@@ -1,0 +1,20 @@
+
+
+QMainWindow {
+    background-color: #d7eff6;
+}
+
+QTabWidget {
+    background-color: none;
+}
+
+QMenuBar {
+    background-color: whiteSmoke;
+}
+
+QPushButton {
+    background-color: #96c1c4;
+    color: black;
+    border: 1px solid black;
+    border-radius: 5px;
+}

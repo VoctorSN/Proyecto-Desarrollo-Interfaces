@@ -1,6 +1,10 @@
 import sys
 from PyQt6 import QtWidgets
 
+import conexion
+import var
+
+
 class Eventos():
     def mensajeSalir(self=None):
         mbox = QtWidgets.QMessageBox()
@@ -16,3 +20,15 @@ class Eventos():
             sys.exit()
         else:
             mbox.hide()
+
+    def cargarProv(self):
+        cmbProvCli = var.ui.cmbProvCli
+        listaprov = conexion.Conexion.listaProv(self)
+        cmbProvCli.clear()
+        cmbProvCli.addItems(listaprov)
+
+    def cargarMun(self,pkProv):
+        cmbMuniCli = var.ui.cmbMuniCli
+        listaprov = conexion.Conexion.listaMun(self,pkProv)
+        cmbMuniCli.clear()
+        cmbMuniCli.addItems(listaprov)
