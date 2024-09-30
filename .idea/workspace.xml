@@ -5,12 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b138e9cf-b85a-43cb-9048-15798344b753" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/SanchezNogueira.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/eventos.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VenPrincipal.py" beforeDir="false" afterPath="$PROJECT_DIR$/VenPrincipal.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VenPrincipal.ui" beforeDir="false" afterPath="$PROJECT_DIR$/VenPrincipal.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,9 +42,8 @@
     "Python.VenvPrincipal.executor": "Run",
     "Python.main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "com.google.cloudcode.ide_session_index": "20240925_0003",
+    "com.google.cloudcode.ide_session_index": "20240930_0001",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/a23victorsn/PycharmProjects/figueiridomolares",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -55,6 +53,11 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\a23joelfm\Documents\pycharm-proyects\figueiridomolares\img" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="figueiridomolares" />
@@ -101,10 +104,13 @@
       <workItem from="1727095963732" duration="1361000" />
       <workItem from="1727157979462" duration="58000" />
       <workItem from="1727158049908" duration="818000" />
-      <workItem from="1727158985717" duration="235000" />
-      <workItem from="1727159490046" duration="124000" />
-      <workItem from="1727250639097" duration="2402000" />
-      <workItem from="1727255346990" duration="1213000" />
+      <workItem from="1727158985717" duration="4402000" />
+      <workItem from="1727251065306" duration="5292000" />
+      <workItem from="1727337480915" duration="3828000" />
+      <workItem from="1727341539843" duration="877000" />
+      <workItem from="1727342464324" duration="1277000" />
+      <workItem from="1727679600504" duration="1457000" />
+      <workItem from="1727681525808" duration="64000" />
     </task>
     <servers />
   </component>
@@ -113,7 +119,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/figueiridomolares$VenvPrincipal.coverage" NAME="VenvPrincipal Coverage Results" MODIFIED="1727158725318" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/figueiridomolares$main.coverage" NAME="main Coverage Results" MODIFIED="1727253483648" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/SanchezNogueira$main.coverage" NAME="main Coverage Results" MODIFIED="1727256253393" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/figueiridomolares$main.coverage" NAME="main Coverage Results" MODIFIED="1727681302456" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/SanchezNogueira$main.coverage" NAME="main Coverage Results" MODIFIED="1727681588545" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

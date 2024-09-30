@@ -1,5 +1,6 @@
-"""
-Fichero de variables globales
-"""
+'''
 
+Fichero de variables globales
+
+'''
 global ui
