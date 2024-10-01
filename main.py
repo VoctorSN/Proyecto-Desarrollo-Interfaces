@@ -1,3 +1,4 @@
+import clientes
 import conexion
 import eventos
 import styles
@@ -16,10 +17,21 @@ class Main(QtWidgets.QMainWindow):
         conexion.Conexion.db_conexion(self)
         eventos.Eventos.cargarProv(self)
         eventos.Eventos.cargarMun(self,var.ui.cmbProvCli.currentText())
+
         '''
         ZONA DE EVENTOS DEL MENUBAR
         '''
         var.ui.actionSalir.triggered.connect(eventos.Eventos.mensajeSalir)
+
+        '''
+        ZONA DE EVENTOS DE BOTONES
+        '''
+        var.ui.btnGrabarCli.clicked.connect(clientes.Clientes.altaCliente)
+
+        '''
+        ZONA DE EVENTOS DE TEXTBOX  
+        '''
+        var.ui.txtDniCli.editingFinished.connect(lambda : clientes.Clientes.checkDni(var.ui.txtDniCli.text()))
 
 
 

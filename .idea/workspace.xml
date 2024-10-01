@@ -4,15 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b138e9cf-b85a-43cb-9048-15798344b753" name="Changes" comment="BBDD">
-      <change afterPath="$PROJECT_DIR$/styles.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles.qss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="b138e9cf-b85a-43cb-9048-15798344b753" name="Changes" comment="30/09">
+      <change afterPath="$PROJECT_DIR$/clientes.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/calendar.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eventos.py" beforeDir="false" afterPath="$PROJECT_DIR$/eventos.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venPrincipal.py" beforeDir="false" afterPath="$PROJECT_DIR$/venPrincipal.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venPrincipal.ui" beforeDir="false" afterPath="$PROJECT_DIR$/venPrincipal.ui" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +38,9 @@
     &quot;accountId&quot;: &quot;d4451a69-5bd3-4ad1-83bf-6b58295c36b9&quot;
   }
 }</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/eventos.py" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
 }</component>
@@ -58,8 +58,9 @@
     "Python.main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "com.google.cloudcode.ide_session_index": "20240930_0002",
+    "com.google.cloudcode.ide_session_index": "20241001_0000",
     "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Users/a23victorsn/PycharmProjects/SanchezNogueira/img",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -69,6 +70,9 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="ReadonlyStatusHandler">
+    <option name="SHOW_DIALOG" value="false" />
+  </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\a23joelfm\Documents\pycharm-proyects\figueiridomolares\img" />
@@ -127,7 +131,8 @@
       <workItem from="1727342464324" duration="1277000" />
       <workItem from="1727679600504" duration="1457000" />
       <workItem from="1727681525808" duration="2727000" />
-      <workItem from="1727684711289" duration="729000" />
+      <workItem from="1727684711289" duration="974000" />
+      <workItem from="1727763009134" duration="5032000" />
     </task>
     <task id="LOCAL-00001" summary="BBDD">
       <option name="closed" value="true" />
@@ -137,7 +142,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727681651848</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="30/09">
+      <option name="closed" value="true" />
+      <created>1727685663541</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1727685663541</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -148,11 +161,12 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="BBDD" />
-    <option name="LAST_COMMIT_MESSAGE" value="BBDD" />
+    <MESSAGE value="30/09" />
+    <option name="LAST_COMMIT_MESSAGE" value="30/09" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/figueiridomolares$VenvPrincipal.coverage" NAME="VenvPrincipal Coverage Results" MODIFIED="1727158725318" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/figueiridomolares$main.coverage" NAME="main Coverage Results" MODIFIED="1727681302456" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/SanchezNogueira$main.coverage" NAME="main Coverage Results" MODIFIED="1727685381256" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/SanchezNogueira$main.coverage" NAME="main Coverage Results" MODIFIED="1727766897012" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
