@@ -1,3 +1,4 @@
+import re
 import sys
 import time
 
@@ -29,12 +30,11 @@ class Eventos():
         cmbProvCli.clear()
         cmbProvCli.addItems(listaprov)
 
-    def cargarMuniCli(self):
-        provincia = var.ui.cmbProvCli.currentText()
-        listado = conexion.Conexion.listaMunicipios(provincia)
-        var.ui.cmbProvCli.addItems(listado)
-        print(provincia)
-        print(listado)
+    @staticmethod
+    def cargarMuniCli():
+        var.ui.cmbMuniCli.clear()
+        listado = conexion.Conexion.listaMunicipios(var.ui.cmbProvCli.currentText())
+        var.ui.cmbMuniCli.addItems(listado)
 
     def checkDNI(dni):
         try:
@@ -75,3 +75,6 @@ class Eventos():
         except Exception as error:
             print("error en cargar fecha: ", error)
 
+    def validarMail(mail):
+        regex = r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w+$'
+        return re.match(regex,mail.lower())

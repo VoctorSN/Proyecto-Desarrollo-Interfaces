@@ -56,8 +56,8 @@ class Conexion:
         try:
             listamunicipios = []
             query = QtSql.QSqlQuery()
-            query.prepare("SELECT * FROM municipios where idprov = (select idprov from provincias where provincia = ?)")
-            query.bindValue(0, provincia)
+            query.prepare("SELECT * FROM municipios where idprov = (select idprov from provincias where provincia = :provincia)")
+            query.bindValue(":provincia", provincia)
             if query.exec():
                 while query.next():
                     listamunicipios.append(query.value(1))

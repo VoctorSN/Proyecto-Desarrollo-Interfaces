@@ -4,16 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b138e9cf-b85a-43cb-9048-15798344b753" name="Changes" comment="01/10 nuevo remoto">
-      <change afterPath="$PROJECT_DIR$/templates/VenPrincipal.ui" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venAux.py" afterDir="false" />
+    <list default="true" id="b138e9cf-b85a-43cb-9048-15798344b753" name="Changes" comment="07/10 cal">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/clientes.py" beforeDir="false" afterPath="$PROJECT_DIR$/clientes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/conexion.py" beforeDir="false" afterPath="$PROJECT_DIR$/conexion.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eventos.py" beforeDir="false" afterPath="$PROJECT_DIR$/eventos.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/var.py" beforeDir="false" afterPath="$PROJECT_DIR$/var.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venPrincipal.py" beforeDir="false" afterPath="$PROJECT_DIR$/venPrincipal.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venPrincipal.ui" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +58,7 @@
     "Python.main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "com.google.cloudcode.ide_session_index": "20241007_0003",
+    "com.google.cloudcode.ide_session_index": "20241008_0005",
     "git-widget-placeholder": "master",
     "last_opened_file_path": "C:/Users/a23victorsn/PycharmProjects/SanchezNogueira/img",
     "node.js.detected.package.eslint": "true",
@@ -144,7 +140,11 @@
       <workItem from="1727781539785" duration="27000" />
       <workItem from="1728036071622" duration="1000" />
       <workItem from="1728301252304" duration="4083000" />
-      <workItem from="1728305365873" duration="1679000" />
+      <workItem from="1728305365873" duration="1800000" />
+      <workItem from="1728368086830" duration="182000" />
+      <workItem from="1728368278063" duration="315000" />
+      <workItem from="1728368795337" duration="258000" />
+      <workItem from="1728369068688" duration="671000" />
     </task>
     <task id="LOCAL-00001" summary="BBDD">
       <option name="closed" value="true" />
@@ -178,7 +178,23 @@
       <option name="project" value="LOCAL" />
       <updated>1727768885421</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="07/10">
+      <option name="closed" value="true" />
+      <created>1728307127381</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1728307127381</updated>
+    </task>
+    <task id="LOCAL-00006" summary="07/10 cal">
+      <option name="closed" value="true" />
+      <created>1728307156138</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1728307156138</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -215,11 +231,13 @@
     <MESSAGE value="30/09" />
     <MESSAGE value="01/10" />
     <MESSAGE value="01/10 nuevo remoto" />
-    <option name="LAST_COMMIT_MESSAGE" value="01/10 nuevo remoto" />
+    <MESSAGE value="07/10" />
+    <MESSAGE value="07/10 cal" />
+    <option name="LAST_COMMIT_MESSAGE" value="07/10 cal" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/figueiridomolares$VenvPrincipal.coverage" NAME="VenvPrincipal Coverage Results" MODIFIED="1727158725318" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/figueiridomolares$main.coverage" NAME="main Coverage Results" MODIFIED="1727681302456" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/SanchezNogueira$main.coverage" NAME="main Coverage Results" MODIFIED="1728307047598" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/SanchezNogueira$main.coverage" NAME="main Coverage Results" MODIFIED="1728369605213" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

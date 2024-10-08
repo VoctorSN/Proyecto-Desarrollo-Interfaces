@@ -35,6 +35,7 @@ class Main(QtWidgets.QMainWindow):
         ZONA DE EVENTOS DE TEXTBOX  
         '''
         var.ui.txtDniCli.editingFinished.connect(lambda : clientes.Clientes.checkDni(var.ui.txtDniCli.text()))
+        var.ui.txtEmailCli.editingFinished.connect(lambda : clientes.Clientes.checkEmail(var.ui.txtEmailCli.text()))
 
         '''
         ZONA DE EVENTOS DE TEXTBOX  
