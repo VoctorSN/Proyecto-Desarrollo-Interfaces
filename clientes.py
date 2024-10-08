@@ -2,12 +2,21 @@ from tkinter.messagebox import ERROR
 
 from PyQt6 import QtWidgets
 
+import conexion
 import eventos
 import var
 
 class Clientes:
-    def altaCliente(self):
-        dni  = var.ui.txtDniCli.text()
+
+    @staticmethod
+    def altaCliente():
+        nuevoCli = [var.ui.txtDniCli.text(),var.ui.txtCalendarCli.text(),
+                 var.ui.txtApelCli.text(),var.ui.txtNomCli.text(),
+                 var.ui.txtEmailCli.text(),var.ui.txtMovilCli.text(),
+                 var.ui.txtDirCli.text(),
+                 var.ui.cmbProvCli.currentText(),
+                 var.ui.cmbMuniCli.currentText()]
+        conexion.Conexion.altaCliente(nuevoCli)
 
     def checkDni(dni):
         try:
@@ -25,7 +34,6 @@ class Clientes:
 
     def checkEmail(mail):
         try:
-            print("aqui")
             mail = str(var.ui.txtEmailCli.text())
             if eventos.Eventos.validarMail(mail):
                 var.ui.txtEmailCli.setStyleSheet('background-color: rgb(255, 255, 255);')
