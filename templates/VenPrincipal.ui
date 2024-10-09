@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1164</width>
+    <width>1238</width>
     <height>874</height>
    </rect>
   </property>
@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../../../../.designer/backup/img/logo.ico</normaloff>../../../../.designer/backup/img/logo.ico</iconset>
+    <normaloff>../img/logo.ico</normaloff>../img/logo.ico</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
@@ -467,7 +467,7 @@
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>../img/calendar.png</normaloff>../img/calendar.png</iconset>
+              <normaloff>../../../../.designer/img/calendar.png</normaloff>../../../../.designer/img/calendar.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -682,7 +682,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1164</width>
+     <width>1238</width>
      <height>21</height>
     </rect>
    </property>

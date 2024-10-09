@@ -1,6 +1,7 @@
+import sqlite3
 from tkinter.messagebox import ERROR
 
-from PyQt6 import QtWidgets
+from PyQt6 import QtWidgets, QtGui
 
 import conexion
 import eventos
@@ -8,15 +9,33 @@ import var
 
 class Clientes:
 
-    @staticmethod
-    def altaCliente():
+
+    def altaCliente(self):
         nuevoCli = [var.ui.txtDniCli.text(),var.ui.txtCalendarCli.text(),
                  var.ui.txtApelCli.text(),var.ui.txtNomCli.text(),
                  var.ui.txtEmailCli.text(),var.ui.txtMovilCli.text(),
                  var.ui.txtDirCli.text(),
                  var.ui.cmbProvCli.currentText(),
                  var.ui.cmbMuniCli.currentText()]
-        conexion.Conexion.altaCliente(nuevoCli)
+        if conexion.Conexion.altaCliente(self,nuevoCli):
+            mbox = QtWidgets.QMessageBox()
+            mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
+            mbox.setWindowIcon(QtGui.QIcon('img/logo.ico'))
+            mbox.setWindowTitle('Aviso')
+            mbox.setText('Cliente dado de alta correctamente')
+            mbox.setStandardButtons(
+                QtWidgets.QMessageBox.StandardButton.Ok)
+            mbox.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Ok)
+            mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
+            mbox.exec()
+        else:
+            mbox = QtWidgets.QMessageBox()
+            mbox.setWindowTitle("Aviso")
+            mbox.setIcon(QtWidgets.QMessageBox.Icon.Critical)
+            mbox.setWindowIcon(QtGui.QIcon('img/logo.ico'))
+            mbox.setText("Error al dar de alta el cliente")
+            mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Cancel)
+            mbox.exec()
 
     def checkDni(dni):
         try:
@@ -44,6 +63,7 @@ class Clientes:
                 var.ui.txtEmailCli.setText(None)
                 var.ui.txtEmailCli.setText("correo no válido")
                 var.ui.txtEmailCli.setFocus()
-
+        except sqlite3.IntegrityError as e:
+            print("Error, ya existe el dni: ", e)
         except Exception as error:
             print("error check cliente", error)

@@ -2,7 +2,7 @@ import re
 import sys
 import time
 
-from PyQt6 import QtWidgets
+from PyQt6 import QtWidgets, QtGui
 
 import conexion
 import var
