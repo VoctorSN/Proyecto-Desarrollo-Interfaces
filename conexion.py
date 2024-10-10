@@ -1,12 +1,10 @@
 import os
 import sqlite3
-import sys
 
 from PyQt6 import QtSql, QtWidgets
 
 
 class Conexion:
-
     '''
 
     método de una clase que no depende de una instancia específica de esa clase. 
@@ -37,7 +35,7 @@ class Conexion:
                 return False
             else:
                 QtWidgets.QMessageBox.information(None, 'Aviso', 'Conexión Base de Datos realizada',
-                                               QtWidgets.QMessageBox.StandardButton.Ok)
+                                                  QtWidgets.QMessageBox.StandardButton.Ok)
                 return True
         else:
             QtWidgets.QMessageBox.critical(None, 'Error', 'No se pudo abrir la base de datos.',
@@ -60,7 +58,8 @@ class Conexion:
         try:
             listamunicipios = []
             query = QtSql.QSqlQuery()
-            query.prepare("SELECT * FROM municipios where idprov = (select idprov from provincias where provincia = :provincia)")
+            query.prepare(
+                "SELECT * FROM municipios where idprov = (select idprov from provincias where provincia = :provincia)")
             query.bindValue(":provincia", provincia)
             if query.exec():
                 while query.next():
@@ -69,8 +68,7 @@ class Conexion:
         except Exception as error:
             print("error lista muni: ", error)
 
-
-    def altaCliente(self,nuevoCli):
+    def altaCliente(self, nuevoCli):
         try:
             query = QtSql.QSqlQuery()
             query.prepare(
@@ -94,3 +92,14 @@ class Conexion:
         except Exception as error:
             print("Error en alta cliente: ", error)
 
+    def listadoClientes(self):
+        try:
+            listado = []
+            query = QtSql.QSqlQuery()
+            query.prepare("SELECT * FROM CLIENTES ORDER BY apelcli, nomecli ASC")
+            if query.exec():
+                while query.next():
+                    listado.append([query.value(i) for i in range(query.record().count())])
+            return listado
+        except Exception as e:
+            print(e)

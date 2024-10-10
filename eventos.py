@@ -2,7 +2,7 @@ import re
 import sys
 import time
 
-from PyQt6 import QtWidgets, QtGui
+from PyQt6 import QtWidgets
 
 import conexion
 import var
@@ -77,4 +77,20 @@ class Eventos():
 
     def validarMail(mail):
         regex = r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w+$'
-        return re.match(regex,mail.lower())
+        return re.match(regex, mail.lower())
+
+    def resizeTablaClientes(self):
+        try:
+            header = var.ui.tabClientes.horizontalHeader()
+            for i in range(header.count()):
+                if i in (0,1,3,4):
+                    header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeMode.Stretch)
+                else:
+                    header.setSectionResizeMode(i,QtWidgets.QHeaderView.ResizeMode.ResizeToContents)
+                header_item = var.ui.tabClientes.horizontalHeaderItem(i)
+                font = header_item.font()
+                font.setBold(True)
+                header_item.setFont(font)
+
+        except Exception as e:
+            print("Error en resizeClientes",e)

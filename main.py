@@ -1,10 +1,9 @@
+import sys
+
 import clientes
 import conexion
 import eventos
 import styles
-from VenPrincipal import *
-import sys
-import var
 from VenPrincipal import Ui_venPrincipal
 from venAux import *
 
@@ -19,6 +18,8 @@ class Main(QtWidgets.QMainWindow):
         self.setStyleSheet(styles.load_stylesheet())
         conexion.Conexion.db_conexion(self)
         eventos.Eventos.cargarProv(self)
+        clientes.Clientes.cargaTablaClientes(self)
+        eventos.Eventos.resizeTablaClientes(self)
 
         '''
         ZONA DE EVENTOS DEL MENUBAR
@@ -28,14 +29,14 @@ class Main(QtWidgets.QMainWindow):
         '''
         ZONA DE EVENTOS DE BOTONES
         '''
-        var.ui.btnAltaCli.clicked.connect(lambda : eventos.Eventos.abrirCalendar(0))
+        var.ui.btnAltaCli.clicked.connect(lambda: eventos.Eventos.abrirCalendar(0))
         var.ui.btnGrabarCli.clicked.connect(clientes.Clientes.altaCliente)
 
         '''
         ZONA DE EVENTOS DE TEXTBOX  
         '''
-        var.ui.txtDniCli.editingFinished.connect(lambda : clientes.Clientes.checkDni(var.ui.txtDniCli.text()))
-        var.ui.txtEmailCli.editingFinished.connect(lambda : clientes.Clientes.checkEmail(var.ui.txtEmailCli.text()))
+        var.ui.txtDniCli.editingFinished.connect(lambda: clientes.Clientes.checkDni(var.ui.txtDniCli.text()))
+        var.ui.txtEmailCli.editingFinished.connect(lambda: clientes.Clientes.checkEmail(var.ui.txtEmailCli.text()))
 
         '''
         ZONA DE EVENTOS DE TEXTBOX  
