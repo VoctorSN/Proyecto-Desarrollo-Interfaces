@@ -1,7 +1,7 @@
 
 
 QMainWindow {
-    background-color: #d7eff6;
+    background-color: #96c1c4;
 }
 
 QTabWidget {

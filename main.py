@@ -2,6 +2,7 @@ import sys
 
 import clientes
 import conexion
+import conexionserver
 import eventos
 import styles
 from VenPrincipal import Ui_venPrincipal
@@ -17,7 +18,10 @@ class Main(QtWidgets.QMainWindow):
         var.uicalendar = Calendar()
         self.setStyleSheet(styles.load_stylesheet())
         conexion.Conexion.db_conexion(self)
-        eventos.Eventos.cargarProv(self)
+
+        '''
+        EVENTOS DE TABLAS
+        '''
         clientes.Clientes.cargaTablaClientes(self)
         eventos.Eventos.resizeTablaClientes(self)
 
@@ -39,8 +43,9 @@ class Main(QtWidgets.QMainWindow):
         var.ui.txtEmailCli.editingFinished.connect(lambda: clientes.Clientes.checkEmail(var.ui.txtEmailCli.text()))
 
         '''
-        ZONA DE EVENTOS DE TEXTBOX  
+        ZONA DE EVENTOS DE COMBOX  
         '''
+        eventos.Eventos.cargarProv(self)
         var.ui.cmbProvCli.currentIndexChanged.connect(eventos.Eventos.cargarMuniCli)
 
 
