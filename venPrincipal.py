@@ -182,7 +182,7 @@ class Ui_venPrincipal(object):
         self.btnAltaCli.setStyleSheet("")
         self.btnAltaCli.setText("")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("img/calendar.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon1.addPixmap(QtGui.QPixmap(".\\\\templates\\../img/calendar2.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.btnAltaCli.setIcon(icon1)
         self.btnAltaCli.setIconSize(QtCore.QSize(24, 24))
         self.btnAltaCli.setObjectName("btnAltaCli")
