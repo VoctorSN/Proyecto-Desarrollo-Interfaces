@@ -16,6 +16,7 @@ class Main(QtWidgets.QMainWindow):
         var.ui = Ui_venPrincipal()
         var.ui.setupUi(self)
         var.uicalendar = Calendar()
+        var.dlgabrir = FileDialogAbrir()
         self.setStyleSheet(styles.load_stylesheet())
         conexion.Conexion.db_conexion(self)
 
@@ -29,6 +30,8 @@ class Main(QtWidgets.QMainWindow):
         ZONA DE EVENTOS DEL MENUBAR
         '''
         var.ui.actionSalir.triggered.connect(eventos.Eventos.mensajeSalir)
+        var.ui.actionCrear_Backup.triggered.connect(eventos.Eventos.crearBackup)
+        var.ui.actionRestaurar_Backup.triggered.connect(eventos.Eventos.restaurarBackup)
 
         '''
         ZONA DE EVENTOS DE BOTONES

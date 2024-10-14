@@ -508,7 +508,7 @@
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>../img/calendar2.png</normaloff>../img/calendar2.png</iconset>
+              <normaloff>../img/calendar.png</normaloff>../img/calendar.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -740,8 +740,14 @@
     <addaction name="actionCrear_Backup"/>
     <addaction name="actionRestaurar_Backup"/>
    </widget>
+   <widget class="QMenu" name="menuAyuda">
+    <property name="title">
+     <string>Ayuda</string>
+    </property>
+   </widget>
    <addaction name="menuArchivo"/>
    <addaction name="menuHerramientas"/>
+   <addaction name="menuAyuda"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionSalir">
