@@ -18,6 +18,7 @@ QPushButton {
     border: 1px solid black;
     border-radius: 5px;
 }
+
 QHeaderView::section {
         background-color:#FFFBE7;
         color: black;

@@ -1,10 +1,11 @@
 import sqlite3
 
-from PyQt6 import QtWidgets, QtGui, QtCore
+from PyQt6 import QtWidgets, QtGui, QtCore, QtSql
 
 import conexion
 import eventos
 import var
+from conexion import Conexion
 
 
 class Clientes:
@@ -96,8 +97,51 @@ class Clientes:
             fila = var.ui.tabClientes.selectedItems()
             datos = [dato.text() for dato in fila]
             registro = conexion.Conexion.datosOneCliente(str(datos[0]))
-            print(registro)
-            #Clientes.cargarCliente(self,registro)
+
+            listado = [var.ui.txtDniCli, var.ui.txtCalendarCli,
+                        var.ui.txtApelCli, var.ui.txtNomCli,
+                        var.ui.txtEmailCli, var.ui.txtMovilCli,
+                        var.ui.txtDirCli,var.ui.cmbProvCli,var.ui.cmbMuniCli]
+
+            for i in range(len(listado)):
+                if i in (7,8):
+                    listado[i].setCurrentText(registro[i])
+                else:
+                    listado[i].setText(registro[i])
 
         except Exception as e:
             print("Error cargar Clientes", e)
+
+
+    def modifCliente(self):
+        try:
+            modifCli = [var.ui.txtDniCli.text(), var.ui.txtCalendarCli.text(),
+                        var.ui.txtApelCli.text(), var.ui.txtNomCli.text(),
+                        var.ui.txtEmailCli.text(), var.ui.txtMovilCli.text(),
+                        var.ui.txtDirCli.text(),
+                        var.ui.cmbProvCli.currentText(),
+                        var.ui.cmbMuniCli.currentText()]
+            if conexion.Conexion.modifCliente(modifCli):
+                mbox = QtWidgets.QMessageBox()
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
+                mbox.setWindowIcon(QtGui.QIcon('img/logo.ico'))
+                mbox.setWindowTitle('Aviso')
+                mbox.setText('Datos del Cliente modificados correctamente')
+                mbox.setStandardButtons(
+                    QtWidgets.QMessageBox.StandardButton.Ok)
+                mbox.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Ok)
+                mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
+                mbox.exec()
+            else:
+                mbox = QtWidgets.QMessageBox()
+                mbox.setWindowTitle("Aviso")
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Critical)
+                mbox.setWindowIcon(QtGui.QIcon('img/logo.ico'))
+                mbox.setText("Error al modificar el cliente")
+                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Cancel)
+                mbox.exec()
+
+            Clientes.cargaTablaClientes(self)
+
+        except Exception as error:
+            print("Error en modificar cliente: ", error)

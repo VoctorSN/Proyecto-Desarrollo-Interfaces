@@ -39,6 +39,7 @@ class Main(QtWidgets.QMainWindow):
         '''
         var.ui.btnAltaCli.clicked.connect(lambda: eventos.Eventos.abrirCalendar(0))
         var.ui.btnGrabarCli.clicked.connect(clientes.Clientes.altaCliente)
+        var.ui.btnModifCli.clicked.connect(clientes.Clientes.modifCliente)
 
         '''
         ZONA DE EVENTOS DE TEXTBOX  

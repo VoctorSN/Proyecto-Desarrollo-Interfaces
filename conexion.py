@@ -103,3 +103,40 @@ class Conexion:
             return listado
         except Exception as e:
             print(e)
+
+    def datosOneCliente(dni):
+        try:
+            registro = []
+            query = QtSql.QSqlQuery()
+            query.prepare("SELECT * FROM CLIENTES WHERE dnicli = :dni")
+            query.bindValue(":dni", str(dni))
+            if query.exec():
+                while query.next():
+                    for i in range(query.record().count()):
+                        registro.append(query.value(i))
+            return registro
+        except Exception as error:
+            print("Error en datos cliente: ", error)
+
+    def modifCliente(registro):
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare("UPDATE clientes set altacli = :altacli, apelcli = :apelcli, nomecli = :nomecli, emailcli = :emailcli,"
+                          " movilcli = :movilcli, dircli = :dircli, provcli = :provcli, municli = :municli WHERE dnicli = :dnicli")
+            query.bindValue(":altacli", str(registro[1]))
+            query.bindValue(":apelcli", str(registro[2]))
+            query.bindValue(":nomecli", str(registro[3]))
+            query.bindValue(":emailcli", str(registro[4]))
+            query.bindValue(":movilcli", str(registro[5]))
+            query.bindValue(":dircli", str(registro[6]))
+            query.bindValue(":provcli", str(registro[7]))
+            query.bindValue(":municli", str(registro[8]))
+            query.bindValue(":dnicli", str(registro[0]))
+
+            if query.exec():
+                return True
+            else:
+                return False
+
+        except Exception as error:
+            print("Error en modif cliente: ", error)
