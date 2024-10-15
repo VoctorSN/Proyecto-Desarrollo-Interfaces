@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1238</width>
+    <width>1334</width>
     <height>874</height>
    </rect>
   </property>
@@ -245,28 +245,6 @@
              </size>
             </property>
            </spacer>
-          </item>
-          <item row="3" column="7" colspan="5">
-           <widget class="QLineEdit" name="txtMovilCli">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>120</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>200</width>
-              <height>20</height>
-             </size>
-            </property>
-           </widget>
           </item>
           <item row="3" column="14">
            <spacer name="horizontalSpacer_15">
@@ -518,6 +496,28 @@
             </property>
            </widget>
           </item>
+          <item row="3" column="7" colspan="5">
+           <widget class="QLineEdit" name="txtMovilCli">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>120</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>20</height>
+             </size>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
         <item>
@@ -625,9 +625,17 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectRows</enum>
+          </property>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
           </attribute>
+          <column>
+           <property name="text">
+            <string>DNI / NIE</string>
+           </property>
+          </column>
           <column>
            <property name="text">
             <string>Apellidos</string>
@@ -715,7 +723,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1238</width>
+     <width>1334</width>
      <height>21</height>
     </rect>
    </property>

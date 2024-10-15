@@ -91,7 +91,7 @@ class Eventos():
         try:
             header = var.ui.tabClientes.horizontalHeader()
             for i in range(header.count()):
-                if i in (0,1,3,4):
+                if i in (1,2,4,5):
                     header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeMode.Stretch)
                 else:
                     header.setSectionResizeMode(i,QtWidgets.QHeaderView.ResizeMode.ResizeToContents)

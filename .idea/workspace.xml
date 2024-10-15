@@ -4,21 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b138e9cf-b85a-43cb-9048-15798344b753" name="Changes" comment="10/10 TabClientes">
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/conexionserver.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/figueiridomolares.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/SanchezNogueira.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+    <list default="true" id="b138e9cf-b85a-43cb-9048-15798344b753" name="Changes" comment="14/10 backups">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bbdd.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/bbdd.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/clientes.py" beforeDir="false" afterPath="$PROJECT_DIR$/clientes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eventos.py" beforeDir="false" afterPath="$PROJECT_DIR$/eventos.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/calendar.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/styles.qss" beforeDir="false" afterPath="$PROJECT_DIR$/styles.qss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/VenPrincipal.ui" beforeDir="false" afterPath="$PROJECT_DIR$/templates/VenPrincipal.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venPrincipal.py" beforeDir="false" afterPath="$PROJECT_DIR$/venPrincipal.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +60,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "com.google.cloudcode.ide_session_index": "20241014_0001",
+    "com.google.cloudcode.ide_session_index": "20241015_0001",
     "git-widget-placeholder": "master",
     "last_opened_file_path": "C:/Users/a23victorsn/PycharmProjects/SanchezNogueira",
     "node.js.detected.package.eslint": "true",
@@ -161,7 +153,9 @@
       <workItem from="1728471016424" duration="2955000" />
       <workItem from="1728546712567" duration="5824000" />
       <workItem from="1728887026916" duration="3000" />
-      <workItem from="1728906193945" duration="1380000" />
+      <workItem from="1728906193945" duration="5408000" />
+      <workItem from="1728911628925" duration="152000" />
+      <workItem from="1728972731574" duration="1204000" />
     </task>
     <task id="LOCAL-00001" summary="BBDD">
       <option name="closed" value="true" />
@@ -243,7 +237,31 @@
       <option name="project" value="LOCAL" />
       <updated>1728552260431</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="14/10 conexionserver">
+      <option name="closed" value="true" />
+      <created>1728907919029</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1728907919029</updated>
+    </task>
+    <task id="LOCAL-00012" summary="14/10 gitignore">
+      <option name="closed" value="true" />
+      <created>1728908076667</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1728908076667</updated>
+    </task>
+    <task id="LOCAL-00013" summary="14/10 backups">
+      <option name="closed" value="true" />
+      <created>1728911651688</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1728911651688</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -286,11 +304,14 @@
     <MESSAGE value="08/10 conexion cli" />
     <MESSAGE value="09/10 conexion bbdd Clientes dados de alta" />
     <MESSAGE value="10/10 TabClientes" />
-    <option name="LAST_COMMIT_MESSAGE" value="10/10 TabClientes" />
+    <MESSAGE value="14/10 conexionserver" />
+    <MESSAGE value="14/10 gitignore" />
+    <MESSAGE value="14/10 backups" />
+    <option name="LAST_COMMIT_MESSAGE" value="14/10 backups" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/figueiridomolares$VenvPrincipal.coverage" NAME="VenvPrincipal Coverage Results" MODIFIED="1727158725318" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/figueiridomolares$main.coverage" NAME="main Coverage Results" MODIFIED="1727681302456" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/SanchezNogueira$main.coverage" NAME="main Coverage Results" MODIFIED="1728907577413" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/SanchezNogueira$main.coverage" NAME="main Coverage Results" MODIFIED="1728973936522" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

@@ -72,20 +72,32 @@ class Clientes:
             for i, registro in enumerate(listado):
                 var.ui.tabClientes.setRowCount(i + 1)
 
-                var.ui.tabClientes.setItem(i, 0, QtWidgets.QTableWidgetItem(registro[2]))
-                var.ui.tabClientes.setItem(i, 1, QtWidgets.QTableWidgetItem(registro[3]))
-                var.ui.tabClientes.setItem(i, 2, QtWidgets.QTableWidgetItem(registro[5]))
-                var.ui.tabClientes.setItem(i, 3, QtWidgets.QTableWidgetItem(registro[7]))
-                var.ui.tabClientes.setItem(i, 4, QtWidgets.QTableWidgetItem(registro[8]))
-                var.ui.tabClientes.setItem(i, 5, QtWidgets.QTableWidgetItem(registro[9]))
+                var.ui.tabClientes.setItem(i, 0, QtWidgets.QTableWidgetItem(registro[0]))
+                var.ui.tabClientes.setItem(i, 1, QtWidgets.QTableWidgetItem(registro[2]))
+                var.ui.tabClientes.setItem(i, 2, QtWidgets.QTableWidgetItem(registro[3]))
+                var.ui.tabClientes.setItem(i, 3, QtWidgets.QTableWidgetItem(registro[5]))
+                var.ui.tabClientes.setItem(i, 4, QtWidgets.QTableWidgetItem(registro[7]))
+                var.ui.tabClientes.setItem(i, 5, QtWidgets.QTableWidgetItem(registro[8]))
+                var.ui.tabClientes.setItem(i, 6, QtWidgets.QTableWidgetItem(registro[9]))
 
-                var.ui.tabClientes.item(i, 0).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft.AlignVCenter)
+                var.ui.tabClientes.item(i, 0).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
                 var.ui.tabClientes.item(i, 1).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft.AlignVCenter)
-                var.ui.tabClientes.item(i, 2).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-                var.ui.tabClientes.item(i, 3).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft.AlignVCenter)
+                var.ui.tabClientes.item(i, 2).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft.AlignVCenter)
+                var.ui.tabClientes.item(i, 3).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
                 var.ui.tabClientes.item(i, 4).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft.AlignVCenter)
-                var.ui.tabClientes.item(i, 5).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                var.ui.tabClientes.item(i, 5).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft.AlignVCenter)
+                var.ui.tabClientes.item(i, 6).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
 
+        except Exception as e:
+            print("Error cargar Clientes", e)
+
+    def cargaCliente(self):
+        try:
+            fila = var.ui.tabClientes.selectedItems()
+            datos = [dato.text() for dato in fila]
+            registro = conexion.Conexion.datosOneCliente(str(datos[0]))
+            print(registro)
+            #Clientes.cargarCliente(self,registro)
 
         except Exception as e:
             print("Error cargar Clientes", e)
