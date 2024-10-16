@@ -37,9 +37,11 @@ class Main(QtWidgets.QMainWindow):
         '''
         ZONA DE EVENTOS DE BOTONES
         '''
-        var.ui.btnAltaCli.clicked.connect(lambda: eventos.Eventos.abrirCalendar(0))
+        var.ui.btnAltaCli.clicked.connect(lambda: eventos.Eventos.abrirCalendar(0,0))
+        var.ui.btnBajaCli.clicked.connect(lambda: eventos.Eventos.abrirCalendar(0,1))
         var.ui.btnGrabarCli.clicked.connect(clientes.Clientes.altaCliente)
         var.ui.btnModifCli.clicked.connect(clientes.Clientes.modifCliente)
+        var.ui.btnDelCli.clicked.connect(clientes.Clientes.bajaCliente)
 
         '''
         ZONA DE EVENTOS DE TEXTBOX  
@@ -53,6 +55,11 @@ class Main(QtWidgets.QMainWindow):
         eventos.Eventos.cargarProv(self)
         var.ui.cmbProvCli.currentIndexChanged.connect(eventos.Eventos.cargarMuniCli)
 
+        '''
+        ZONA DE EVENTOS DE TOOLBAR  
+        '''
+        var.ui.actionbarSalir.triggered.connect(eventos.Eventos.mensajeSalir)
+        var.ui.actionbarLimpiar.triggered.connect(eventos.Eventos.limpiarPanel)
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)

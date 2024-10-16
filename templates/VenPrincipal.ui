@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1334</width>
+    <width>1513</width>
     <height>874</height>
    </rect>
   </property>
@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../img/logo.ico</normaloff>../img/logo.ico</iconset>
+    <normaloff>../../../.designer/img/logo.ico</normaloff>../../../.designer/img/logo.ico</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
@@ -519,7 +519,7 @@
            </widget>
           </item>
           <item row="0" column="12">
-           <widget class="QPushButton" name="BtnBajaCli">
+           <widget class="QPushButton" name="btnBajaCli">
             <property name="minimumSize">
              <size>
               <width>29</width>
@@ -796,15 +796,15 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1334</width>
+     <width>1513</width>
      <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuArchivo">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
+      <x>269</x>
+      <y>125</y>
       <width>135</width>
       <height>72</height>
      </rect>
@@ -831,6 +831,20 @@
    <addaction name="menuAyuda"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionbarLimpiar"/>
+   <addaction name="separator"/>
+   <addaction name="actionbarSalir"/>
+  </widget>
   <action name="actionSalir">
    <property name="text">
     <string>Salir</string>
@@ -844,6 +858,30 @@
   <action name="actionRestaurar_Backup">
    <property name="text">
     <string>Restaurar Backup</string>
+   </property>
+  </action>
+  <action name="actionbarSalir">
+   <property name="icon">
+    <iconset>
+     <normaloff>../img/salida.png</normaloff>../img/salida.png</iconset>
+   </property>
+   <property name="text">
+    <string>barSalir</string>
+   </property>
+   <property name="toolTip">
+    <string>Salir</string>
+   </property>
+  </action>
+  <action name="actionbarLimpiar">
+   <property name="icon">
+    <iconset>
+     <normaloff>../img/icons8-actualizar-40.png</normaloff>../img/icons8-actualizar-40.png</iconset>
+   </property>
+   <property name="text">
+    <string>barLimpiar</string>
+   </property>
+   <property name="toolTip">
+    <string>Limpiar</string>
    </property>
   </action>
  </widget>

@@ -65,9 +65,10 @@ class Eventos():
             print("error en validar dni ", error)
             return False
 
-    def abrirCalendar(op):
+    def abrirCalendar(pan,btn):
         try:
-            var.panel = op
+            var.panel = pan
+            var.btn = btn
             var.uicalendar.show()
         except Exception as error:
             print("error en abrir calendar ", error)
@@ -75,8 +76,10 @@ class Eventos():
     def cargaFecha(qDate):
         try:
             data = ('{:02d}/{:02d}/{:4d}'.format(qDate.day(), qDate.month(), qDate.year()))
-            if var.panel == var.ui.panPrincipal.currentIndex():
+            if var.panel == var.ui.panPrincipal.currentIndex() and var.btn == 0:
                 var.ui.txtCalendarCli.setText(str(data))
+            elif var.panel == var.ui.panPrincipal.currentIndex() and var.btn == 1:
+                var.ui.txtBajaCli.setText(str(data))
             time.sleep(0.5)
             var.uicalendar.hide()
             return data
@@ -116,7 +119,7 @@ class Eventos():
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
                 mbox.setWindowTitle('Backup')
-                mbox.setText('Base de Datos Creada')
+                mbox.setText('Backup Creado')
                 mbox.setStandardButtons(
                     QtWidgets.QMessageBox.StandardButton.Ok)
                 mbox.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Ok)
