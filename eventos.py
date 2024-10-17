@@ -86,9 +86,9 @@ class Eventos():
         except Exception as error:
             print("error en cargar fecha: ", error)
 
-    def validarMail(mail):
+    def validarMail(self,mail):
         regex = r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w+$'
-        return re.match(regex, mail.lower())
+        return re.match(regex, mail.lower()) or mail == ""
 
     def resizeTablaClientes(self):
         try:
@@ -154,3 +154,23 @@ class Eventos():
 
         except Exception as e:
             print(e)
+
+    def limpiarPanel(self):
+        try:
+            if var.ui.panPrincipal.currentIndex() == 0:
+                listado = [var.ui.txtDniCli, var.ui.txtCalendarCli,
+                            var.ui.txtApelCli, var.ui.txtNomCli,
+                            var.ui.txtEmailCli, var.ui.txtMovilCli,
+                            var.ui.txtDirCli, var.ui.cmbProvCli, var.ui.cmbMuniCli,
+                           var.ui.txtBajaCli]
+
+                for i,dato in enumerate(listado):
+                    if i in (7, 8):
+                        pass
+                    dato.setText('')
+
+                Eventos.cargarProv(self)
+                var.ui.cmbMuniCli.clear()
+
+        except Exception as error:
+            print("Error en limpiar panel: ", error)
