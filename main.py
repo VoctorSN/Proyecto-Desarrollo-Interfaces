@@ -5,7 +5,7 @@ import conexion
 import conexionserver
 import eventos
 import styles
-from VenPrincipal import Ui_venPrincipal
+from venPrincipal import Ui_venPrincipal
 from venAux import *
 
 
@@ -48,6 +48,7 @@ class Main(QtWidgets.QMainWindow):
         '''
         var.ui.txtDniCli.editingFinished.connect(lambda: clientes.Clientes.checkDni(var.ui.txtDniCli.text()))
         var.ui.txtEmailCli.editingFinished.connect(lambda: clientes.Clientes.checkEmail(var.ui.txtEmailCli.text()))
+        var.ui.txtMovilCli.editingFinished.connect(lambda: clientes.Clientes.checkTelefono(var.ui.txtMovilCli.text()))
 
         '''
         ZONA DE EVENTOS DE COMBOX  

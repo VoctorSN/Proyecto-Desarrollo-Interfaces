@@ -1,11 +1,10 @@
 import sqlite3
 
-from PyQt6 import QtWidgets, QtGui, QtCore, QtSql
+from PyQt6 import QtWidgets, QtGui, QtCore
 
 import conexion
 import eventos
 import var
-from conexion import Conexion
 
 
 class Clientes:
@@ -17,26 +16,48 @@ class Clientes:
                     var.ui.txtDirCli.text(),
                     var.ui.cmbProvCli.currentText(),
                     var.ui.cmbMuniCli.currentText()]
-        if nuevoCli[0] != "" and conexion.Conexion.altaCliente(self, nuevoCli):
+        mensajes_error = [
+            "Falta ingresar DNI",
+            "Falta ingresar fecha de alta",
+            "Falta ingresar apellido",
+            "Falta ingresar nombre",
+            None,
+            "Falta ingresar móvil",
+            "Falta ingresar dirección",
+            "Falta seleccionar provincia",
+            "Falta seleccionar municipio"
+        ]
+
+        for i, dato in enumerate(nuevoCli):
+            if i == 4:  # Saltamos la validación para el email (índice 4)
+                continue
+            if dato == '':
+                mbox = QtWidgets.QMessageBox()
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
+                mbox.setWindowTitle("Error en los datos")
+                mbox.setText(mensajes_error[i])
+                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+                mbox.exec()
+                return
+        try:
+            if conexion.Conexion.altaCliente(nuevoCli):
+                mbox = QtWidgets.QMessageBox()
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
+                mbox.setWindowTitle("Aviso")
+                mbox.setText("Se ha insertado el cliente correctamente.")
+                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+                mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
+                mbox.exec()
+                Clientes.cargaTablaClientes(self)
+        except Exception as e:
+            print(e)
             mbox = QtWidgets.QMessageBox()
-            mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
-            mbox.setWindowIcon(QtGui.QIcon('img/logo.ico'))
-            mbox.setWindowTitle('Aviso')
-            mbox.setText('Cliente dado de alta correctamente')
-            mbox.setStandardButtons(
-                QtWidgets.QMessageBox.StandardButton.Ok)
-            mbox.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Ok)
-            mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
-            mbox.exec()
-            Clientes.cargaTablaClientes(self)
-        else:
-            mbox = QtWidgets.QMessageBox()
-            mbox.setWindowTitle("Aviso")
+            mbox.setWindowTitle("Error")
             mbox.setIcon(QtWidgets.QMessageBox.Icon.Critical)
-            mbox.setWindowIcon(QtGui.QIcon('img/logo.ico'))
-            mbox.setText("Error al dar de alta el cliente")
-            mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Cancel)
+            mbox.setText('Error al insertar el cliente. Intente nuevamente.')
+            mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
             mbox.exec()
+
 
     def checkDni(dni):
         try:
@@ -50,6 +71,7 @@ class Clientes:
                 var.ui.txtDniCli.setFocus()
         except Exception as error:
             print("Error en validar dni ", error)
+
 
     def checkEmail(mail):
         try:
@@ -66,6 +88,7 @@ class Clientes:
             print("Error, ya existe el dni: ", e)
         except Exception as error:
             print("error check cliente", error)
+
 
     def cargaTablaClientes(self):
         try:
@@ -92,6 +115,7 @@ class Clientes:
         except Exception as e:
             print("Error cargar Clientes", e)
 
+
     def cargaCliente(self):
         try:
             fila = var.ui.tabClientes.selectedItems()
@@ -99,12 +123,12 @@ class Clientes:
             registro = conexion.Conexion.datosOneCliente(str(datos[0]))
 
             listado = [var.ui.txtDniCli, var.ui.txtCalendarCli,
-                        var.ui.txtApelCli, var.ui.txtNomCli,
-                        var.ui.txtEmailCli, var.ui.txtMovilCli,
-                        var.ui.txtDirCli,var.ui.cmbProvCli,var.ui.cmbMuniCli]
+                       var.ui.txtApelCli, var.ui.txtNomCli,
+                       var.ui.txtEmailCli, var.ui.txtMovilCli,
+                       var.ui.txtDirCli, var.ui.cmbProvCli, var.ui.cmbMuniCli]
 
             for i in range(len(listado)):
-                if i in (7,8):
+                if i in (7, 8):
                     listado[i].setCurrentText(registro[i])
                 else:
                     listado[i].setText(registro[i])
@@ -146,9 +170,10 @@ class Clientes:
         except Exception as error:
             print("Error en modificar cliente: ", error)
 
+
     def bajaCliente(self):
         try:
-            datos = [var.ui.txtBajaCli.text(),var.ui.txtDniCli.text()]
+            datos = [var.ui.txtBajaCli.text(), var.ui.txtDniCli.text()]
             if conexion.Conexion.bajaCliente(datos):
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
@@ -172,3 +197,18 @@ class Clientes:
 
         except Exception as error:
             print("Error en baja cliente: ", error)
+
+
+    @staticmethod
+    def checkTelefono(telefono):
+        try:
+            if eventos.Eventos.validarTelefono(telefono):
+                var.ui.txtMovilCli.setStyleSheet('background-color: rgb(255, 255, 255);')
+            else:
+                var.ui.txtMovilCli.setStyleSheet('background-color:#FFC0CB; font-style: italic;')
+                var.ui.txtMovilCli.setText(None)
+                var.ui.txtMovilCli.setText("telefono no válido")
+                var.ui.txtMovilCli.setFocus()
+
+        except Exception as error:
+            print("error check cliente", error)

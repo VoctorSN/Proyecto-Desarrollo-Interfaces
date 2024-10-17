@@ -174,3 +174,14 @@ class Eventos():
 
         except Exception as error:
             print("Error en limpiar panel: ", error)
+
+    def validarTelefono(telefono):
+        try:
+            regex = r'^[6-7]\d{8}$'
+            if re.match(regex, telefono):
+                return True
+            else:
+                return False
+        except Exception as error:
+            print("error en validar telefono: ", error)
+            return False

@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file '.\\templates\\dlgCalendar.ui'
+# Form implementation generated from reading ui file './templates/dlgCalendar.ui'
 #
 # Created by: PyQt6 UI code generator 6.7.1
 #
@@ -17,7 +17,7 @@ class Ui_dlgCalendar(object):
         dlgCalendar.setMinimumSize(QtCore.QSize(312, 185))
         dlgCalendar.setMaximumSize(QtCore.QSize(312, 185))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(".\\\\templates\\../img/logo.ico"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon.addPixmap(QtGui.QPixmap("./templates\\../img/logo.ico"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         dlgCalendar.setWindowIcon(icon)
         dlgCalendar.setModal(True)
         self.Calendar = QtWidgets.QCalendarWidget(parent=dlgCalendar)

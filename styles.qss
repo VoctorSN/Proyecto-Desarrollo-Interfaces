@@ -16,6 +16,18 @@ QPushButton {
     border-radius: 5px;
 }
 
+QTableWidget::item:selected {
+    background-color: #b5e5e5;
+}
+
+QHeaderView::section {
+    background-color: #b5e5e5;
+}
+
+QTableWidget::item:alternate: {
+    background-color: grey;
+}
+
 QToolBar {
     background-color: #b5e5e5;
 }
