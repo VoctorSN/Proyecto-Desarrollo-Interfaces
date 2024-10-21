@@ -1,7 +1,8 @@
 import sqlite3
 
-from PyQt6 import QtWidgets, QtGui, QtCore
+from PyQt6 import QtWidgets, QtGui, QtCore, QtSql
 
+import clientes
 import conexion
 import eventos
 import var
@@ -136,39 +137,41 @@ class Clientes:
         except Exception as e:
             print("Error cargar Clientes", e)
 
-
-    def modifCliente(self):
+    def modifCliente(registro):
         try:
-            modifCli = [var.ui.txtDniCli.text(), var.ui.txtCalendarCli.text(),
-                        var.ui.txtApelCli.text(), var.ui.txtNomCli.text(),
-                        var.ui.txtEmailCli.text(), var.ui.txtMovilCli.text(),
-                        var.ui.txtDirCli.text(),
-                        var.ui.cmbProvCli.currentText(),
-                        var.ui.cmbMuniCli.currentText()]
-            if conexion.Conexion.modifCliente(modifCli):
-                mbox = QtWidgets.QMessageBox()
-                mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
-                mbox.setWindowIcon(QtGui.QIcon('img/logo.ico'))
-                mbox.setWindowTitle('Aviso')
-                mbox.setText('Datos del Cliente modificados correctamente')
-                mbox.setStandardButtons(
-                    QtWidgets.QMessageBox.StandardButton.Ok)
-                mbox.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Ok)
-                mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
-                mbox.exec()
-            else:
-                mbox = QtWidgets.QMessageBox()
-                mbox.setWindowTitle("Aviso")
-                mbox.setIcon(QtWidgets.QMessageBox.Icon.Critical)
-                mbox.setWindowIcon(QtGui.QIcon('img/logo.ico'))
-                mbox.setText("Error al modificar el cliente")
-                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Cancel)
-                mbox.exec()
-
-            Clientes.cargaTablaClientes(self)
-
+            query = QtSql.QSqlQuery()
+            query.prepare("select count(*) from clientes where dnicli = :dni")
+            query.bindValue(":dni", str(registro[0]))
+            if query.exec():
+                if query.next() and query.value(0) > 0:
+                    if query.exec():
+                        query = QtSql.QSqlQuery()
+                        query.prepare("UPDATE clientes set altacli = :altacli, apelcli = :apelcli, nomecli = :nomecli, "
+                                      " emailcli = :emailcli, movilcli = :movilcli, dircli = :dircli, provcli = :provcli, "
+                                      " municli = :municli, bajacli = :bajacli where dnicli = :dni")
+                        query.bindValue(":dni", str(registro[0]))
+                        query.bindValue(":altacli", str(registro[1]))
+                        query.bindValue(":apelcli", str(registro[2]))
+                        query.bindValue(":nomecli", str(registro[3]))
+                        query.bindValue(":emailcli", str(registro[4]))
+                        query.bindValue(":movilcli", str(registro[5]))
+                        query.bindValue(":dircli", str(registro[6]))
+                        query.bindValue(":provcli", str(registro[7]))
+                        query.bindValue(":municli", str(registro[8]))
+                        if registro[9] == "":
+                            query.bindValue(":bajacli", QtCore.QVariant())
+                        else:
+                            query.bindValue(":bajacli", str(registro[9]))
+                        if query.exec():
+                            return True
+                        else:
+                            return False
+                    else:
+                        return False
+                else:
+                    return False
         except Exception as error:
-            print("Error en modificar cliente: ", error)
+            print("error modificar cliente", error)
 
 
     def bajaCliente(self):
@@ -212,3 +215,15 @@ class Clientes:
 
         except Exception as error:
             print("error check cliente", error)
+
+    @staticmethod
+    def historicoCli(self):
+        try:
+            if var.ui.chkHistoriaCli.isChecked():
+                var.historico = 0
+            else:
+                var.historico = 1
+            Clientes.cargaTablaClientes(self)
+
+        except Exception as error:
+            print("Error en historico cliente: ", error)

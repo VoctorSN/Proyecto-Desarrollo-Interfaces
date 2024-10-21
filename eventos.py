@@ -166,8 +166,9 @@ class Eventos():
 
                 for i,dato in enumerate(listado):
                     if i in (7, 8):
-                        pass
-                    dato.setText('')
+                        continue
+                    else:
+                        dato.setText('')
 
                 Eventos.cargarProv(self)
                 var.ui.cmbMuniCli.clear()

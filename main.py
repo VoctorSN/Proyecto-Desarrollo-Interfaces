@@ -5,6 +5,7 @@ import conexion
 import conexionserver
 import eventos
 import styles
+import var
 from venPrincipal import Ui_venPrincipal
 from venAux import *
 
@@ -18,6 +19,7 @@ class Main(QtWidgets.QMainWindow):
         var.uicalendar = Calendar()
         var.dlgabrir = FileDialogAbrir()
         self.setStyleSheet(styles.load_stylesheet())
+        var.historico = 0
         conexion.Conexion.db_conexion(self)
 
         '''
@@ -61,6 +63,11 @@ class Main(QtWidgets.QMainWindow):
         '''
         var.ui.actionbarSalir.triggered.connect(eventos.Eventos.mensajeSalir)
         var.ui.actionbarLimpiar.triggered.connect(eventos.Eventos.limpiarPanel)
+
+        '''
+        ZONA DE EVENTOS DE CHECKBOX  
+        '''
+        var.ui.chkHistoriaCli.stateChanged.connect(clientes.Clientes.historicoCli)
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
