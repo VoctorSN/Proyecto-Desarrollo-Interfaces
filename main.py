@@ -19,7 +19,7 @@ class Main(QtWidgets.QMainWindow):
         var.uicalendar = Calendar()
         var.dlgabrir = FileDialogAbrir()
         self.setStyleSheet(styles.load_stylesheet())
-        var.historico = 0
+        var.historico = 1
         conexion.Conexion.db_conexion(self)
 
         '''
