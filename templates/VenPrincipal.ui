@@ -1855,8 +1855,8 @@
    <widget class="QMenu" name="menuArchivo">
     <property name="geometry">
      <rect>
-      <x>237</x>
-      <y>125</y>
+      <x>308</x>
+      <y>239</y>
       <width>143</width>
       <height>72</height>
      </rect>
@@ -1878,14 +1878,14 @@
      <string>Ayuda</string>
     </property>
    </widget>
-   <widget class="QMenu" name="menuGesti_n">
+   <widget class="QMenu" name="menuGestion">
     <property name="title">
      <string>Gestión</string>
     </property>
     <addaction name="actionTipoProp"/>
    </widget>
    <addaction name="menuArchivo"/>
-   <addaction name="menuGesti_n"/>
+   <addaction name="menuGestion"/>
    <addaction name="menuHerramientas"/>
    <addaction name="menuAyuda"/>
   </widget>
