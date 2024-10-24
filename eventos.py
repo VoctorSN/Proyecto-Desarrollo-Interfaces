@@ -186,3 +186,9 @@ class Eventos():
         except Exception as error:
             print("error en validar telefono: ", error)
             return False
+
+    def abrirTipoProp(self):
+        try:
+            var.dlgGestion.show()
+        except Exception as error:
+            print("error en abrir tipo propiedades: ", error)

@@ -1878,7 +1878,14 @@
      <string>Ayuda</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menuGesti_n">
+    <property name="title">
+     <string>Gestión</string>
+    </property>
+    <addaction name="actionTipoProp"/>
+   </widget>
    <addaction name="menuArchivo"/>
+   <addaction name="menuGesti_n"/>
    <addaction name="menuHerramientas"/>
    <addaction name="menuAyuda"/>
   </widget>
@@ -1938,6 +1945,11 @@
    </property>
    <property name="toolTip">
     <string>Limpiar</string>
+   </property>
+  </action>
+  <action name="actionTipoProp">
+   <property name="text">
+    <string>Tipo Propiedades</string>
    </property>
   </action>
  </widget>

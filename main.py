@@ -17,6 +17,7 @@ class Main(QtWidgets.QMainWindow):
         var.ui = Ui_venPrincipal()
         var.ui.setupUi(self)
         var.uicalendar = Calendar()
+        var.dlgGestion = dlgTipoProp()
         var.dlgabrir = FileDialogAbrir()
         self.setStyleSheet(styles.load_stylesheet())
         var.historico = 1
@@ -35,6 +36,7 @@ class Main(QtWidgets.QMainWindow):
         var.ui.actionSalir.triggered.connect(eventos.Eventos.mensajeSalir)
         var.ui.actionCrear_Backup.triggered.connect(eventos.Eventos.crearBackup)
         var.ui.actionRestaurar_Backup.triggered.connect(eventos.Eventos.restaurarBackup)
+        var.ui.actionTipo_Propiedades.triggered.connect(eventos.Eventos.abrirTipoProp)
 
         '''
         ZONA DE EVENTOS DE BOTONES
