@@ -182,3 +182,8 @@ class Conexion:
                 return False
         except Exception as error:
             print("Error en baja cliente: ", error)
+
+
+"""
+-------------------- GESTION PROPIEDADES --------------------
+"""
