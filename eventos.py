@@ -1,10 +1,10 @@
 import locale
 import os.path
 import re
+import shutil
 import sys
 import time
 import zipfile
-import shutil
 from datetime import datetime
 
 from PyQt6 import QtWidgets
@@ -15,6 +15,7 @@ import var
 
 locale.setlocale(locale.LC_MONETARY, 'es_ES.UTF-8')
 locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
+
 
 class Eventos():
     def mensajeSalir(self=None):
@@ -33,16 +34,25 @@ class Eventos():
             mbox.hide()
 
     def cargarProv(self):
-        cmbProvCli = var.ui.cmbProvCli
         listaprov = conexion.Conexion.listaProv(self)
+        cmbProvCli = var.ui.cmbProvCli
+        cmbProvProp = var.ui.cmbProvProp
         cmbProvCli.clear()
         cmbProvCli.addItems(listaprov)
+        cmbProvProp.clear()
+        cmbProvProp.addItems(listaprov)
 
     @staticmethod
     def cargarMuniCli():
         var.ui.cmbMuniCli.clear()
         listado = conexion.Conexion.listaMunicipios(var.ui.cmbProvCli.currentText())
         var.ui.cmbMuniCli.addItems(listado)
+
+    @staticmethod
+    def cargarMuniProp():
+        var.ui.cmbMuniProp.clear()
+        listado = conexion.Conexion.listaMunicipios(var.ui.cmbProvCli.currentText())
+        var.ui.cmbMuniProp.addItems(listado)
 
     def checkDNI(dni):
         try:
@@ -65,9 +75,8 @@ class Eventos():
             print("error en validar dni ", error)
             return False
 
-    def abrirCalendar(pan,btn):
+    def abrirCalendar(btn):
         try:
-            var.panel = pan
             var.btn = btn
             var.uicalendar.show()
         except Exception as error:
@@ -76,17 +85,21 @@ class Eventos():
     def cargaFecha(qDate):
         try:
             data = ('{:02d}/{:02d}/{:4d}'.format(qDate.day(), qDate.month(), qDate.year()))
-            if var.panel == var.ui.panPrincipal.currentIndex() and var.btn == 0:
+            if var.btn == 0:
                 var.ui.txtCalendarCli.setText(str(data))
-            elif var.panel == var.ui.panPrincipal.currentIndex() and var.btn == 1:
+            elif var.btn == 1:
                 var.ui.txtBajaCli.setText(str(data))
+            elif var.btn == 2:
+                var.ui.txtFechaProp.setText(str(data))
+            elif var.btn == 3:
+                var.ui.txtFechaBajaProp.setText(str(data))
             time.sleep(0.5)
             var.uicalendar.hide()
             return data
         except Exception as error:
             print("error en cargar fecha: ", error)
 
-    def validarMail(self,mail):
+    def validarMail(self, mail):
         regex = r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w+$'
         return re.match(regex, mail.lower()) or mail == ""
 
@@ -94,27 +107,27 @@ class Eventos():
         try:
             header = var.ui.tabClientes.horizontalHeader()
             for i in range(header.count()):
-                if i in (1,2,4,5):
+                if i in (1, 2, 4, 5):
                     header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeMode.Stretch)
                 else:
-                    header.setSectionResizeMode(i,QtWidgets.QHeaderView.ResizeMode.ResizeToContents)
+                    header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeMode.ResizeToContents)
                 header_item = var.ui.tabClientes.horizontalHeaderItem(i)
                 font = header_item.font()
                 font.setBold(True)
                 header_item.setFont(font)
 
         except Exception as e:
-            print("Error en resizeClientes",e)
+            print("Error en resizeClientes", e)
 
     def crearBackup(self):
         try:
             copia = str(datetime.now().strftime('%Y_%m_%d_%H_%M_%S')) + '_backup.zip'
-            directorio, fichero = var.dlgabrir.getSaveFileName(None,"Guardar Copia Seguridad", copia ,".zip")
+            directorio, fichero = var.dlgabrir.getSaveFileName(None, "Guardar Copia Seguridad", copia, ".zip")
             if var.dlgabrir.accept and fichero:
-                fichzip = zipfile.ZipFile(fichero,"w")
+                fichzip = zipfile.ZipFile(fichero, "w")
                 fichzip.write("bbdd.sqlite", os.path.basename("bbdd.sqlite"), zipfile.ZIP_DEFLATED)
                 fichzip.close()
-                shutil.move(fichero,directorio)
+                shutil.move(fichero, directorio)
 
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
@@ -159,12 +172,12 @@ class Eventos():
         try:
             if var.ui.panPrincipal.currentIndex() == 0:
                 listado = [var.ui.txtDniCli, var.ui.txtCalendarCli,
-                            var.ui.txtApelCli, var.ui.txtNomCli,
-                            var.ui.txtEmailCli, var.ui.txtMovilCli,
-                            var.ui.txtDirCli, var.ui.cmbProvCli, var.ui.cmbMuniCli,
+                           var.ui.txtApelCli, var.ui.txtNomCli,
+                           var.ui.txtEmailCli, var.ui.txtMovilCli,
+                           var.ui.txtDirCli, var.ui.cmbProvCli, var.ui.cmbMuniCli,
                            var.ui.txtBajaCli]
 
-                for i,dato in enumerate(listado):
+                for i, dato in enumerate(listado):
                     if i in (7, 8):
                         continue
                     else:

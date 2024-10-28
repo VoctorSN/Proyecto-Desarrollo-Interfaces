@@ -4,6 +4,7 @@ import clientes
 import conexion
 import conexionserver
 import eventos
+import propiedades
 import styles
 import var
 from venPrincipal import Ui_venPrincipal
@@ -41,11 +42,14 @@ class Main(QtWidgets.QMainWindow):
         '''
         ZONA DE EVENTOS DE BOTONES
         '''
-        var.ui.btnAltaCli.clicked.connect(lambda: eventos.Eventos.abrirCalendar(0,0))
-        var.ui.btnBajaCli.clicked.connect(lambda: eventos.Eventos.abrirCalendar(0,1))
+        var.ui.btnAltaCli.clicked.connect(lambda: eventos.Eventos.abrirCalendar(0))
+        var.ui.btnBajaCli.clicked.connect(lambda: eventos.Eventos.abrirCalendar(1))
         var.ui.btnGrabarCli.clicked.connect(clientes.Clientes.altaCliente)
         var.ui.btnModifCli.clicked.connect(clientes.Clientes.modifCliente)
         var.ui.btnDelCli.clicked.connect(clientes.Clientes.bajaCliente)
+        var.ui.btnGrabarProp.clicked.connect(propiedades.Propiedades.altaPropiedad)
+        var.ui.btnFechaProp.clicked.connect(lambda: eventos.Eventos.abrirCalendar(2))
+        var.ui.btnFechaBajaProp.clicked.connect(lambda: eventos.Eventos.abrirCalendar(3))
 
         '''
         ZONA DE EVENTOS DE TEXTBOX  
@@ -59,6 +63,7 @@ class Main(QtWidgets.QMainWindow):
         '''
         eventos.Eventos.cargarProv(self)
         var.ui.cmbProvCli.currentIndexChanged.connect(eventos.Eventos.cargarMuniCli)
+        var.ui.cmbProvProp.currentIndexChanged.connect(eventos.Eventos.cargarMuniProp)
 
         '''
         ZONA DE EVENTOS DE TOOLBAR  

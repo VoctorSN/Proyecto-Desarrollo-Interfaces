@@ -256,6 +256,9 @@
               <height>20</height>
              </size>
             </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 216);</string>
+            </property>
            </widget>
           </item>
           <item row="3" column="1" alignment="Qt::AlignRight">
@@ -284,6 +287,9 @@
               <width>200</width>
               <height>20</height>
              </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 216);</string>
             </property>
            </widget>
           </item>
@@ -334,6 +340,9 @@
               <height>20</height>
              </size>
             </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 216);</string>
+            </property>
            </widget>
           </item>
           <item row="4" column="2">
@@ -378,6 +387,9 @@
               <height>20</height>
              </size>
             </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 216);</string>
+            </property>
            </widget>
           </item>
           <item row="0" column="3" colspan="2">
@@ -420,6 +432,9 @@
               <width>250</width>
               <height>20</height>
              </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 216);</string>
             </property>
            </widget>
           </item>
@@ -553,6 +568,9 @@
               <width>80</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 216);</string>
             </property>
            </widget>
           </item>
@@ -780,6 +798,9 @@
                 <height>0</height>
                </size>
               </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
@@ -875,6 +896,9 @@
                 <height>20</height>
                </size>
               </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 216);</string>
+              </property>
              </widget>
             </item>
             <item>
@@ -960,27 +984,18 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="txtCodigoProp">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
+             <widget class="QLabel" name="lblProp">
               <property name="minimumSize">
                <size>
-                <width>90</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
                 <width>100</width>
-                <height>20</height>
+                <height>0</height>
                </size>
               </property>
-              <property name="layoutDirection">
-               <enum>Qt::LeftToRight</enum>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 216);</string>
+              </property>
+              <property name="text">
+               <string/>
               </property>
              </widget>
             </item>
@@ -1119,6 +1134,9 @@
                 <height>0</height>
                </size>
               </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 216);</string>
+              </property>
              </widget>
             </item>
            </layout>
@@ -1151,6 +1169,9 @@
                 <width>200</width>
                 <height>20</height>
                </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 216);</string>
               </property>
              </widget>
             </item>
@@ -1190,6 +1211,9 @@
                 <width>250</width>
                 <height>20</height>
                </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 216);</string>
               </property>
              </widget>
             </item>
@@ -1237,6 +1261,9 @@
                 <height>20</height>
                </size>
               </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 216);</string>
+              </property>
              </widget>
             </item>
             <item>
@@ -1283,6 +1310,9 @@
                 <height>20</height>
                </size>
               </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 216);</string>
+              </property>
              </widget>
             </item>
             <item>
@@ -1316,6 +1346,9 @@
                 <width>75</width>
                 <height>0</height>
                </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
@@ -1582,6 +1615,9 @@
               <property name="layoutDirection">
                <enum>Qt::RightToLeft</enum>
               </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 216);</string>
+              </property>
               <property name="text">
                <string/>
               </property>
@@ -1658,7 +1694,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="txtPrecioProp">
+             <widget class="QLineEdit" name="txtPrecioAlquilerProp">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -1680,11 +1716,46 @@
               <property name="layoutDirection">
                <enum>Qt::RightToLeft</enum>
               </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
               <property name="text">
                <string/>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="placeholderText">
+               <string>Precio Alquiler</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lblBarraProp">
+              <property name="text">
+               <string>/</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="txtPrecioVentaProp">
+              <property name="minimumSize">
+               <size>
+                <width>75</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="placeholderText">
+               <string>Precio Venta</string>
               </property>
              </widget>
             </item>
@@ -1694,19 +1765,6 @@
                <string>€</string>
               </property>
              </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_24">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
             </item>
            </layout>
           </item>
@@ -1798,6 +1856,19 @@
             <property name="sizeHint" stdset="0">
              <size>
               <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="2" column="6">
+           <spacer name="horizontalSpacer_24">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
               <height>20</height>
              </size>
             </property>
