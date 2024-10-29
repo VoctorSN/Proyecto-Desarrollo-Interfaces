@@ -184,6 +184,36 @@ class Conexion:
             print("Error en baja cliente: ", error)
 
 
-"""
--------------------- GESTION PROPIEDADES --------------------
-"""
+    """
+    -------------------- GESTION PROPIEDADES --------------------
+    """
+
+    def altaTipoPropiedad(tipo):
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare("INSERT INTO tipoPropiedad (tipo) VALUES (:tipo)")
+            query.bindValue(":tipo", tipo)
+            return query.exec()
+        except Exception as error:
+            print("Error en alta tipo propiedad: ", error)
+
+    def bajaTipoPropiedad(tipo):
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare("DELETE FROM tipoPropiedad WHERE tipo = :tipo")
+            query.bindValue(":tipo", tipo)
+            return query.exec()
+        except Exception as error:
+            print("Error en baja tipo propiedad: ", error)
+
+    def cargarTipoPropiedad(self):
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare("SELECT tipo FROM tipoPropiedad")
+            if query.exec():
+                registro = []
+                while query.next():
+                    registro.append(query.value(0))
+            return registro
+        except Exception as error:
+            print("Error en cargar tipo propiedad: ", error)

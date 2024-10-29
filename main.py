@@ -64,6 +64,7 @@ class Main(QtWidgets.QMainWindow):
         eventos.Eventos.cargarProv(self)
         var.ui.cmbProvCli.currentIndexChanged.connect(eventos.Eventos.cargarMuniCli)
         var.ui.cmbProvProp.currentIndexChanged.connect(eventos.Eventos.cargarMuniProp)
+        eventos.Eventos.cargarTipoPropiedad(self)
 
         '''
         ZONA DE EVENTOS DE TOOLBAR  

@@ -26,6 +26,7 @@ class FileDialogAbrir(QtWidgets.QFileDialog):
 class dlgTipoProp(QtWidgets.QDialog):
     def __init__(self):
         super(dlgTipoProp,self).__init__()
-        var.dlgGestion = Ui_dlg_TipoProp()
-        var.dlgGestion.setupUi(self)
-        var.dlgGestion.btnAltaTipoProp.clicked.connect(propiedades.Propiedades.altaTipoPropiedad)
+        self.ui = Ui_dlg_TipoProp()
+        self.ui.setupUi(self)
+        self.ui.btnAltaTipoProp.clicked.connect(propiedades.Propiedades.altaTipoPropiedad)
+        self.ui.btnDelTipoProp.clicked.connect(propiedades.Propiedades.bajaTipoPropiedad)

@@ -815,7 +815,7 @@ class Ui_venPrincipal(object):
         self.chkAlquilerProp.setText(_translate("venPrincipal", "Alquiler"))
         self.chkVentaProp.setText(_translate("venPrincipal", "Venta"))
         self.chkIntercambioProp.setText(_translate("venPrincipal", "Intercambio"))
-        self.lblPrecioProp.setText(_translate("venPrincipal", "Precio:"))
+        self.lblPrecioProp.setText(_translate("venPrincipal", "Precio(Alquiler/Venta):"))
         self.txtPrecioAlquilerProp.setPlaceholderText(_translate("venPrincipal", "Precio Alquiler"))
         self.lblBarraProp.setText(_translate("venPrincipal", "/"))
         self.txtPrecioVentaProp.setPlaceholderText(_translate("venPrincipal", "Precio Venta"))

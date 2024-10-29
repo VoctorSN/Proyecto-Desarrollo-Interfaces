@@ -1689,7 +1689,7 @@
             <item>
              <widget class="QLabel" name="lblPrecioProp">
               <property name="text">
-               <string>Precio:</string>
+               <string>Precio(Alquiler/Venta):</string>
               </property>
              </widget>
             </item>
