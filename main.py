@@ -30,6 +30,7 @@ class Main(QtWidgets.QMainWindow):
         clientes.Clientes.cargaTablaClientes(self)
         eventos.Eventos.resizeTablaClientes(self)
         var.ui.tabClientes.clicked.connect(clientes.Clientes.cargaCliente)
+        eventos.Eventos.resizeTablaPropiedades(self)
 
         '''
         ZONA DE EVENTOS DEL MENUBAR
@@ -50,6 +51,7 @@ class Main(QtWidgets.QMainWindow):
         var.ui.btnGrabarProp.clicked.connect(propiedades.Propiedades.altaPropiedad)
         var.ui.btnFechaProp.clicked.connect(lambda: eventos.Eventos.abrirCalendar(2))
         var.ui.btnFechaBajaProp.clicked.connect(lambda: eventos.Eventos.abrirCalendar(3))
+        var.ui.btnGrabarProp.clicked.connect(lambda: propiedades.Propiedades.altaPropiedad())
 
         '''
         ZONA DE EVENTOS DE TEXTBOX  

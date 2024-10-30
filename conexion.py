@@ -217,3 +217,9 @@ class Conexion:
             return registro
         except Exception as error:
             print("Error en cargar tipo propiedad: ", error)
+
+    def altaPropiedad(propiedad):
+        try:
+            pass
+        except Exception as e:
+            print("Error en alta Propiedad Conexion: ",e)

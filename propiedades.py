@@ -1,5 +1,6 @@
 
 from PyQt6 import QtWidgets, QtGui, QtCore, QtSql
+from matplotlib.pyplot import connect
 
 import conexion
 import eventos
@@ -43,13 +44,28 @@ class Propiedades():
 
     def altaPropiedad(self):
         try:
-            propiedad = [var.ui.txtFechaProp.text(),var.ui.txtDirProp.text(),var.ui.txtFechaBajaProp.text(),
+            propiedad = [var.ui.txtFechaProp.text(),var.ui.txtDirProp.text(),
                          var.ui.cmbProvProp.currentText(),var.ui.cmbMuniProp.currentText(),
                          var.ui.cmbTipoProp.currentText(),var.ui.spinHabProp.text(),
                          var.ui.spinBanosProp.text(),var.ui.txtSuperProp.text(),
                          var.ui.txtPrecioAlquilerProp.text(),var.ui.txtPrecioVentaProp.text(),
-                         var.ui.txtCPProp.text(),var.ui.areatxtDescripProp.toPlainText(),
-                         var.ui.txtNomeProp.text(),var.ui.txtMovilProp.text()]
-            print(propiedad)
+                         var.ui.txtCPProp.text(),var.ui.areatxtDescripProp.toPlainText()]
+            tipooper = []
+            if var.ui.chkAlquilerProp.isChecked():
+                tipooper.append(var.ui.chkAlquilerProp.text())
+            if var.ui.chkVentaProp.isChecked():
+                tipooper.append(var.ui.chkVentaProp.text())
+            if var.ui.chkIntercambioProp.isChecked():
+                tipooper.append(var.ui.chkIntercambioProp.text())
+            propiedad.append(tipooper)
+            if var.ui.rbtEstadoDisponibleProp.isChecked():
+                propiedad.append(var.ui.rbtEstadoDisponibleProp.text())
+            if var.ui.rbtEstadoAlquiladoProp.isChecked():
+                propiedad.append(var.ui.rbtEstadoAlquiladoProp.text())
+            if var.ui.rbtEstadoVendidoProp.isChecked():
+                propiedad.append(var.ui.rbtEstadoVendidoProp.text())
+            propiedad.append(var.ui.txtNomeProp.text())
+            propiedad.append(var.ui.txtMovilProp.text())
+            conexion.Conexion.altaPropiedad(propiedad)
         except Exception as error:
             print("Error en alta propiedad: ", error)

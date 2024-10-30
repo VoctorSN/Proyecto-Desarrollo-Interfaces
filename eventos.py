@@ -214,3 +214,18 @@ class Eventos():
                 var.ui.cmbTipoProp.addItems(registro)
         except Exception as error:
             print("Error en cargar tipo propiedad: ", error)
+
+    def resizeTablaPropiedades(self):
+        try:
+            header = var.ui.tabPropiedades.horizontalHeader()
+            for i in range(header.count()):
+                if i == 1 or i == 2 or i == 5:
+                    header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeMode.Stretch)
+                else:
+                    header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeMode.ResizeToContents)
+                header_items = var.ui.tabPropiedades.horizontalHeaderItem(i)
+                font = header_items.font()
+                font.setBold(True)
+                header_items.setFont(font)
+        except Exception as e:
+            print("error en resize tabla propiedades: ", e)
