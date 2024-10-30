@@ -220,6 +220,28 @@ class Conexion:
 
     def altaPropiedad(propiedad):
         try:
-            pass
+            query = QtSql.QSqlQuery()
+            query.prepare(
+                "INSERT INTO propiedades (altaprop, dirprop, muniprop, tipoprop, habprop, banprop, superprop, prealquiprop, "
+                "prevenprop, cpprop, obserprop, tipooper, estadoprop, nomeprop, movilprop)"
+                " VALUES (:altaprop, :dirprop, :muniprop, :tipoprop, :habprop, :banprop, :superprop, :prealquiprop, "
+                ":prevenprop, :cpprop, :obserprop, :tipooper, :estadoprop, :nomeprop, :movilprop)"
+            )
+            query.bindValue(":altaprop", str(propiedad[0]))
+            query.bindValue(":dirprop", str(propiedad[1]))
+            query.bindValue(":muniprop", str(propiedad[2]))
+            query.bindValue(":tipoprop", str(propiedad[3]))
+            query.bindValue(":habprop", str(propiedad[4]))
+            query.bindValue(":banprop", str(propiedad[5]))
+            query.bindValue(":superprop", str(propiedad[6]))
+            query.bindValue(":prealquiprop", str(propiedad[7]))
+            query.bindValue(":prevenprop", str(propiedad[8]))
+            query.bindValue(":cpprop", str(propiedad[9]))
+            query.bindValue(":obserprop", str(propiedad[10]))
+            query.bindValue(":tipooper", str(propiedad[11]))
+            query.bindValue(":estadoprop", "Disponible")
+            query.bindValue(":nomeprop", "")
+            query.bindValue(":movilprop", "")
+
         except Exception as e:
             print("Error en alta Propiedad Conexion: ",e)
