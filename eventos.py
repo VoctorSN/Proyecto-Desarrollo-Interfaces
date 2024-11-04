@@ -51,7 +51,7 @@ class Eventos():
     @staticmethod
     def cargarMuniProp():
         var.ui.cmbMuniProp.clear()
-        listado = conexion.Conexion.listaMunicipios(var.ui.cmbProvCli.currentText())
+        listado = conexion.Conexion.listaMunicipios(var.ui.cmbProvProp.currentText())
         var.ui.cmbMuniProp.addItems(listado)
 
     def checkDNI(dni):
@@ -219,7 +219,7 @@ class Eventos():
         try:
             header = var.ui.tabPropiedades.horizontalHeader()
             for i in range(header.count()):
-                if i == 1 or i == 2 or i == 5:
+                if i == 1 or i == 2:
                     header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeMode.Stretch)
                 else:
                     header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeMode.ResizeToContents)

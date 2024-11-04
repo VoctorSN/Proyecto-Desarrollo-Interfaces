@@ -899,6 +899,9 @@
               <property name="styleSheet">
                <string notr="true">background-color: rgb(255, 255, 216);</string>
               </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
              </widget>
             </item>
             <item>
@@ -1390,7 +1393,7 @@
                <string/>
               </property>
               <property name="alignment">
-               <set>Qt::AlignCenter</set>
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
              </widget>
             </item>
@@ -1571,7 +1574,12 @@
               </column>
               <column>
                <property name="text">
-                <string>Precio</string>
+                <string>Precio Alquiler</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Precio Ventas</string>
                </property>
               </column>
               <column>
@@ -1978,7 +1986,7 @@
   <action name="actionSalir">
    <property name="icon">
     <iconset>
-     <normaloff>../img/salida.png</normaloff>../img/salida.png</iconset>
+     <normaloff>../../../.designer/img/salida.png</normaloff>../../../.designer/img/salida.png</iconset>
    </property>
    <property name="text">
     <string>Salir</string>

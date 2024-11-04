@@ -221,27 +221,27 @@ class Conexion:
     def altaPropiedad(propiedad):
         try:
             query = QtSql.QSqlQuery()
-            query.prepare(
-                "INSERT INTO propiedades (altaprop, dirprop, muniprop, tipoprop, habprop, banprop, superprop, prealquiprop, "
-                "prevenprop, cpprop, obserprop, tipooper, estadoprop, nomeprop, movilprop)"
-                " VALUES (:altaprop, :dirprop, :muniprop, :tipoprop, :habprop, :banprop, :superprop, :prealquiprop, "
-                ":prevenprop, :cpprop, :obserprop, :tipooper, :estadoprop, :nomeprop, :movilprop)"
-            )
+            query.prepare(" INSERT into PROPIEDADES (altaprop, dirprop, provprop, muniprop, tipoprop, habprop, banprop, "
+                          " superprop, prealquiprop, prevenprop, cpprop, obserprop, tipooper, estadoprop, nomeprop, movilprop) "
+                          " VALUES (:altaprop, :dirprop, :provprop, :muniprop, :tipoprop, :habprop, :banprop, :superprop, "
+                          " :prealquiprop, :prevenprop, :cpprop, :obserprop, :tipooper, :estadoprop, :nomeprop, :movilprop)")
             query.bindValue(":altaprop", str(propiedad[0]))
             query.bindValue(":dirprop", str(propiedad[1]))
-            query.bindValue(":muniprop", str(propiedad[2]))
-            query.bindValue(":tipoprop", str(propiedad[3]))
-            query.bindValue(":habprop", str(propiedad[4]))
-            query.bindValue(":banprop", str(propiedad[5]))
-            query.bindValue(":superprop", str(propiedad[6]))
-            query.bindValue(":prealquiprop", str(propiedad[7]))
-            query.bindValue(":prevenprop", str(propiedad[8]))
-            query.bindValue(":cpprop", str(propiedad[9]))
-            query.bindValue(":obserprop", str(propiedad[10]))
-            query.bindValue(":tipooper", str(propiedad[11]))
-            query.bindValue(":estadoprop", "Disponible")
-            query.bindValue(":nomeprop", "")
-            query.bindValue(":movilprop", "")
+            query.bindValue(":provprop", str(propiedad[2]))
+            query.bindValue(":muniprop", str(propiedad[3]))
+            query.bindValue(":tipoprop", str(propiedad[4]))
+            query.bindValue(":habprop", int(propiedad[5]))
+            query.bindValue(":banprop", int(propiedad[6]))
+            query.bindValue(":superprop", float(propiedad[7]))
+            query.bindValue(":prealquiprop", float(propiedad[8]))
+            query.bindValue(":prevenprop", float(propiedad[9]))
+            query.bindValue(":cpprop", str(propiedad[10]))
+            query.bindValue(":obserprop", str(propiedad[11]))
+            query.bindValue(":tipooper", str(propiedad[12]))
+            query.bindValue(":estadoprop", str(propiedad[13]))
+            query.bindValue(":nomeprop", str(propiedad[14]))
+            query.bindValue(":movilprop", str(propiedad[15]))
+            return query.exec()
 
         except Exception as e:
-            print("Error en alta Propiedad Conexion: ",e)
+            print("error altaPropiedad en conexion", e)

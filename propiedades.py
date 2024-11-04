@@ -57,7 +57,7 @@ class Propiedades():
                 tipooper.append(var.ui.chkVentaProp.text())
             if var.ui.chkIntercambioProp.isChecked():
                 tipooper.append(var.ui.chkIntercambioProp.text())
-            propiedad.append(tipooper)
+            propiedad.append("-".join(tipooper))
             if var.ui.rbtEstadoDisponibleProp.isChecked():
                 propiedad.append(var.ui.rbtEstadoDisponibleProp.text())
             if var.ui.rbtEstadoAlquiladoProp.isChecked():
