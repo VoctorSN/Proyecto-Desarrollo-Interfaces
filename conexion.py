@@ -245,3 +245,54 @@ class Conexion:
 
         except Exception as e:
             print("error altaPropiedad en conexion", e)
+
+    def listadoPropiedades(self,*contexto):
+        try:
+            listado = []
+            queryStr = ""
+            if var.historico == 1:
+                queryStr = "SELECT * FROM propiedades WHERE bajaprop is NULL ORDER BY muniprop ASC "
+                if contexto:
+                    query = QtSql.QSqlQuery()
+                    query.prepare("SELECT * FROM propiedades WHERE bajaprop is NULL AND tipoprop = :tipoprop ORDER BY muniprop ASC ")
+                    query.bindValue(":tipoprop", str(var.ui.cmbTipoProp.currentText()))
+                    if query.exec():
+                        while query.next():
+                            fila = [query.value(i) for i in range(query.record().count())]
+                            listado.append(fila)
+                    return listado
+            elif var.historico == 0:
+                queryStr = "SELECT * FROM propiedades ORDER BY muniprop ASC "
+                if contexto:
+                    query = QtSql.QSqlQuery()
+                    query.prepare("SELECT * FROM propiedades WHERE tipoprop = :tipoprop ORDER BY muniprop ASC ")
+                    query.bindValue(":tipoprop", str(var.ui.cmbTipoProp.currentText()))
+                    if query.exec():
+                        while query.next():
+                            fila = [query.value(i) for i in range(query.record().count())]
+                            listado.append(fila)
+                    return listado
+
+            query = QtSql.QSqlQuery()
+            query.prepare(queryStr)
+            if query.exec():
+                while query.next():
+                    fila = [query.value(i) for i in range(query.record().count())]
+                    listado.append(fila)
+            return listado
+        except Exception as e:
+            print("Error listado en conexion", e)
+
+    def datosOnePropiedad(codigo):
+        try:
+            registro = []
+            query = QtSql.QSqlQuery()
+            query.prepare("SELECT * FROM propiedades WHERE codigo = :codigo")
+            query.bindValue(":codigo", str(codigo))
+            if query.exec():
+                while query.next():
+                    for i in range(query.record().count()):
+                        registro.append(query.value(i))
+            return registro
+        except Exception as error:
+            print("Error en datos datosOnePropiedad: ", error)

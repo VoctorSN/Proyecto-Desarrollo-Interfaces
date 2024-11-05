@@ -491,7 +491,7 @@
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>../img/calendar.png</normaloff>../img/calendar.png</iconset>
+              <normaloff>../../../.designer/img/calendar.png</normaloff>../../../.designer/img/calendar.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -539,7 +539,7 @@
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>../img/calendar.png</normaloff>../img/calendar.png</iconset>
+              <normaloff>../../../.designer/img/calendar.png</normaloff>../../../.designer/img/calendar.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -1095,7 +1095,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>../img/calendar.png</normaloff>../img/calendar.png</iconset>
+                <normaloff>../../../.designer/img/calendar.png</normaloff>../../../.designer/img/calendar.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -1139,6 +1139,35 @@
               </property>
               <property name="styleSheet">
                <string notr="true">background-color: rgb(255, 255, 216);</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnTipoProp">
+              <property name="minimumSize">
+               <size>
+                <width>29</width>
+                <height>29</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>29</width>
+                <height>29</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>../img/buscar.png</normaloff>../img/buscar.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>28</width>
+                <height>28</height>
+               </size>
               </property>
              </widget>
             </item>
@@ -1587,6 +1616,11 @@
                 <string>Tipo de Operación</string>
                </property>
               </column>
+              <column>
+               <property name="text">
+                <string>Fecha Baja</string>
+               </property>
+              </column>
              </widget>
             </item>
            </layout>
@@ -1841,7 +1875,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>../img/calendar.png</normaloff>../img/calendar.png</iconset>
+                <normaloff>../../../.designer/img/calendar.png</normaloff>../../../.designer/img/calendar.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -1986,7 +2020,7 @@
   <action name="actionSalir">
    <property name="icon">
     <iconset>
-     <normaloff>../../../.designer/img/salida.png</normaloff>../../../.designer/img/salida.png</iconset>
+     <normaloff>../../../../.designer/img/salida.png</normaloff>../../../../.designer/img/salida.png</iconset>
    </property>
    <property name="text">
     <string>Salir</string>
@@ -2005,7 +2039,7 @@
   <action name="actionbarSalir">
    <property name="icon">
     <iconset>
-     <normaloff>../img/salida.png</normaloff>../img/salida.png</iconset>
+     <normaloff>../../../.designer/img/salida.png</normaloff>../../../.designer/img/salida.png</iconset>
    </property>
    <property name="text">
     <string>barSalir</string>
@@ -2017,7 +2051,7 @@
   <action name="actionbarLimpiar">
    <property name="icon">
     <iconset>
-     <normaloff>../img/icons8-actualizar-40.png</normaloff>../img/icons8-actualizar-40.png</iconset>
+     <normaloff>../../../.designer/img/icons8-actualizar-40.png</normaloff>../../../.designer/img/icons8-actualizar-40.png</iconset>
    </property>
    <property name="text">
     <string>barLimpiar</string>
