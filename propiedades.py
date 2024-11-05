@@ -189,3 +189,31 @@ class Propiedades():
                     return False
         except Exception as error:
             print("error modificar cliente", error)
+
+
+    def bajaPropiedad(self):
+        try:
+            datos = [var.ui.txtFechaBajaProp.text(), var.ui.lblProp.text()]
+            if conexion.Conexion.bajaPropiedad(datos):
+                mbox = QtWidgets.QMessageBox()
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
+                mbox.setWindowIcon(QtGui.QIcon('img/logo.ico'))
+                mbox.setWindowTitle('Aviso')
+                mbox.setText('Cliente dado de baja correctamente')
+                mbox.setStandardButtons(
+                    QtWidgets.QMessageBox.StandardButton.Ok)
+                mbox.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Ok)
+                mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
+                mbox.exec()
+                Clientes.cargaTablaClientes(self)
+            else:
+                mbox = QtWidgets.QMessageBox()
+                mbox.setWindowTitle("Aviso")
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Critical)
+                mbox.setWindowIcon(QtGui.QIcon('img/logo.ico'))
+                mbox.setText("Error al dar de baja el cliente")
+                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Cancel)
+                mbox.exec()
+
+        except Exception as error:
+            print("Error en baja cliente: ", error)
