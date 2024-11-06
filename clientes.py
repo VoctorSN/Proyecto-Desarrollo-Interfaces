@@ -158,7 +158,6 @@ class Clientes:
                 mbox.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Ok)
                 mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
                 mbox.exec()
-                Clientes.cargaTablaClientes(self)
             else:
                 mbox = QtWidgets.QMessageBox()
                 mbox.setWindowTitle("Aviso")
@@ -186,7 +185,6 @@ class Clientes:
                 mbox.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Ok)
                 mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
                 mbox.exec()
-                Clientes.cargaTablaClientes(self)
             else:
                 mbox = QtWidgets.QMessageBox()
                 mbox.setWindowTitle("Aviso")
@@ -195,6 +193,7 @@ class Clientes:
                 mbox.setText("Error al dar de baja el cliente")
                 mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Cancel)
                 mbox.exec()
+            Clientes.cargaTablaClientes(self)
 
         except Exception as error:
             print("Error en baja cliente: ", error)
