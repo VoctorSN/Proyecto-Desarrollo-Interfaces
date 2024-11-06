@@ -52,6 +52,7 @@ class Main(QtWidgets.QMainWindow):
         var.ui.btnDelCli.clicked.connect(clientes.Clientes.bajaCliente)
         var.ui.btnGrabarProp.clicked.connect(propiedades.Propiedades.altaPropiedad)
         var.ui.btnModifProp.clicked.connect(propiedades.Propiedades.modifPropiedad)
+        var.ui.btnDelProp.clicked.connect(propiedades.Propiedades.bajaPropiedad)
         var.ui.btnFechaProp.clicked.connect(lambda: eventos.Eventos.abrirCalendar(2))
         var.ui.btnFechaBajaProp.clicked.connect(lambda: eventos.Eventos.abrirCalendar(3))
         var.ui.btnTipoProp.clicked.connect(lambda: propiedades.Propiedades.cargaTablaPropiedades(self, 1))
@@ -76,11 +77,13 @@ class Main(QtWidgets.QMainWindow):
         '''
         var.ui.actionbarSalir.triggered.connect(eventos.Eventos.mensajeSalir)
         var.ui.actionbarLimpiar.triggered.connect(eventos.Eventos.limpiarPanel)
+        var.ui.actionbarTipoProp.triggered.connect(eventos.Eventos.abrirTipoProp)
 
         '''
         ZONA DE EVENTOS DE CHECKBOX  
         '''
         var.ui.chkHistoriaCli.stateChanged.connect(clientes.Clientes.historicoCli)
+        var.ui.chkHistoriaProp.stateChanged.connect(propiedades.Propiedades.historicoProp)
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)

@@ -1,4 +1,4 @@
-from PyQt6 import QtWidgets, QtCore, QtSql
+from PyQt6 import QtWidgets, QtGui, QtCore, QtSql
 
 import conexion
 import eventos
@@ -41,13 +41,44 @@ class Propiedades():
             print("Error en baja tipo propiedad: ", error)
 
     def altaPropiedad(self):
+        nuevaProp = [var.ui.txtFechaProp.text(), var.ui.txtDirProp.text(),
+                     var.ui.cmbProvProp.currentText(), var.ui.cmbMuniProp.currentText(),
+                     var.ui.cmbTipoProp.currentText(), var.ui.spinHabProp.text(),
+                     var.ui.spinBanosProp.text(), var.ui.txtSuperProp.text(),
+                     var.ui.txtPrecioAlquilerProp.text(), var.ui.txtPrecioVentaProp.text(),
+                     var.ui.txtCPProp.text(), var.ui.areatxtDescripProp.toPlainText(),
+                     var.ui.txtNomeProp.text(), var.ui.txtMovilProp.text()]
+
+        mensajes_error = [
+            "Falta ingresar fecha de alta",
+            "Falta ingresar dirección",
+            "Falta seleccionar provincia",
+            "Falta seleccionar municipio",
+            "Falta seleccionar tipo de propiedad",
+            "Falta ingresar número de habitaciones",
+            "Falta ingresar número de baños",
+            "Falta ingresar superficie",
+            "Falta ingresar precio de alquiler",
+            "Falta ingresar precio de venta",
+            "Falta ingresar código postal",
+            None,  # No validation for description
+            "Falta ingresar nombre del propietario",
+            "Falta ingresar móvil del propietario"
+        ]
+
+        for i, dato in enumerate(nuevaProp):
+            if i == 11:  # Skip validation for description (index 11)
+                continue
+            if dato == '':
+                mbox = QtWidgets.QMessageBox()
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
+                mbox.setWindowTitle("Error en los datos")
+                mbox.setText(mensajes_error[i])
+                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+                mbox.exec()
+                return
+
         try:
-            propiedad = [var.ui.txtFechaProp.text(), var.ui.txtDirProp.text(),
-                         var.ui.cmbProvProp.currentText(), var.ui.cmbMuniProp.currentText(),
-                         var.ui.cmbTipoProp.currentText(), var.ui.spinHabProp.text(),
-                         var.ui.spinBanosProp.text(), var.ui.txtSuperProp.text(),
-                         var.ui.txtPrecioAlquilerProp.text(), var.ui.txtPrecioVentaProp.text(),
-                         var.ui.txtCPProp.text(), var.ui.areatxtDescripProp.toPlainText()]
             tipooper = []
             if var.ui.chkAlquilerProp.isChecked():
                 tipooper.append(var.ui.chkAlquilerProp.text())
@@ -55,25 +86,39 @@ class Propiedades():
                 tipooper.append(var.ui.chkVentaProp.text())
             if var.ui.chkIntercambioProp.isChecked():
                 tipooper.append(var.ui.chkIntercambioProp.text())
-            propiedad.append("-".join(tipooper))
+            nuevaProp.append("-".join(tipooper))
+
             if var.ui.rbtEstadoDisponibleProp.isChecked():
-                propiedad.append(var.ui.rbtEstadoDisponibleProp.text())
+                nuevaProp.append(var.ui.rbtEstadoDisponibleProp.text())
             if var.ui.rbtEstadoAlquiladoProp.isChecked():
-                propiedad.append(var.ui.rbtEstadoAlquiladoProp.text())
+                nuevaProp.append(var.ui.rbtEstadoAlquiladoProp.text())
             if var.ui.rbtEstadoVendidoProp.isChecked():
-                propiedad.append(var.ui.rbtEstadoVendidoProp.text())
-            propiedad.append(var.ui.txtNomeProp.text())
-            propiedad.append(var.ui.txtMovilProp.text())
-            conexion.Conexion.altaPropiedad(propiedad)
-            Propiedades.cargaTablaPropiedades(self)
-        except Exception as error:
-            print("Error en alta propiedad: ", error)
+                nuevaProp.append(var.ui.rbtEstadoVendidoProp.text())
+
+            if conexion.Conexion.altaPropiedad(nuevaProp):
+                mbox = QtWidgets.QMessageBox()
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
+                mbox.setWindowTitle("Aviso")
+                mbox.setText("Se ha insertado la propiedad correctamente.")
+                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+                mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
+                mbox.exec()
+                Propiedades.cargaTablaPropiedades(self,0)
+        except Exception as e:
+            print(e)
+            mbox = QtWidgets.QMessageBox()
+            mbox.setWindowTitle("Error")
+            mbox.setIcon(QtWidgets.QMessageBox.Icon.Critical)
+            mbox.setText('Error al insertar la propiedad. Intente nuevamente.')
+            mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+            mbox.exec()
 
     def cargaTablaPropiedades(self,contexto):
         try:
             listado = conexion.Conexion.listadoPropiedades(self)
             var.ui.tabPropiedades.setRowCount(0)
-            for i, registro in enumerate(listado):
+            i=0
+            for registro in listado:
                 if contexto == 1 and var.ui.cmbTipoProp.currentText() != registro[6]:
                     continue
 
@@ -102,6 +147,7 @@ class Propiedades():
                 var.ui.tabPropiedades.item(i, 6).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
                 var.ui.tabPropiedades.item(i, 7).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
                 var.ui.tabPropiedades.item(i, 8).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                i += 1
 
         except Exception as e:
             print("Error cargar tabPropiedades", e)
@@ -154,47 +200,61 @@ class Propiedades():
         except Exception as e:
             print("Error cargar Clientes", e)
 
-    def modifPropiedad(registro):
+    def modifPropiedad(self):
         try:
-            query = QtSql.QSqlQuery()
-            query.prepare("select count(*) from propiedades where codigo = :codigo")
-            query.bindValue(":codigo", str(registro[0]))
-            if query.exec():
-                if query.next() and query.value(0) > 0:
-                    if query.exec():
-                        query = QtSql.QSqlQuery()
-                        query.prepare("UPDATE clientes set altacli = :altacli, apelcli = :apelcli, nomecli = :nomecli, "
-                                      " emailcli = :emailcli, movilcli = :movilcli, dircli = :dircli, provcli = :provcli, "
-                                      " municli = :municli, bajacli = :bajacli where dnicli = :dni")
-                        query.bindValue(":dni", str(registro[0]))
-                        query.bindValue(":altacli", str(registro[1]))
-                        query.bindValue(":apelcli", str(registro[2]))
-                        query.bindValue(":nomecli", str(registro[3]))
-                        query.bindValue(":emailcli", str(registro[4]))
-                        query.bindValue(":movilcli", str(registro[5]))
-                        query.bindValue(":dircli", str(registro[6]))
-                        query.bindValue(":provcli", str(registro[7]))
-                        query.bindValue(":municli", str(registro[8]))
-                        if registro[9] == "":
-                            query.bindValue(":bajacli", QtCore.QVariant())
-                        else:
-                            query.bindValue(":bajacli", str(registro[9]))
-                        if query.exec():
-                            return True
-                        else:
-                            return False
-                    else:
-                        return False
-                else:
-                    return False
+            registro = [var.ui.lblProp.text(),var.ui.txtFechaProp.text(), var.ui.txtDirProp.text(),
+                        var.ui.cmbProvProp.currentText(), var.ui.cmbMuniProp.currentText(),
+                        var.ui.cmbTipoProp.currentText(), var.ui.spinHabProp.text(),
+                        var.ui.spinBanosProp.text(), var.ui.txtSuperProp.text(),
+                        var.ui.txtPrecioAlquilerProp.text(), var.ui.txtPrecioVentaProp.text(),
+                        var.ui.txtCPProp.text(), var.ui.areatxtDescripProp.toPlainText(),
+                        ]
+            tipooper = []
+            if var.ui.chkAlquilerProp.isChecked():
+                tipooper.append(var.ui.chkAlquilerProp.text())
+            if var.ui.chkVentaProp.isChecked():
+                tipooper.append(var.ui.chkVentaProp.text())
+            if var.ui.chkIntercambioProp.isChecked():
+                tipooper.append(var.ui.chkIntercambioProp.text())
+            registro.append("-".join(tipooper))
+
+            if var.ui.rbtEstadoDisponibleProp.isChecked():
+                registro.append(var.ui.rbtEstadoDisponibleProp.text())
+            if var.ui.rbtEstadoAlquiladoProp.isChecked():
+                registro.append(var.ui.rbtEstadoAlquiladoProp.text())
+            if var.ui.rbtEstadoVendidoProp.isChecked():
+                registro.append(var.ui.rbtEstadoVendidoProp.text())
+            registro.append(var.ui.txtNomeProp.text())
+            registro.append(var.ui.txtMovilProp.text())
+
+            if conexion.Conexion.modifPropiedad(registro):
+                mbox = QtWidgets.QMessageBox()
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
+                mbox.setWindowIcon(QtGui.QIcon('img/logo.ico'))
+                mbox.setWindowTitle('Aviso')
+                mbox.setText('Propiedad modificada correctamente')
+                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+                mbox.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Ok)
+                mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
+                mbox.exec()
+                Propiedades.cargaTablaPropiedades(1,0)
+            else:
+                mbox = QtWidgets.QMessageBox()
+                mbox.setWindowTitle("Aviso")
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Critical)
+                mbox.setWindowIcon(QtGui.QIcon('img/logo.ico'))
+                mbox.setText("Error al modificar la propiedad")
+                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Cancel)
+                mbox.exec()
+                Propiedades.cargaTablaPropiedades(1,0)
+
         except Exception as error:
-            print("error modificar cliente", error)
+            print("error modificar propiedad", error)
 
 
     def bajaPropiedad(self):
         try:
-            datos = [var.ui.txtFechaBajaProp.text(), var.ui.lblProp.text()]
-            if conexion.Conexion.bajaPropiedad(datos):
+            if conexion.Conexion.bajaPropiedad(int(var.ui.lblProp.text())):
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
                 mbox.setWindowIcon(QtGui.QIcon('img/logo.ico'))
@@ -205,7 +265,7 @@ class Propiedades():
                 mbox.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Ok)
                 mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
                 mbox.exec()
-                Clientes.cargaTablaClientes(self)
+                Propiedades.cargaTablaPropiedades(self,0)
             else:
                 mbox = QtWidgets.QMessageBox()
                 mbox.setWindowTitle("Aviso")
@@ -217,3 +277,15 @@ class Propiedades():
 
         except Exception as error:
             print("Error en baja cliente: ", error)
+
+
+    def historicoProp(self):
+        try:
+            if var.ui.chkHistoriaProp.isChecked():
+                var.historico = 0
+            else:
+                var.historico = 1
+            Propiedades.cargaTablaPropiedades(self,0)
+
+        except Exception as error:
+            print("Error en historico propiedades: ", error)

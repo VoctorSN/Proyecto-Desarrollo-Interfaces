@@ -899,6 +899,9 @@
               <property name="styleSheet">
                <string notr="true">background-color: rgb(255, 255, 216);</string>
               </property>
+              <property name="inputMethodHints">
+               <set>Qt::ImhDigitsOnly</set>
+              </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
@@ -1668,6 +1671,9 @@
               <property name="styleSheet">
                <string notr="true">background-color: rgb(255, 255, 216);</string>
               </property>
+              <property name="inputMethodHints">
+               <set>Qt::ImhDigitsOnly</set>
+              </property>
               <property name="text">
                <string/>
               </property>
@@ -1769,6 +1775,9 @@
               <property name="styleSheet">
                <string notr="true"/>
               </property>
+              <property name="inputMethodHints">
+               <set>Qt::ImhDigitsOnly</set>
+              </property>
               <property name="text">
                <string/>
               </property>
@@ -1800,6 +1809,9 @@
                 <width>100</width>
                 <height>20</height>
                </size>
+              </property>
+              <property name="inputMethodHints">
+               <set>Qt::ImhDigitsOnly</set>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -2021,6 +2033,7 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionbarTipoProp"/>
    <addaction name="actionbarLimpiar"/>
    <addaction name="separator"/>
    <addaction name="actionbarSalir"/>
@@ -2047,7 +2060,7 @@
   <action name="actionbarSalir">
    <property name="icon">
     <iconset>
-     <normaloff>../../../../.designer/img/salida.png</normaloff>../../../../.designer/img/salida.png</iconset>
+     <normaloff>../img/salida.png</normaloff>../img/salida.png</iconset>
    </property>
    <property name="text">
     <string>barSalir</string>
@@ -2059,7 +2072,7 @@
   <action name="actionbarLimpiar">
    <property name="icon">
     <iconset>
-     <normaloff>../../../../.designer/img/icons8-actualizar-40.png</normaloff>../../../../.designer/img/icons8-actualizar-40.png</iconset>
+     <normaloff>../img/icons8-actualizar-40.png</normaloff>../img/icons8-actualizar-40.png</iconset>
    </property>
    <property name="text">
     <string>barLimpiar</string>
@@ -2071,6 +2084,15 @@
   <action name="actionTipoProp">
    <property name="text">
     <string>Tipo Propiedades</string>
+   </property>
+  </action>
+  <action name="actionbarTipoProp">
+   <property name="icon">
+    <iconset>
+     <normaloff>../img/casa.ico</normaloff>../img/casa.ico</iconset>
+   </property>
+   <property name="text">
+    <string>barTipoProp</string>
    </property>
   </action>
  </widget>
