@@ -1,9 +1,12 @@
+from datetime import datetime
+
 from PyQt6 import QtWidgets, QtGui, QtCore, QtSql
 
 import conexion
 import eventos
 import var
 
+from datetime import datetime
 
 class Propiedades():
     def altaTipoPropiedad(self):
@@ -227,7 +230,7 @@ class Propiedades():
             registro.append(var.ui.txtNomeProp.text())
             registro.append(var.ui.txtMovilProp.text())
 
-            if conexion.Conexion.modifPropiedad(registro):
+            if conexion.Conexion.modifPropiedad(registro) and not var.ui.rbtEstadoDisponibleProp.isChecked():
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
                 mbox.setWindowIcon(QtGui.QIcon('img/logo.ico'))
@@ -254,7 +257,7 @@ class Propiedades():
 
     def bajaPropiedad(self):
         try:
-            if conexion.Conexion.bajaPropiedad(int(var.ui.lblProp.text())):
+            if conexion.Conexion.bajaPropiedad(int(var.ui.lblProp.text())) and not var.ui.rbtEstadoDisponibleProp.isChecked() and Propiedades.checkFechas(self):
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
                 mbox.setWindowIcon(QtGui.QIcon('img/logo.ico'))
@@ -266,6 +269,22 @@ class Propiedades():
                 mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
                 mbox.exec()
                 Propiedades.cargaTablaPropiedades(self,0)
+            elif not var.ui.rbtEstadoDisponibleProp.isChecked():
+                mbox = QtWidgets.QMessageBox()
+                mbox.setWindowTitle("Aviso")
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Critical)
+                mbox.setWindowIcon(QtGui.QIcon('img/logo.ico'))
+                mbox.setText("No puedes dar de baja una propiedad Disponible")
+                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Cancel)
+                mbox.exec()
+            elif Propiedades.checkFechas(self):
+                mbox = QtWidgets.QMessageBox()
+                mbox.setWindowTitle("Aviso")
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Critical)
+                mbox.setWindowIcon(QtGui.QIcon('img/logo.ico'))
+                mbox.setText("No puedes dar de baja una propiedad con fecha de alta mayor a fecha de baja")
+                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Cancel)
+                mbox.exec()
             else:
                 mbox = QtWidgets.QMessageBox()
                 mbox.setWindowTitle("Aviso")
@@ -289,3 +308,15 @@ class Propiedades():
 
         except Exception as error:
             print("Error en historico propiedades: ", error)
+
+
+    def checkFechas(self):
+        baja = var.ui.txtFechaBajaProp.text()
+        if baja == '':
+            baja = datetime.now().strftime("%d/%m/%Y")
+        alta = var.ui.txtFechaProp.text()
+        formato = "%d/%m/%Y"
+
+        date1 = datetime.strptime(baja, formato)
+        date2 = datetime.strptime(alta, formato)
+        return date1 > date2

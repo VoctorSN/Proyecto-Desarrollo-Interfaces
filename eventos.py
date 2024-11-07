@@ -176,14 +176,31 @@ class Eventos():
                            var.ui.txtApelCli, var.ui.txtNomCli,
                            var.ui.txtEmailCli, var.ui.txtMovilCli,
                            var.ui.txtDirCli, var.ui.cmbProvCli, var.ui.cmbMuniCli,
-                           var.ui.txtBajaCli,var.ui.lblProp, var.ui.txtFechaProp,
+                           var.ui.txtBajaCli]
+
+                for casilla in listado:
+                    if isinstance(casilla, QtWidgets.QComboBox):
+                        casilla.setCurrentText("")
+                    elif isinstance(casilla, QtWidgets.QTextEdit):
+                        casilla.setPlainText("")
+                    else:
+                        casilla.setText("")
+
+                Eventos.cargarProv(self)
+                var.ui.cmbMuniCli.clear()
+                clientes.Clientes.cargaTablaClientes(self)
+                propiedades.Propiedades.cargaTablaPropiedades(self, 0)
+
+            elif var.ui.panPrincipal.currentIndex() == 1:
+                listado = [var.ui.lblProp, var.ui.txtFechaProp,
                            var.ui.txtFechaBajaProp, var.ui.txtDirProp,
                            var.ui.cmbProvProp, var.ui.cmbMuniProp,
                            var.ui.cmbTipoProp, var.ui.spinHabProp, var.ui.spinBanosProp,
                            var.ui.txtSuperProp, var.ui.txtPrecioAlquilerProp, var.ui.txtPrecioVentaProp,
                            var.ui.txtCPProp, var.ui.areatxtDescripProp, var.ui.chkAlquilerProp,
                            var.ui.chkIntercambioProp, var.ui.chkVentaProp, var.ui.rbtEstadoDisponibleProp,
-                           var.ui.rbtEstadoAlquiladoProp, var.ui.rbtEstadoVendidoProp, var.ui.txtNomeProp, var.ui.txtMovilProp]
+                           var.ui.rbtEstadoAlquiladoProp, var.ui.rbtEstadoVendidoProp, var.ui.txtNomeProp,
+                           var.ui.txtMovilProp]
 
                 for casilla in listado:
                     if isinstance(casilla, QtWidgets.QComboBox):
@@ -193,7 +210,7 @@ class Eventos():
                     elif isinstance(casilla, QtWidgets.QRadioButton):
                         var.ui.rbtEstadoDisponibleProp.setChecked(True)
                     elif isinstance(casilla, QtWidgets.QSpinBox):
-                        casilla.setValue("")
+                        casilla.setValue(0)
                     elif isinstance(casilla, QtWidgets.QTextEdit):
                         casilla.setPlainText("")
                     else:
