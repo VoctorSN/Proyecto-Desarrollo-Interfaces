@@ -78,6 +78,7 @@ class Main(QtWidgets.QMainWindow):
         var.ui.actionbarSalir.triggered.connect(eventos.Eventos.mensajeSalir)
         var.ui.actionbarLimpiar.triggered.connect(eventos.Eventos.limpiarPanel)
         var.ui.actionbarTipoProp.triggered.connect(eventos.Eventos.abrirTipoProp)
+        var.ui.actionFiltrarbarProp.triggered.connect(lambda: propiedades.Propiedades.cargaTablaPropiedades(self, 1))
 
         '''
         ZONA DE EVENTOS DE CHECKBOX  

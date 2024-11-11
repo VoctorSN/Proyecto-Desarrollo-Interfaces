@@ -2033,6 +2033,7 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionFiltrarbarProp"/>
    <addaction name="actionbarTipoProp"/>
    <addaction name="actionbarLimpiar"/>
    <addaction name="separator"/>
@@ -2093,6 +2094,15 @@
    </property>
    <property name="text">
     <string>barTipoProp</string>
+   </property>
+  </action>
+  <action name="actionFiltrarbarProp">
+   <property name="icon">
+    <iconset>
+     <normaloff>../img/buscar.png</normaloff>../img/buscar.png</iconset>
+   </property>
+   <property name="text">
+    <string>FiltrarbarProp</string>
    </property>
   </action>
  </widget>

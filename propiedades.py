@@ -122,7 +122,7 @@ class Propiedades():
             var.ui.tabPropiedades.setRowCount(0)
             i=0
             for registro in listado:
-                if contexto == 1 and var.ui.cmbTipoProp.currentText() != registro[6]:
+                if contexto == 1 and (var.ui.cmbTipoProp.currentText() != registro[6] or var.ui.cmbMuniProp.currentText() != registro[5]):
                     continue
 
                 var.ui.tabPropiedades.setRowCount(i + 1)
