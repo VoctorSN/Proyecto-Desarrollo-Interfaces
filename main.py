@@ -7,6 +7,7 @@ import eventos
 import propiedades
 import styles
 import var
+from propiedades import Propiedades
 from venPrincipal import Ui_venPrincipal
 from venAux import *
 
@@ -45,16 +46,16 @@ class Main(QtWidgets.QMainWindow):
         '''
         ZONA DE EVENTOS DE BOTONES
         '''
-        var.ui.btnAltaCli.clicked.connect(lambda: eventos.Eventos.abrirCalendar(0))
-        var.ui.btnBajaCli.clicked.connect(lambda: eventos.Eventos.abrirCalendar(1))
+        var.ui.btnAltaCli.clicked.connect(lambda: eventos.Eventos.abrirCalendar(self,0))
+        var.ui.btnBajaCli.clicked.connect(lambda: eventos.Eventos.abrirCalendar(self,1))
         var.ui.btnGrabarCli.clicked.connect(clientes.Clientes.altaCliente)
         var.ui.btnModifCli.clicked.connect(clientes.Clientes.modifCliente)
         var.ui.btnDelCli.clicked.connect(clientes.Clientes.bajaCliente)
         var.ui.btnGrabarProp.clicked.connect(propiedades.Propiedades.altaPropiedad)
         var.ui.btnModifProp.clicked.connect(propiedades.Propiedades.modifPropiedad)
         var.ui.btnDelProp.clicked.connect(propiedades.Propiedades.bajaPropiedad)
-        var.ui.btnFechaProp.clicked.connect(lambda: eventos.Eventos.abrirCalendar(2))
-        var.ui.btnFechaBajaProp.clicked.connect(lambda: eventos.Eventos.abrirCalendar(3))
+        var.ui.btnFechaProp.clicked.connect(lambda: eventos.Eventos.abrirCalendar(self,2))
+        var.ui.btnFechaBajaProp.clicked.connect(lambda: eventos.Eventos.abrirCalendar(self,3))
         var.ui.btnTipoProp.clicked.connect(lambda: propiedades.Propiedades.cargaTablaPropiedades(self, 1))
 
         '''
@@ -63,6 +64,9 @@ class Main(QtWidgets.QMainWindow):
         var.ui.txtDniCli.editingFinished.connect(lambda: clientes.Clientes.checkDni(var.ui.txtDniCli.text()))
         var.ui.txtEmailCli.editingFinished.connect(lambda: clientes.Clientes.checkEmail(var.ui.txtEmailCli.text()))
         var.ui.txtMovilCli.editingFinished.connect(lambda: clientes.Clientes.checkTelefono(var.ui.txtMovilCli.text()))
+        var.ui.txtPrecioVentaProp.textEdited.connect(lambda: propiedades.Propiedades.checkVentaProp(self))
+        var.ui.txtPrecioAlquilerProp.textChanged.connect(lambda: propiedades.Propiedades.checkAlquilerProp(self))
+        var.ui.txtFechaBajaProp.textChanged.connect(lambda: propiedades.Propiedades.checkBajaProp(self))
 
         '''
         ZONA DE EVENTOS DE COMBOX  
@@ -85,6 +89,9 @@ class Main(QtWidgets.QMainWindow):
         '''
         var.ui.chkHistoriaCli.stateChanged.connect(clientes.Clientes.historicoCli)
         var.ui.chkHistoriaProp.stateChanged.connect(propiedades.Propiedades.historicoProp)
+        propiedades.Propiedades.checkBajaProp(self)
+        propiedades.Propiedades.checkVentaProp(self)
+        propiedades.Propiedades.checkAlquilerProp(self)
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)

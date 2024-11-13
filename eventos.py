@@ -13,6 +13,7 @@ import clientes
 import conexion
 import propiedades
 import var
+from propiedades import Propiedades
 
 locale.setlocale(locale.LC_MONETARY, 'es_ES.UTF-8')
 locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
@@ -76,10 +77,11 @@ class Eventos():
             print("error en validar dni ", error)
             return False
 
-    def abrirCalendar(btn):
+    def abrirCalendar(self,btn):
         try:
             var.btn = btn
             var.uicalendar.show()
+            propiedades.Propiedades.changeRadioProp(self,True)
         except Exception as error:
             print("error en abrir calendar ", error)
 

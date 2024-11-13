@@ -269,7 +269,7 @@ class Propiedades():
                 mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
                 mbox.exec()
                 Propiedades.cargaTablaPropiedades(self,0)
-            elif not var.ui.rbtEstadoDisponibleProp.isChecked():
+            elif var.ui.rbtEstadoDisponibleProp.isChecked():
                 mbox = QtWidgets.QMessageBox()
                 mbox.setWindowTitle("Aviso")
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Critical)
@@ -320,3 +320,34 @@ class Propiedades():
         date1 = datetime.strptime(baja, formato)
         date2 = datetime.strptime(alta, formato)
         return date1 > date2
+
+    def checkVentaProp(self):
+        if var.ui.txtPrecioVentaProp.text() != '':
+            var.ui.chkVentaProp.setChecked(True)
+        else:
+            var.ui.chkVentaProp.setChecked(False)
+            var.ui.chkVentaProp.setEnabled(False)
+
+    def checkBajaProp(self):
+        Propiedades.changeRadioProp(self,var.ui.txtFechaBajaProp.text() == '')
+
+    def changeRadioProp(self,set):
+        if not set:
+            var.ui.rbtEstadoVendidoProp.setEnabled(True)
+            var.ui.rbtEstadoAlquiladoProp.setEnabled(True)
+            var.ui.rbtEstadoDisponibleProp.setChecked(False)
+            var.ui.rbtEstadoAlquiladoProp.setChecked(True)
+            var.ui.rbtEstadoDisponibleProp.setEnabled(False)
+        else:
+            var.ui.rbtEstadoVendidoProp.setEnabled(False)
+            var.ui.rbtEstadoAlquiladoProp.setEnabled(False)
+            var.ui.rbtEstadoDisponibleProp.setEnabled(True)
+            var.ui.rbtEstadoDisponibleProp.setChecked(True)
+            var.ui.rbtEstadoAlquiladoProp.setChecked(False)
+
+    def checkAlquilerProp(self):
+        if var.ui.txtPrecioAlquilerProp.text() != '':
+            var.ui.chkAlquilerProp.setChecked(True)
+        else:
+            var.ui.chkAlquilerProp.setChecked(False)
+            var.ui.chkAlquilerProp.setEnabled(False)

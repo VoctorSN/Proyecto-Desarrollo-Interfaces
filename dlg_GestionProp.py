@@ -28,7 +28,7 @@ class Ui_dlg_TipoProp(object):
         self.frame.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
         self.frame.setObjectName("frame")
         self.layoutWidget1 = QtWidgets.QWidget(parent=self.frame)
-        self.layoutWidget1.setGeometry(QtCore.QRect(20, 10, 351, 111))
+        self.layoutWidget1.setGeometry(QtCore.QRect(20, 10, 351, 114))
         self.layoutWidget1.setObjectName("layoutWidget1")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.layoutWidget1)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
