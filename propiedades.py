@@ -8,6 +8,7 @@ import var
 
 from datetime import datetime
 
+
 class Propiedades():
     def altaTipoPropiedad(self):
         try:
@@ -106,7 +107,7 @@ class Propiedades():
                 mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
                 mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
                 mbox.exec()
-                Propiedades.cargaTablaPropiedades(self,0)
+                Propiedades.cargaTablaPropiedades(self, 0)
         except Exception as e:
             print(e)
             mbox = QtWidgets.QMessageBox()
@@ -116,13 +117,15 @@ class Propiedades():
             mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
             mbox.exec()
 
-    def cargaTablaPropiedades(self,contexto):
+    def cargaTablaPropiedades(self, contexto):
         try:
             listado = conexion.Conexion.listadoPropiedades(self)
             var.ui.tabPropiedades.setRowCount(0)
-            i=0
+            i = 0
             for registro in listado:
-                if contexto == 1 and (var.ui.cmbTipoProp.currentText() != registro[6] or var.ui.cmbMuniProp.currentText() != registro[5]):
+                if contexto == 1 and (
+                        var.ui.cmbTipoProp.currentText() != registro[6] or var.ui.cmbMuniProp.currentText() != registro[
+                    5]):
                     continue
 
                 var.ui.tabPropiedades.setRowCount(i + 1)
@@ -152,8 +155,15 @@ class Propiedades():
                 var.ui.tabPropiedades.item(i, 8).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
                 i += 1
 
+            if var.ui.tabPropiedades.rowCount() == 0:
+                var.ui.tabPropiedades.setRowCount(1)
+                var.ui.tabPropiedades.setItem(0, 2, QtWidgets.QTableWidgetItem("No hay propiedades"))
+                var.ui.tabPropiedades.item(i, 2).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft.AlignVCenter)
+                return
+
         except Exception as e:
             print("Error cargar tabPropiedades", e)
+
 
     def cargaPropiedad(self):
         try:
@@ -182,20 +192,20 @@ class Propiedades():
                         var.ui.chkVentaProp.setChecked(True)
                     else:
                         var.ui.chkVentaProp.setChecked(False)
-                    if ("Intercambio") in  registro[i]:
+                    if ("Intercambio") in registro[i]:
                         var.ui.chkIntercambioProp.setChecked(True)
                     else:
                         var.ui.chkIntercambioProp.setChecked(False)
-                elif isinstance(casilla,QtWidgets.QRadioButton):
+                elif isinstance(casilla, QtWidgets.QRadioButton):
                     if registro[i] == "Vendido":
                         var.ui.rbtEstadoVendidoProp.setChecked(True)
                     elif registro[i] == "Disponible":
                         var.ui.rbtEstadoDisponibleProp.setChecked(True)
                     else:
                         var.ui.rbtEstadoAlquiladoProp.setChecked(True)
-                elif isinstance(casilla,QtWidgets.QSpinBox):
+                elif isinstance(casilla, QtWidgets.QSpinBox):
                     casilla.setValue(registro[i])
-                elif isinstance(casilla,QtWidgets.QTextEdit):
+                elif isinstance(casilla, QtWidgets.QTextEdit):
                     casilla.setPlainText(str(registro[i]))
                 else:
                     casilla.setText(str(registro[i]))
@@ -203,9 +213,10 @@ class Propiedades():
         except Exception as e:
             print("Error cargar Clientes", e)
 
+
     def modifPropiedad(self):
         try:
-            registro = [var.ui.lblProp.text(),var.ui.txtFechaProp.text(), var.ui.txtDirProp.text(),
+            registro = [var.ui.lblProp.text(), var.ui.txtFechaProp.text(), var.ui.txtDirProp.text(),
                         var.ui.cmbProvProp.currentText(), var.ui.cmbMuniProp.currentText(),
                         var.ui.cmbTipoProp.currentText(), var.ui.spinHabProp.text(),
                         var.ui.spinBanosProp.text(), var.ui.txtSuperProp.text(),
@@ -240,7 +251,7 @@ class Propiedades():
                 mbox.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Ok)
                 mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
                 mbox.exec()
-                Propiedades.cargaTablaPropiedades(1,0)
+                Propiedades.cargaTablaPropiedades(1, 0)
             else:
                 mbox = QtWidgets.QMessageBox()
                 mbox.setWindowTitle("Aviso")
@@ -249,7 +260,7 @@ class Propiedades():
                 mbox.setText("Error al modificar la propiedad")
                 mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Cancel)
                 mbox.exec()
-                Propiedades.cargaTablaPropiedades(1,0)
+                Propiedades.cargaTablaPropiedades(1, 0)
 
         except Exception as error:
             print("error modificar propiedad", error)
@@ -257,7 +268,9 @@ class Propiedades():
 
     def bajaPropiedad(self):
         try:
-            if conexion.Conexion.bajaPropiedad(int(var.ui.lblProp.text())) and not var.ui.rbtEstadoDisponibleProp.isChecked() and Propiedades.checkFechas(self):
+            if conexion.Conexion.bajaPropiedad(
+                    int(var.ui.lblProp.text())) and not var.ui.rbtEstadoDisponibleProp.isChecked() and Propiedades.checkFechas(
+                    self):
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
                 mbox.setWindowIcon(QtGui.QIcon('img/logo.ico'))
@@ -268,7 +281,7 @@ class Propiedades():
                 mbox.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Ok)
                 mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
                 mbox.exec()
-                Propiedades.cargaTablaPropiedades(self,0)
+                Propiedades.cargaTablaPropiedades(self, 0)
             elif var.ui.rbtEstadoDisponibleProp.isChecked():
                 mbox = QtWidgets.QMessageBox()
                 mbox.setWindowTitle("Aviso")
@@ -304,7 +317,7 @@ class Propiedades():
                 var.historico = 0
             else:
                 var.historico = 1
-            Propiedades.cargaTablaPropiedades(self,0)
+            Propiedades.cargaTablaPropiedades(self, 0)
 
         except Exception as error:
             print("Error en historico propiedades: ", error)
@@ -321,6 +334,7 @@ class Propiedades():
         date2 = datetime.strptime(alta, formato)
         return date1 > date2
 
+
     def checkVentaProp(self):
         if var.ui.txtPrecioVentaProp.text() != '':
             var.ui.chkVentaProp.setChecked(True)
@@ -328,10 +342,12 @@ class Propiedades():
             var.ui.chkVentaProp.setChecked(False)
             var.ui.chkVentaProp.setEnabled(False)
 
-    def checkBajaProp(self):
-        Propiedades.changeRadioProp(self,var.ui.txtFechaBajaProp.text() == '')
 
-    def changeRadioProp(self,set):
+    def checkBajaProp(self):
+        Propiedades.changeRadioProp(self, var.ui.txtFechaBajaProp.text() == '')
+
+
+    def changeRadioProp(self, set):
         if not set:
             var.ui.rbtEstadoVendidoProp.setEnabled(True)
             var.ui.rbtEstadoAlquiladoProp.setEnabled(True)
@@ -344,6 +360,7 @@ class Propiedades():
             var.ui.rbtEstadoDisponibleProp.setEnabled(True)
             var.ui.rbtEstadoDisponibleProp.setChecked(True)
             var.ui.rbtEstadoAlquiladoProp.setChecked(False)
+
 
     def checkAlquilerProp(self):
         if var.ui.txtPrecioAlquilerProp.text() != '':

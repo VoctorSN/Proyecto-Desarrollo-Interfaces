@@ -42,6 +42,8 @@ class Main(QtWidgets.QMainWindow):
         var.ui.actionCrear_Backup.triggered.connect(eventos.Eventos.crearBackup)
         var.ui.actionRestaurar_Backup.triggered.connect(eventos.Eventos.restaurarBackup)
         var.ui.menuGestion.triggered.connect(eventos.Eventos.abrirTipoProp)
+        var.ui.actionExportar_Clientes_CSV.triggered.connect(eventos.Eventos.exportCSVProp)
+        var.ui.actionExportar_Clientes_JSON.triggered.connect(eventos.Eventos.exportJSONProp)
 
         '''
         ZONA DE EVENTOS DE BOTONES
@@ -83,6 +85,7 @@ class Main(QtWidgets.QMainWindow):
         var.ui.actionbarLimpiar.triggered.connect(eventos.Eventos.limpiarPanel)
         var.ui.actionbarTipoProp.triggered.connect(eventos.Eventos.abrirTipoProp)
         var.ui.actionFiltrarbarProp.triggered.connect(lambda: propiedades.Propiedades.cargaTablaPropiedades(self, 1))
+
 
         '''
         ZONA DE EVENTOS DE CHECKBOX  
