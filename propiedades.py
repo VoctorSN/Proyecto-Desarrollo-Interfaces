@@ -169,6 +169,8 @@ class Propiedades():
         try:
             fila = var.ui.tabPropiedades.selectedItems()
             datos = [dato.text() for dato in fila]
+            if(datos[0] == "No hay propiedades"):
+                return
             registro = conexion.Conexion.datosOnePropiedad(str(datos[0]))
 
             listado = [var.ui.lblProp, var.ui.txtFechaProp,
@@ -211,7 +213,7 @@ class Propiedades():
                     casilla.setText(str(registro[i]))
 
         except Exception as e:
-            print("Error cargar Clientes", e)
+            print("Error cargar Propiedad", e)
 
 
     def modifPropiedad(self):
@@ -250,6 +252,15 @@ class Propiedades():
                 mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
                 mbox.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Ok)
                 mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
+                mbox.exec()
+                Propiedades.cargaTablaPropiedades(1, 0)
+            elif not var.ui.rbtEstadoDisponibleProp.isChecked():
+                mbox = QtWidgets.QMessageBox()
+                mbox.setWindowTitle("Aviso")
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Critical)
+                mbox.setWindowIcon(QtGui.QIcon('img/logo.ico'))
+                mbox.setText("No puedes estar la propiedad no disponible sin fecha de baja")
+                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Cancel)
                 mbox.exec()
                 Propiedades.cargaTablaPropiedades(1, 0)
             else:

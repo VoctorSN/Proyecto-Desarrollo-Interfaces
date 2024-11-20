@@ -336,3 +336,9 @@ class Eventos():
                 mbox.exec()
         except Exception as e:
             print(e)
+
+    def abrirAbout(self):
+        try:
+            var.dlgAbout.show()
+        except Exception as error:
+            print("error en abrir about ", error)

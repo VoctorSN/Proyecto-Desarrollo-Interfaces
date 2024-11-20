@@ -2025,6 +2025,7 @@
     <property name="title">
      <string>Ayuda</string>
     </property>
+    <addaction name="actionAbout"/>
    </widget>
    <widget class="QMenu" name="menuGestion">
     <property name="title">
@@ -2131,6 +2132,11 @@
   <action name="actionExportar_Clientes_JSON">
    <property name="text">
     <string>Exportar Clientes JSON</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
    </property>
   </action>
  </widget>

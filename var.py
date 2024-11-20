@@ -8,3 +8,4 @@ global uicalendar
 global dlgabrir
 global historico
 global dlgGestion
+global dlgAbout
