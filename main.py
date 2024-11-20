@@ -61,6 +61,7 @@ class Main(QtWidgets.QMainWindow):
         var.ui.btnFechaProp.clicked.connect(lambda: eventos.Eventos.abrirCalendar(self,2))
         var.ui.btnFechaBajaProp.clicked.connect(lambda: eventos.Eventos.abrirCalendar(self,3))
         var.ui.btnTipoProp.clicked.connect(lambda: propiedades.Propiedades.cargaTablaPropiedades(self, 1))
+        var.ui.btnBuscarDniCli.clicked.connect(lambda: clientes.Clientes.cargaClienteDni(self))
 
         '''
         ZONA DE EVENTOS DE TEXTBOX  

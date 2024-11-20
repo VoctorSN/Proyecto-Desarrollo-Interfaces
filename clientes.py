@@ -68,7 +68,7 @@ class Clientes:
                 var.ui.txtDniCli.setStyleSheet('background-color: rgb(255,255,220);')
             else:
                 var.ui.txtDniCli.setStyleSheet('background-color:#FFC0CB;')
-                var.ui.txtDniCli.setText(None)
+                var.ui.txtDniCli.setText('DNI Invalido')
                 var.ui.txtDniCli.setFocus()
         except Exception as error:
             print("Error en validar dni ", error)
@@ -82,7 +82,6 @@ class Clientes:
 
             else:
                 var.ui.txtEmailCli.setStyleSheet('background-color:#FFC0CB; font-style: italic;')
-                var.ui.txtEmailCli.setText(None)
                 var.ui.txtEmailCli.setText("correo no válido")
                 var.ui.txtEmailCli.setFocus()
         except sqlite3.IntegrityError as e:
@@ -129,14 +128,42 @@ class Clientes:
                        var.ui.txtDirCli, var.ui.cmbProvCli,
                        var.ui.cmbMuniCli,var.ui.txtBajaCli]
 
-            for i in range(len(listado)):
-                if i in (7, 8):
-                    listado[i].setCurrentText(registro[i])
+            for i, casilla in enumerate(listado):
+                if isinstance(casilla, QtWidgets.QComboBox):
+                    casilla.setCurrentText(registro[i])
                 else:
-                    listado[i].setText(registro[i])
+                    casilla.setText(registro[i])
 
         except Exception as e:
             print("Error cargar Clientes", e)
+
+    def cargaClienteDni(self):
+        try:
+            dni = var.ui.txtDniCli.text()
+            registro = conexion.Conexion.datosOneCliente(dni)
+            if not registro:
+                mbox = QtWidgets.QMessageBox()
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
+                mbox.setWindowTitle("Aviso")
+                mbox.setText("No se ha encontrado el cliente")
+                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+                mbox.exec()
+                return
+
+            listado = [var.ui.txtDniCli, var.ui.txtCalendarCli,
+                       var.ui.txtApelCli, var.ui.txtNomCli,
+                       var.ui.txtEmailCli, var.ui.txtMovilCli,
+                       var.ui.txtDirCli, var.ui.cmbProvCli,
+                       var.ui.cmbMuniCli,var.ui.txtBajaCli]
+
+            for i,casilla in enumerate(listado):
+                if isinstance(casilla, QtWidgets.QComboBox):
+                    casilla.setCurrentText(registro[i])
+                else:
+                    casilla.setText(registro[i])
+
+        except Exception as e:
+            print("Error cargar Clientes por dni", e)
 
     def modifCliente(self):
         try:
@@ -147,6 +174,29 @@ class Clientes:
                         var.ui.cmbProvCli.currentText(),
                         var.ui.cmbMuniCli.currentText(),
                         var.ui.txtBajaCli.text()]
+            mensajes_error = [
+                "Falta ingresar DNI",
+                "Falta ingresar fecha de alta",
+                "Falta ingresar apellido",
+                "Falta ingresar nombre",
+                None,
+                "Falta ingresar móvil",
+                "Falta ingresar dirección",
+                "Falta seleccionar provincia",
+                "Falta seleccionar municipio"
+            ]
+
+            for i, dato in enumerate(registro):
+                if i == 4:  # Saltamos la validación para el email (índice 4)
+                    continue
+                if dato == '':
+                    mbox = QtWidgets.QMessageBox()
+                    mbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
+                    mbox.setWindowTitle("Error en los datos")
+                    mbox.setText(mensajes_error[i])
+                    mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+                    mbox.exec()
+                    return
             if conexion.Conexion.modifCliente(registro):
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
@@ -206,7 +256,6 @@ class Clientes:
                 var.ui.txtMovilCli.setStyleSheet('background-color: rgb(255, 255, 255);')
             else:
                 var.ui.txtMovilCli.setStyleSheet('background-color:#FFC0CB; font-style: italic;')
-                var.ui.txtMovilCli.setText(None)
                 var.ui.txtMovilCli.setText("telefono no válido")
                 var.ui.txtMovilCli.setFocus()
 
