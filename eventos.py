@@ -8,17 +8,15 @@ import sys
 import time
 import zipfile
 from datetime import datetime
-from xml.etree.ElementTree import indent
 
 from PyQt6 import QtWidgets
 from PyQt6.uic.Compiler.qtproxies import QtGui
-from matplotlib.font_manager import json_dump
 
 import clientes
 import conexion
+import conexionserver
 import propiedades
 import var
-from propiedades import Propiedades
 
 locale.setlocale(locale.LC_MONETARY, 'es_ES.UTF-8')
 locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
@@ -41,7 +39,7 @@ class Eventos():
             mbox.hide()
 
     def cargarProv(self):
-        listaprov = conexion.Conexion.listaProv(self)
+        listaprov = conexionserver.ConexionServer.listaProv(self)
         cmbProvCli = var.ui.cmbProvCli
         cmbProvProp = var.ui.cmbProvProp
         cmbProvCli.clear()
@@ -52,13 +50,13 @@ class Eventos():
     @staticmethod
     def cargarMuniCli():
         var.ui.cmbMuniCli.clear()
-        listado = conexion.Conexion.listaMunicipios(var.ui.cmbProvCli.currentText())
+        listado = conexionserver.ConexionServer.listaMuniProv(var.ui.cmbProvCli.currentText())
         var.ui.cmbMuniCli.addItems(listado)
 
     @staticmethod
     def cargarMuniProp():
         var.ui.cmbMuniProp.clear()
-        listado = conexion.Conexion.listaMunicipios(var.ui.cmbProvProp.currentText())
+        listado = conexionserver.ConexionServer.listaMuniProv(var.ui.cmbProvProp.currentText())
         var.ui.cmbMuniProp.addItems(listado)
 
     def checkDNI(dni):
@@ -82,11 +80,11 @@ class Eventos():
             print("error en validar dni ", error)
             return False
 
-    def abrirCalendar(self,btn):
+    def abrirCalendar(self, btn):
         try:
             var.btn = btn
             var.uicalendar.show()
-            propiedades.Propiedades.changeRadioProp(self,True)
+            propiedades.Propiedades.changeRadioProp(self, True)
         except Exception as error:
             print("error en abrir calendar ", error)
 
@@ -277,20 +275,21 @@ class Eventos():
             fecha = datetime.today()
             fecha = fecha.strftime('%Y_%m_%d_%H_%M_%S')
             file = str(fecha + "DatosPropiedades.csv")
-            directorio,fichero = var.dlgabrir.getSaveFileName(None,"Exporta Datos en CSV", file,'.csv')
+            directorio, fichero = var.dlgabrir.getSaveFileName(None, "Exporta Datos en CSV", file, '.csv')
             if fichero:
                 historicoGuardar = var.historico
                 var.historico = 0
                 registros = conexion.Conexion.listadoPropiedades(self)
                 var.historico = historicoGuardar
-                with open(fichero,"w",newline="",encoding="utf-8") as csvfile:
+                with open(fichero, "w", newline="", encoding="utf-8") as csvfile:
                     writer = csv.writer(csvfile)
-                    writer.writerow(["Codigo","Alta","Baja","Direccion","Provincia","Municipio","Tipo"
-                                     ,"Nº Habitaciones", "Nº Baños", "Superficie", "Precio Alquiler", "Precio Compra",
+                    writer.writerow(["Codigo", "Alta", "Baja", "Direccion", "Provincia", "Municipio", "Tipo"
+                                        , "Nº Habitaciones", "Nº Baños", "Superficie", "Precio Alquiler",
+                                     "Precio Compra",
                                      "Codigo Postal", "Observaciones", "Operacion", "Estado", "Propietario", "Movil"])
                     for registro in registros:
                         writer.writerow(registro)
-                shutil.move(fichero,directorio)
+                shutil.move(fichero, directorio)
             else:
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
@@ -310,19 +309,19 @@ class Eventos():
             fecha = datetime.today()
             fecha = fecha.strftime('%Y_%m_%d_%H_%M_%S')
             file = str(fecha + "DatosPropiedades.json")
-            directorio,fichero = var.dlgabrir.getSaveFileName(None,"Exporta Datos en JSON", file,'.json')
+            directorio, fichero = var.dlgabrir.getSaveFileName(None, "Exporta Datos en JSON", file, '.json')
             if fichero:
-                keys = ["Codigo","Alta","Baja","Direccion","Provincia","Municipio","Tipo"
-                                 ,"Nº Habitaciones", "Nº Baños", "Superficie", "Precio Alquiler", "Precio Compra",
-                                 "Codigo Postal", "Observaciones", "Operacion", "Estado", "Propietario", "Movil"]
+                keys = ["Codigo", "Alta", "Baja", "Direccion", "Provincia", "Municipio", "Tipo"
+                    , "Nº Habitaciones", "Nº Baños", "Superficie", "Precio Alquiler", "Precio Compra",
+                        "Codigo Postal", "Observaciones", "Operacion", "Estado", "Propietario", "Movil"]
                 historicoGuardar = var.historico
                 var.historico = 0
                 registros = conexion.Conexion.listadoPropiedades(self)
                 var.historico = historicoGuardar
-                listapropiedades = [dict(zip(keys,registro)) for registro in registros]
-                with open(fichero,"w",newline="",encoding="utf-8") as jsonfile:
-                    json.dump(listapropiedades, jsonfile, ensure_ascii=False, indent = 4)
-                shutil.move(fichero,directorio)
+                listapropiedades = [dict(zip(keys, registro)) for registro in registros]
+                with open(fichero, "w", newline="", encoding="utf-8") as jsonfile:
+                    json.dump(listapropiedades, jsonfile, ensure_ascii=False, indent=4)
+                shutil.move(fichero, directorio)
             else:
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)

@@ -47,4 +47,5 @@ class Ui_dlgAbout(object):
         dlgAbout.setWindowTitle(_translate("dlgAbout", "Dialog"))
         self.btnSalir.setText(_translate("dlgAbout", "Aceptar"))
         self.label_2.setText(_translate("dlgAbout", "INMO TEIS"))
-        self.label_3.setText(_translate("dlgAbout", "<html><head/><body><p><br/>Versión 1.0.0</p><p>Copyright © [1998-2024] Inmoteis&amp;Co. Todos los derechos reservados.</p><p>Este sitio web y su contenido están protegidos por derechos de autor y otras leyes de propiedad intelectual aplicables.</p><p>El uso de este producto está sujeto a los Términos y Condiciones de Uso.</p><p>Licenciado a: Amán Lama Vilariño</p><p>El uso no autorizado de este sitio web, su contenido o materiales asociados puede dar lugar a acciones legales.</p></body></html>"))
+        self.label_3.setText(_translate("dlgAbout",
+                                        "<html><head/><body><p><br/>Versión 1.0.0</p><p>Copyright © [1998-2024] Inmoteis&amp;Co. Todos los derechos reservados.</p><p>Este sitio web y su contenido están protegidos por derechos de autor y otras leyes de propiedad intelectual aplicables.</p><p>El uso de este producto está sujeto a los Términos y Condiciones de Uso.</p><p>Licenciado a: Amán Lama Vilariño</p><p>El uso no autorizado de este sitio web, su contenido o materiales asociados puede dar lugar a acciones legales.</p></body></html>"))

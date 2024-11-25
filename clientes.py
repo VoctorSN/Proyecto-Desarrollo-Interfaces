@@ -1,9 +1,10 @@
 import sqlite3
 
-from PyQt6 import QtWidgets, QtGui, QtCore, QtSql
+from PyQt6 import QtWidgets, QtGui, QtCore
 
 import clientes
 import conexion
+import conexionserver
 import eventos
 import var
 
@@ -41,7 +42,7 @@ class Clientes:
                 mbox.exec()
                 return
         try:
-            if conexion.Conexion.altaCliente(self,nuevoCli):
+            if conexionserver.ConexionServer.altaCliente(self, nuevoCli):
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
                 mbox.setWindowTitle("Aviso")
@@ -59,7 +60,6 @@ class Clientes:
             mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
             mbox.exec()
 
-
     def checkDni(dni):
         try:
             dni = str(dni).upper()
@@ -73,10 +73,9 @@ class Clientes:
         except Exception as error:
             print("Error en validar dni ", error)
 
-
-    def checkEmail(mail):
+    def checkEmail(self, mail):
         try:
-            if eventos.Eventos.validarMail(str(var.ui.txtEmailCli.text())):
+            if eventos.Eventos.validarMail(self, str(var.ui.txtEmailCli.text())):
                 var.ui.txtEmailCli.setStyleSheet('background-color: rgb(255, 255, 255);')
                 var.ui.txtEmailCli.setText(mail.lower())
 
@@ -89,10 +88,9 @@ class Clientes:
         except Exception as error:
             print("error check cliente", error)
 
-
     def cargaTablaClientes(self):
         try:
-            listado = conexion.Conexion.listadoClientes(self)
+            listado = conexionserver.ConexionServer.listadoClientes(self)
             for i, registro in enumerate(listado):
                 var.ui.tabClientes.setRowCount(i + 1)
 
@@ -115,18 +113,17 @@ class Clientes:
         except Exception as e:
             print("Error cargar Clientes", e)
 
-
     def cargaCliente(self):
         try:
             fila = var.ui.tabClientes.selectedItems()
             datos = [dato.text() for dato in fila]
-            registro = conexion.Conexion.datosOneCliente(str(datos[0]))
+            registro = conexionserver.ConexionServer.datosOneCliente(str(datos[0]))
 
             listado = [var.ui.txtDniCli, var.ui.txtCalendarCli,
                        var.ui.txtApelCli, var.ui.txtNomCli,
                        var.ui.txtEmailCli, var.ui.txtMovilCli,
                        var.ui.txtDirCli, var.ui.cmbProvCli,
-                       var.ui.cmbMuniCli,var.ui.txtBajaCli]
+                       var.ui.cmbMuniCli, var.ui.txtBajaCli]
 
             for i, casilla in enumerate(listado):
                 if isinstance(casilla, QtWidgets.QComboBox):
@@ -140,7 +137,7 @@ class Clientes:
     def cargaClienteDni(self):
         try:
             dni = var.ui.txtDniCli.text()
-            registro = conexion.Conexion.datosOneCliente(dni)
+            registro = conexionserver.ConexionServer.datosOneCliente(dni)
             if not registro:
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
@@ -154,9 +151,9 @@ class Clientes:
                        var.ui.txtApelCli, var.ui.txtNomCli,
                        var.ui.txtEmailCli, var.ui.txtMovilCli,
                        var.ui.txtDirCli, var.ui.cmbProvCli,
-                       var.ui.cmbMuniCli,var.ui.txtBajaCli]
+                       var.ui.cmbMuniCli, var.ui.txtBajaCli]
 
-            for i,casilla in enumerate(listado):
+            for i, casilla in enumerate(listado):
                 if isinstance(casilla, QtWidgets.QComboBox):
                     casilla.setCurrentText(registro[i])
                 else:
@@ -220,7 +217,6 @@ class Clientes:
         except Exception as error:
             print("error modificar cliente", error)
 
-
     def bajaCliente(self):
         try:
             datos = [var.ui.txtBajaCli.text(), var.ui.txtDniCli.text()]
@@ -247,7 +243,6 @@ class Clientes:
 
         except Exception as error:
             print("Error en baja cliente: ", error)
-
 
     @staticmethod
     def checkTelefono(telefono):

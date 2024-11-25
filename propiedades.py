@@ -1,12 +1,10 @@
 from datetime import datetime
 
-from PyQt6 import QtWidgets, QtGui, QtCore, QtSql
+from PyQt6 import QtWidgets, QtGui, QtCore
 
 import conexion
 import eventos
 import var
-
-from datetime import datetime
 
 
 class Propiedades():
@@ -164,12 +162,11 @@ class Propiedades():
         except Exception as e:
             print("Error cargar tabPropiedades", e)
 
-
     def cargaPropiedad(self):
         try:
             fila = var.ui.tabPropiedades.selectedItems()
             datos = [dato.text() for dato in fila]
-            if(datos[0] == "No hay propiedades"):
+            if (datos[0] == "No hay propiedades"):
                 return
             registro = conexion.Conexion.datosOnePropiedad(str(datos[0]))
 
@@ -214,7 +211,6 @@ class Propiedades():
 
         except Exception as e:
             print("Error cargar Propiedad", e)
-
 
     def modifPropiedad(self):
         try:
@@ -276,12 +272,11 @@ class Propiedades():
         except Exception as error:
             print("error modificar propiedad", error)
 
-
     def bajaPropiedad(self):
         try:
             if conexion.Conexion.bajaPropiedad(
                     int(var.ui.lblProp.text())) and not var.ui.rbtEstadoDisponibleProp.isChecked() and Propiedades.checkFechas(
-                    self):
+                self):
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
                 mbox.setWindowIcon(QtGui.QIcon('img/logo.ico'))
@@ -321,7 +316,6 @@ class Propiedades():
         except Exception as error:
             print("Error en baja cliente: ", error)
 
-
     def historicoProp(self):
         try:
             if var.ui.chkHistoriaProp.isChecked():
@@ -332,7 +326,6 @@ class Propiedades():
 
         except Exception as error:
             print("Error en historico propiedades: ", error)
-
 
     def checkFechas(self):
         baja = var.ui.txtFechaBajaProp.text()
@@ -345,7 +338,6 @@ class Propiedades():
         date2 = datetime.strptime(alta, formato)
         return date1 > date2
 
-
     def checkVentaProp(self):
         if var.ui.txtPrecioVentaProp.text() != '':
             var.ui.chkVentaProp.setChecked(True)
@@ -353,10 +345,8 @@ class Propiedades():
             var.ui.chkVentaProp.setChecked(False)
             var.ui.chkVentaProp.setEnabled(False)
 
-
     def checkBajaProp(self):
         Propiedades.changeRadioProp(self, var.ui.txtFechaBajaProp.text() == '')
-
 
     def changeRadioProp(self, set):
         if not set:
@@ -371,7 +361,6 @@ class Propiedades():
             var.ui.rbtEstadoDisponibleProp.setEnabled(True)
             var.ui.rbtEstadoDisponibleProp.setChecked(True)
             var.ui.rbtEstadoAlquiladoProp.setChecked(False)
-
 
     def checkAlquilerProp(self):
         if var.ui.txtPrecioAlquilerProp.text() != '':

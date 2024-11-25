@@ -197,8 +197,8 @@ class Conexion:
         try:
             query = QtSql.QSqlQuery()
             query.prepare("SELECT tipo FROM tipoPropiedad")
+            registro = []
             if query.exec():
-                registro = []
                 while query.next():
                     registro.append(query.value(0))
             return registro

@@ -1,15 +1,10 @@
 import sys
 
 import clientes
-import conexion
 import conexionserver
-import eventos
-import propiedades
 import styles
-import var
-from propiedades import Propiedades
-from venPrincipal import Ui_venPrincipal
 from venAux import *
+from venPrincipal import Ui_venPrincipal
 
 
 class Main(QtWidgets.QMainWindow):
@@ -24,7 +19,8 @@ class Main(QtWidgets.QMainWindow):
         var.dlgAbout = dlgAbout()
         self.setStyleSheet(styles.load_stylesheet())
         var.historico = 1
-        conexion.Conexion.db_conexion(self)
+        # conexion.Conexion.db_conexion(self)
+        conexionserver.ConexionServer.crear_conexion(self)
 
         '''
         EVENTOS DE TABLAS
@@ -32,7 +28,7 @@ class Main(QtWidgets.QMainWindow):
         clientes.Clientes.cargaTablaClientes(self)
         eventos.Eventos.resizeTablaClientes(self)
         var.ui.tabClientes.clicked.connect(clientes.Clientes.cargaCliente)
-        propiedades.Propiedades.cargaTablaPropiedades(self,0)
+        propiedades.Propiedades.cargaTablaPropiedades(self, 0)
         eventos.Eventos.resizeTablaPropiedades(self)
         var.ui.tabPropiedades.clicked.connect(propiedades.Propiedades.cargaPropiedad)
 
@@ -50,16 +46,16 @@ class Main(QtWidgets.QMainWindow):
         '''
         ZONA DE EVENTOS DE BOTONES
         '''
-        var.ui.btnAltaCli.clicked.connect(lambda: eventos.Eventos.abrirCalendar(self,0))
-        var.ui.btnBajaCli.clicked.connect(lambda: eventos.Eventos.abrirCalendar(self,1))
+        var.ui.btnAltaCli.clicked.connect(lambda: eventos.Eventos.abrirCalendar(self, 0))
+        var.ui.btnBajaCli.clicked.connect(lambda: eventos.Eventos.abrirCalendar(self, 1))
         var.ui.btnGrabarCli.clicked.connect(clientes.Clientes.altaCliente)
         var.ui.btnModifCli.clicked.connect(clientes.Clientes.modifCliente)
         var.ui.btnDelCli.clicked.connect(clientes.Clientes.bajaCliente)
         var.ui.btnGrabarProp.clicked.connect(propiedades.Propiedades.altaPropiedad)
         var.ui.btnModifProp.clicked.connect(propiedades.Propiedades.modifPropiedad)
         var.ui.btnDelProp.clicked.connect(propiedades.Propiedades.bajaPropiedad)
-        var.ui.btnFechaProp.clicked.connect(lambda: eventos.Eventos.abrirCalendar(self,2))
-        var.ui.btnFechaBajaProp.clicked.connect(lambda: eventos.Eventos.abrirCalendar(self,3))
+        var.ui.btnFechaProp.clicked.connect(lambda: eventos.Eventos.abrirCalendar(self, 2))
+        var.ui.btnFechaBajaProp.clicked.connect(lambda: eventos.Eventos.abrirCalendar(self, 3))
         var.ui.btnTipoProp.clicked.connect(lambda: propiedades.Propiedades.cargaTablaPropiedades(self, 1))
         var.ui.btnBuscarDniCli.clicked.connect(lambda: clientes.Clientes.cargaClienteDni(self))
 
@@ -67,7 +63,8 @@ class Main(QtWidgets.QMainWindow):
         ZONA DE EVENTOS DE TEXTBOX  
         '''
         var.ui.txtDniCli.editingFinished.connect(lambda: clientes.Clientes.checkDni(var.ui.txtDniCli.text()))
-        var.ui.txtEmailCli.editingFinished.connect(lambda: clientes.Clientes.checkEmail(var.ui.txtEmailCli.text()))
+        var.ui.txtEmailCli.editingFinished.connect(
+            lambda: clientes.Clientes.checkEmail(self, var.ui.txtEmailCli.text()))
         var.ui.txtMovilCli.editingFinished.connect(lambda: clientes.Clientes.checkTelefono(var.ui.txtMovilCli.text()))
         var.ui.txtPrecioVentaProp.textEdited.connect(lambda: propiedades.Propiedades.checkVentaProp(self))
         var.ui.txtPrecioAlquilerProp.textChanged.connect(lambda: propiedades.Propiedades.checkAlquilerProp(self))
@@ -89,7 +86,6 @@ class Main(QtWidgets.QMainWindow):
         var.ui.actionbarTipoProp.triggered.connect(eventos.Eventos.abrirTipoProp)
         var.ui.actionFiltrarbarProp.triggered.connect(lambda: propiedades.Propiedades.cargaTablaPropiedades(self, 1))
 
-
         '''
         ZONA DE EVENTOS DE CHECKBOX  
         '''
@@ -98,6 +94,7 @@ class Main(QtWidgets.QMainWindow):
         propiedades.Propiedades.checkBajaProp(self)
         propiedades.Propiedades.checkVentaProp(self)
         propiedades.Propiedades.checkAlquilerProp(self)
+
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)

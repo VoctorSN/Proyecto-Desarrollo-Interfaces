@@ -40,9 +40,11 @@ class Ui_dlg_TipoProp(object):
         self.label.setText("")
         self.label.setPixmap(QtGui.QPixmap("./templates\\../img/logo.ico"))
         self.label.setScaledContents(True)
-        self.label.setAlignment(QtCore.Qt.AlignmentFlag.AlignLeading|QtCore.Qt.AlignmentFlag.AlignLeft|QtCore.Qt.AlignmentFlag.AlignVCenter)
+        self.label.setAlignment(
+            QtCore.Qt.AlignmentFlag.AlignLeading | QtCore.Qt.AlignmentFlag.AlignLeft | QtCore.Qt.AlignmentFlag.AlignVCenter)
         self.label.setObjectName("label")
-        self.verticalLayout.addWidget(self.label, 0, QtCore.Qt.AlignmentFlag.AlignHCenter|QtCore.Qt.AlignmentFlag.AlignTop)
+        self.verticalLayout.addWidget(self.label, 0,
+                                      QtCore.Qt.AlignmentFlag.AlignHCenter | QtCore.Qt.AlignmentFlag.AlignTop)
         self.lblGestTipoProp = QtWidgets.QLabel(parent=self.layoutWidget1)
         self.lblGestTipoProp.setMinimumSize(QtCore.QSize(250, 20))
         self.lblGestTipoProp.setMaximumSize(QtCore.QSize(350, 20))
@@ -55,13 +57,15 @@ class Ui_dlg_TipoProp(object):
         self.txtGestTipoProp = QtWidgets.QLineEdit(parent=self.layoutWidget1)
         self.txtGestTipoProp.setMinimumSize(QtCore.QSize(150, 20))
         self.txtGestTipoProp.setMaximumSize(QtCore.QSize(150, 20))
-        self.txtGestTipoProp.setAlignment(QtCore.Qt.AlignmentFlag.AlignLeading|QtCore.Qt.AlignmentFlag.AlignLeft|QtCore.Qt.AlignmentFlag.AlignVCenter)
+        self.txtGestTipoProp.setAlignment(
+            QtCore.Qt.AlignmentFlag.AlignLeading | QtCore.Qt.AlignmentFlag.AlignLeft | QtCore.Qt.AlignmentFlag.AlignVCenter)
         self.txtGestTipoProp.setObjectName("txtGestTipoProp")
         self.verticalLayout.addWidget(self.txtGestTipoProp, 0, QtCore.Qt.AlignmentFlag.AlignHCenter)
         self.verticalLayout_2.addWidget(self.frame)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding,
+                                           QtWidgets.QSizePolicy.Policy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
         self.btnAltaTipoProp = QtWidgets.QPushButton(parent=self.layoutWidget)
         self.btnAltaTipoProp.setMinimumSize(QtCore.QSize(80, 25))
@@ -73,7 +77,8 @@ class Ui_dlg_TipoProp(object):
         self.btnDelTipoProp.setMaximumSize(QtCore.QSize(80, 25))
         self.btnDelTipoProp.setObjectName("btnDelTipoProp")
         self.horizontalLayout.addWidget(self.btnDelTipoProp)
-        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
+        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding,
+                                            QtWidgets.QSizePolicy.Policy.Minimum)
         self.horizontalLayout.addItem(spacerItem1)
         self.verticalLayout_2.addLayout(self.horizontalLayout)
 
