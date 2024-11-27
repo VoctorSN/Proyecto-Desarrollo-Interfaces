@@ -3,6 +3,7 @@ from datetime import datetime
 from PyQt6 import QtWidgets, QtGui, QtCore
 
 import conexion
+import conexionserver
 import eventos
 import var
 
@@ -11,7 +12,7 @@ class Propiedades():
     def altaTipoPropiedad(self):
         try:
             tipo = var.dlgGestion.ui.txtGestTipoProp.text().title()
-            registro = conexion.Conexion.altaTipoPropiedad(tipo)
+            registro = conexionserver.ConexionServer.altaTipoPropiedad(self,tipo)
             if registro:
                 eventos.Eventos.cargarTipoPropiedad(self)
             else:
@@ -28,7 +29,7 @@ class Propiedades():
     def bajaTipoPropiedad(self):
         try:
             tipo = var.dlgGestion.ui.txtGestTipoProp.text().title()
-            registro = conexion.Conexion.bajaTipoPropiedad(tipo)
+            registro = conexionserver.ConexionServer.bajaTipoPropiedad(self,tipo)
             if registro:
                 eventos.Eventos.cargarTipoPropiedad(self)
             else:
@@ -60,8 +61,8 @@ class Propiedades():
             "Falta ingresar número de habitaciones",
             "Falta ingresar número de baños",
             "Falta ingresar superficie",
-            "Falta ingresar precio de alquiler",
-            "Falta ingresar precio de venta",
+            None,
+            None,
             "Falta ingresar código postal",
             None,  # No validation for description
             "Falta ingresar nombre del propietario",
@@ -69,7 +70,7 @@ class Propiedades():
         ]
 
         for i, dato in enumerate(nuevaProp):
-            if i == 11:  # Skip validation for description (index 11)
+            if i in (11,9,8):  # Skip validation for description (index 11)
                 continue
             if dato == '':
                 mbox = QtWidgets.QMessageBox()
@@ -97,7 +98,7 @@ class Propiedades():
             if var.ui.rbtEstadoVendidoProp.isChecked():
                 nuevaProp.append(var.ui.rbtEstadoVendidoProp.text())
 
-            if conexion.Conexion.altaPropiedad(nuevaProp):
+            if conexionserver.ConexionServer.altaPropiedad(self,nuevaProp):
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
                 mbox.setWindowTitle("Aviso")
@@ -117,7 +118,7 @@ class Propiedades():
 
     def cargaTablaPropiedades(self, contexto):
         try:
-            listado = conexion.Conexion.listadoPropiedades(self)
+            listado = (conexionserver.ConexionServer.listadoPropiedades(self))
             var.ui.tabPropiedades.setRowCount(0)
             i = 0
             for registro in listado:
@@ -168,7 +169,7 @@ class Propiedades():
             datos = [dato.text() for dato in fila]
             if (datos[0] == "No hay propiedades"):
                 return
-            registro = conexion.Conexion.datosOnePropiedad(str(datos[0]))
+            registro = conexionserver.ConexionServer.datosOnePropiedad(self,str(datos[0]))
 
             listado = [var.ui.lblProp, var.ui.txtFechaProp,
                        var.ui.txtFechaBajaProp, var.ui.txtDirProp,
@@ -203,7 +204,7 @@ class Propiedades():
                     else:
                         var.ui.rbtEstadoAlquiladoProp.setChecked(True)
                 elif isinstance(casilla, QtWidgets.QSpinBox):
-                    casilla.setValue(registro[i])
+                    casilla.setValue(int(registro[i]))
                 elif isinstance(casilla, QtWidgets.QTextEdit):
                     casilla.setPlainText(str(registro[i]))
                 else:
@@ -239,7 +240,7 @@ class Propiedades():
             registro.append(var.ui.txtNomeProp.text())
             registro.append(var.ui.txtMovilProp.text())
 
-            if conexion.Conexion.modifPropiedad(registro) and not var.ui.rbtEstadoDisponibleProp.isChecked():
+            if conexionserver.ConexionServer.modifPropiedad(self,registro):
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
                 mbox.setWindowIcon(QtGui.QIcon('img/logo.ico'))
@@ -248,15 +249,6 @@ class Propiedades():
                 mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
                 mbox.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Ok)
                 mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
-                mbox.exec()
-                Propiedades.cargaTablaPropiedades(1, 0)
-            elif not var.ui.rbtEstadoDisponibleProp.isChecked():
-                mbox = QtWidgets.QMessageBox()
-                mbox.setWindowTitle("Aviso")
-                mbox.setIcon(QtWidgets.QMessageBox.Icon.Critical)
-                mbox.setWindowIcon(QtGui.QIcon('img/logo.ico'))
-                mbox.setText("No puedes estar la propiedad no disponible sin fecha de baja")
-                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Cancel)
                 mbox.exec()
                 Propiedades.cargaTablaPropiedades(1, 0)
             else:
@@ -274,9 +266,11 @@ class Propiedades():
 
     def bajaPropiedad(self):
         try:
-            if conexion.Conexion.bajaPropiedad(
-                    int(var.ui.lblProp.text())) and not var.ui.rbtEstadoDisponibleProp.isChecked() and Propiedades.checkFechas(
-                self):
+            fechas = Propiedades.checkFechas(self)
+            disponible = var.ui.rbtEstadoDisponibleProp.isChecked()
+            baja = conexionserver.ConexionServer.bajaPropiedad(self,
+                    int(var.ui.lblProp.text()))
+            if fechas and not disponible and baja:
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
                 mbox.setWindowIcon(QtGui.QIcon('img/logo.ico'))
@@ -288,7 +282,7 @@ class Propiedades():
                 mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
                 mbox.exec()
                 Propiedades.cargaTablaPropiedades(self, 0)
-            elif var.ui.rbtEstadoDisponibleProp.isChecked():
+            elif not disponible:
                 mbox = QtWidgets.QMessageBox()
                 mbox.setWindowTitle("Aviso")
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Critical)
@@ -296,7 +290,7 @@ class Propiedades():
                 mbox.setText("No puedes dar de baja una propiedad Disponible")
                 mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Cancel)
                 mbox.exec()
-            elif Propiedades.checkFechas(self):
+            elif fechas:
                 mbox = QtWidgets.QMessageBox()
                 mbox.setWindowTitle("Aviso")
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Critical)
@@ -329,7 +323,7 @@ class Propiedades():
 
     def checkFechas(self):
         baja = var.ui.txtFechaBajaProp.text()
-        if baja == '':
+        if baja == '' or baja == 'None':
             baja = datetime.now().strftime("%d/%m/%Y")
         alta = var.ui.txtFechaProp.text()
         formato = "%d/%m/%Y"

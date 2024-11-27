@@ -14,8 +14,8 @@ class Clientes:
     def altaCliente(self):
         nuevoCli = [var.ui.txtDniCli.text(), var.ui.txtCalendarCli.text(),
                     var.ui.txtApelCli.text(), var.ui.txtNomCli.text(),
-                    var.ui.txtEmailCli.text(), var.ui.txtMovilCli.text(),
-                    var.ui.txtDirCli.text(),
+                    var.ui.txtDirCli.text(), var.ui.txtEmailCli.text(),
+                    var.ui.txtMovilCli.text(),
                     var.ui.cmbProvCli.currentText(),
                     var.ui.cmbMuniCli.currentText()]
         mensajes_error = [
@@ -23,9 +23,9 @@ class Clientes:
             "Falta ingresar fecha de alta",
             "Falta ingresar apellido",
             "Falta ingresar nombre",
+            "Falta ingresar dirección",
             None,
             "Falta ingresar móvil",
-            "Falta ingresar dirección",
             "Falta seleccionar provincia",
             "Falta seleccionar municipio"
         ]
@@ -121,8 +121,8 @@ class Clientes:
 
             listado = [var.ui.txtDniCli, var.ui.txtCalendarCli,
                        var.ui.txtApelCli, var.ui.txtNomCli,
-                       var.ui.txtEmailCli, var.ui.txtMovilCli,
-                       var.ui.txtDirCli, var.ui.cmbProvCli,
+                       var.ui.txtDirCli, var.ui.txtEmailCli,
+                       var.ui.txtMovilCli, var.ui.cmbProvCli,
                        var.ui.cmbMuniCli, var.ui.txtBajaCli]
 
             for i, casilla in enumerate(listado):
@@ -149,8 +149,8 @@ class Clientes:
 
             listado = [var.ui.txtDniCli, var.ui.txtCalendarCli,
                        var.ui.txtApelCli, var.ui.txtNomCli,
-                       var.ui.txtEmailCli, var.ui.txtMovilCli,
-                       var.ui.txtDirCli, var.ui.cmbProvCli,
+                       var.ui.txtDirCli, var.ui.txtEmailCli,
+                       var.ui.txtMovilCli, var.ui.cmbProvCli,
                        var.ui.cmbMuniCli, var.ui.txtBajaCli]
 
             for i, casilla in enumerate(listado):
@@ -194,7 +194,7 @@ class Clientes:
                     mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
                     mbox.exec()
                     return
-            if conexion.Conexion.modifCliente(registro):
+            if conexionserver.ConexionServer.modifCliente(registro):
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
                 mbox.setWindowIcon(QtGui.QIcon('img/logo.ico'))
@@ -220,7 +220,7 @@ class Clientes:
     def bajaCliente(self):
         try:
             datos = [var.ui.txtBajaCli.text(), var.ui.txtDniCli.text()]
-            if conexion.Conexion.bajaCliente(datos):
+            if conexionserver.ConexionServer.bajaCliente(datos):
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
                 mbox.setWindowIcon(QtGui.QIcon('img/logo.ico'))
