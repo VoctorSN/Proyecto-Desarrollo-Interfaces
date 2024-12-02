@@ -93,7 +93,35 @@ class Clientes:
     def cargaTablaClientes(self):
         try:
             listado = conexion.Conexion.listadoClientes(self)
-            for i, registro in enumerate(listado):
+            i=0
+            pagina = []
+            paginas = []
+            for cliente in listado:
+                if i>9:
+                    i=0
+                    paginas.append(pagina)
+                    pagina = []
+                else:
+                    pagina.append(cliente)
+                    i+=1
+
+            if i != 0:
+                paginas.append(pagina)
+
+            if len(paginas) < var.paginaCli + 1:
+                mbox = QtWidgets.QMessageBox()
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
+                mbox.setWindowTitle("Aviso")
+                mbox.setText("No hay mas paginas")
+                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+                mbox.exec()
+                var.paginaCli -= 1
+                return
+
+
+            clientes = paginas[var.paginaCli]
+
+            for i, registro in enumerate(clientes):
                 var.ui.tabClientes.setRowCount(i + 1)
 
                 var.ui.tabClientes.setItem(i, 0, QtWidgets.QTableWidgetItem(registro[0]))

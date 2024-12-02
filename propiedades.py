@@ -120,9 +120,37 @@ class Propiedades():
     def cargaTablaPropiedades(self, contexto):
         try:
             listado = conexion.Conexion.listadoPropiedades(self)
+
+            y = 0
+            pagina = []
+            paginas = []
+            for propiedad in listado:
+                if y > 5:
+                    y = 0
+                    paginas.append(pagina)
+                    pagina = []
+                else:
+                    pagina.append(propiedad)
+                    y += 1
+            if y != 0:
+                paginas.append(pagina)
+
+            if len(paginas) < var.paginaProp + 1:
+                mbox = QtWidgets.QMessageBox()
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
+                mbox.setWindowTitle("Aviso")
+                mbox.setText("No hay mas paginas")
+                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+                mbox.exec()
+                var.paginaProp -= 1
+                return
+
+            propiedades = paginas[var.paginaProp]
             var.ui.tabPropiedades.setRowCount(0)
+
             i = 0
-            for registro in listado:
+
+            for registro in propiedades:
                 if contexto == 1 and (
                         var.ui.cmbTipoProp.currentText() != registro[6] or var.ui.cmbMuniProp.currentText() != registro[
                     5]):
@@ -242,8 +270,10 @@ class Propiedades():
                 registro.append(var.ui.rbtEstadoVendidoProp.text())
             registro.append(var.ui.txtNomeProp.text())
             registro.append(var.ui.txtMovilProp.text())
+            baja = var.ui.txtFechaBajaProp.text()
+            disponible = not var.ui.rbtEstadoDisponibleProp.isChecked() and baja ==  "\""
 
-            if conexion.Conexion.modifPropiedad(registro) and not var.ui.rbtEstadoDisponibleProp.isChecked():
+            if conexion.Conexion.modifPropiedad(registro) and not disponible:
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
                 mbox.setWindowIcon(QtGui.QIcon('img/logo.ico'))
@@ -254,7 +284,7 @@ class Propiedades():
                 mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
                 mbox.exec()
                 Propiedades.cargaTablaPropiedades(1, 0)
-            elif not var.ui.rbtEstadoDisponibleProp.isChecked():
+            elif disponible:
                 mbox = QtWidgets.QMessageBox()
                 mbox.setWindowTitle("Aviso")
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Critical)

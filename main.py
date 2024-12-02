@@ -23,6 +23,8 @@ class Main(QtWidgets.QMainWindow):
         var.dlgabrir = FileDialogAbrir()
         var.dlgAbout = dlgAbout()
         self.setStyleSheet(styles.load_stylesheet())
+        var.paginaProp = 0
+        var.paginaCli = 0
         var.historico = 1
         conexion.Conexion.db_conexion(self)
 
@@ -62,6 +64,10 @@ class Main(QtWidgets.QMainWindow):
         var.ui.btnFechaBajaProp.clicked.connect(lambda: eventos.Eventos.abrirCalendar(self,3))
         var.ui.btnTipoProp.clicked.connect(lambda: propiedades.Propiedades.cargaTablaPropiedades(self, 1))
         var.ui.btnBuscarDniCli.clicked.connect(lambda: clientes.Clientes.cargaClienteDni(self))
+        var.ui.btnAnteriorProp.clicked.connect(lambda: eventos.Eventos.anteriorProp(self))
+        var.ui.btnSiguienteProp.clicked.connect(lambda: eventos.Eventos.siguienteProp(self))
+        var.ui.btnAnteriorCli.clicked.connect(lambda: eventos.Eventos.anteriorCli(self))
+        var.ui.btnSiguienteCli.clicked.connect(lambda: eventos.Eventos.siguienteCli(self))
 
         '''
         ZONA DE EVENTOS DE TEXTBOX  

@@ -342,3 +342,33 @@ class Eventos():
             var.dlgAbout.show()
         except Exception as error:
             print("error en abrir about ", error)
+
+    def anteriorProp(self):
+        try:
+            if var.paginaProp > 0:
+                var.paginaProp -= 1
+                propiedades.Propiedades.cargaTablaPropiedades(self,0)
+        except Exception as error:
+            print("error en anterior propiedades: ", error)
+
+    def siguienteProp(self):
+        try:
+            var.paginaProp += 1
+            propiedades.Propiedades.cargaTablaPropiedades(self,0)
+        except Exception as error:
+            print("error en siguiente propiedades: ", error)
+
+    def anteriorCli(self):
+        try:
+            if var.paginaCli > 0:
+                var.paginaCli -= 1
+                clientes.Clientes.cargaTablaClientes(self)
+        except Exception as error:
+            print("error en anterior clientes: ", error)
+
+    def siguienteCli(self):
+        try:
+            var.paginaCli += 1
+            clientes.Clientes.cargaTablaClientes(self)
+        except Exception as error:
+            print("error en siguiente clientes: ", error)

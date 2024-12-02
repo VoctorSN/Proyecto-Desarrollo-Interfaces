@@ -9,3 +9,5 @@ global dlgabrir
 global historico
 global dlgGestion
 global dlgAbout
+global paginaCli
+global paginaProp
