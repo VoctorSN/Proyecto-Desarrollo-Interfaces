@@ -51,6 +51,13 @@ class Clientes:
                 mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
                 mbox.exec()
                 Clientes.cargaTablaClientes(self)
+            else:
+                mbox = QtWidgets.QMessageBox()
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Critical)
+                mbox.setWindowTitle("Error")
+                mbox.setText('Error al insertar el cliente. DNI Repetido.')
+                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+                mbox.exec()
         except Exception as e:
             print(e)
             mbox = QtWidgets.QMessageBox()

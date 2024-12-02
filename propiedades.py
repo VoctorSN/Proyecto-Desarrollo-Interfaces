@@ -282,7 +282,7 @@ class Propiedades():
                 mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
                 mbox.exec()
                 Propiedades.cargaTablaPropiedades(self, 0)
-            elif not disponible:
+            elif disponible:
                 mbox = QtWidgets.QMessageBox()
                 mbox.setWindowTitle("Aviso")
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Critical)
@@ -290,7 +290,7 @@ class Propiedades():
                 mbox.setText("No puedes dar de baja una propiedad Disponible")
                 mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Cancel)
                 mbox.exec()
-            elif fechas:
+            elif not fechas:
                 mbox = QtWidgets.QMessageBox()
                 mbox.setWindowTitle("Aviso")
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Critical)
@@ -326,6 +326,8 @@ class Propiedades():
         if baja == '' or baja == 'None':
             baja = datetime.now().strftime("%d/%m/%Y")
         alta = var.ui.txtFechaProp.text()
+        if (alta == '' or alta == 'None'):
+            return True
         formato = "%d/%m/%Y"
 
         date1 = datetime.strptime(baja, formato)

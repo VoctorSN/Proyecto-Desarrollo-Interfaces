@@ -264,7 +264,7 @@ class ConexionServer():
             if conexion:
                 cursor = conexion.cursor()
                 query = """
-                INSERT INTO propiedades (altaprop, dirprop, provprop, muniprop, tipoprop, habprop, banprop, superprop, prealquiprop, prevenprop, cpprop, obserprop, nomeprop, estadoprop, tipooper, movilprop)
+                INSERT INTO propiedades (altaprop, dirprop, provprop, muniprop, tipoprop, habprop, banprop, superprop, prealquiprop, prevenprop, cpprop, obserprop, nomeprop, movilprop, tipooper, estadoprop)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                 """
                 cursor.execute(query, nuevaProp)
