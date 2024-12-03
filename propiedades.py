@@ -135,7 +135,13 @@ class Propiedades():
             if y != 0:
                 paginas.append(pagina)
 
+            var.ui.btnSiguienteProp.setDisabled(True)
+            var.ui.btnAnteriorProp.setDisabled(True)
+
             if len(paginas) < var.paginaProp + 1:
+                if var.paginaProp == 0:
+                    var.ui.tabPropiedades.setRowCount(0)
+                    return Propiedades.setTablaVaciaProp(self)
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
                 mbox.setWindowTitle("Aviso")
@@ -143,7 +149,15 @@ class Propiedades():
                 mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
                 mbox.exec()
                 var.paginaProp -= 1
+                Propiedades.cargaTablaPropiedades(self,0)
                 return
+
+
+            if len(paginas) >= var.paginaProp +2:
+                var.ui.btnSiguienteProp.setDisabled(False)
+
+            if var.paginaProp > 0:
+                var.ui.btnAnteriorProp.setDisabled(False)
 
             propiedades = paginas[var.paginaProp]
             var.ui.tabPropiedades.setRowCount(0)
@@ -184,14 +198,16 @@ class Propiedades():
                 i += 1
 
             if var.ui.tabPropiedades.rowCount() == 0:
-                var.ui.tabPropiedades.setRowCount(1)
-                var.ui.tabPropiedades.setItem(0, 2, QtWidgets.QTableWidgetItem("No hay propiedades"))
-                var.ui.tabPropiedades.item(i, 2).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft.AlignVCenter)
-                return
+                return Propiedades.setTablaVaciaProp(self)
 
         except Exception as e:
             print("Error cargar tabPropiedades", e)
 
+    def setTablaVaciaProp(self):
+        var.ui.tabPropiedades.setRowCount(1)
+        var.ui.tabPropiedades.setItem(0, 2, QtWidgets.QTableWidgetItem("No hay propiedades"))
+        var.ui.tabPropiedades.item(0, 2).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft.AlignVCenter)
+        return
 
     def cargaPropiedad(self):
         try:
@@ -330,6 +346,7 @@ class Propiedades():
                 mbox.setWindowIcon(QtGui.QIcon('img/logo.ico'))
                 mbox.setText("No puedes dar de baja una propiedad Disponible")
                 mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Cancel)
+                mbox.button(QtWidgets.QMessageBox.StandardButton.Cancel).setText('Aceptar')
                 mbox.exec()
             elif Propiedades.checkFechas(self):
                 mbox = QtWidgets.QMessageBox()
@@ -338,6 +355,7 @@ class Propiedades():
                 mbox.setWindowIcon(QtGui.QIcon('img/logo.ico'))
                 mbox.setText("No puedes dar de baja una propiedad con fecha de alta mayor a fecha de baja")
                 mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Cancel)
+                mbox.button(QtWidgets.QMessageBox.StandardButton.Cancel).setText('Aceptar')
                 mbox.exec()
             else:
                 mbox = QtWidgets.QMessageBox()
@@ -358,6 +376,7 @@ class Propiedades():
                 var.historico = 0
             else:
                 var.historico = 1
+            var.paginaProp = 0
             Propiedades.cargaTablaPropiedades(self, 0)
 
         except Exception as error:

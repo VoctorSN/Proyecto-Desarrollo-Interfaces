@@ -1,6 +1,6 @@
 import sqlite3
 
-from PyQt6 import QtWidgets, QtGui, QtCore, QtSql
+from PyQt6 import QtWidgets, QtGui, QtCore
 
 import clientes
 import conexion
@@ -41,7 +41,7 @@ class Clientes:
                 mbox.exec()
                 return
         try:
-            if conexion.Conexion.altaCliente(self,nuevoCli):
+            if conexion.Conexion.altaCliente(self, nuevoCli):
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
                 mbox.setWindowTitle("Aviso")
@@ -59,7 +59,6 @@ class Clientes:
             mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
             mbox.exec()
 
-
     def checkDni(dni):
         try:
             dni = str(dni).upper()
@@ -72,7 +71,6 @@ class Clientes:
                 var.ui.txtDniCli.setFocus()
         except Exception as error:
             print("Error en validar dni ", error)
-
 
     def checkEmail(mail):
         try:
@@ -89,34 +87,47 @@ class Clientes:
         except Exception as error:
             print("error check cliente", error)
 
-
     def cargaTablaClientes(self):
         try:
             listado = conexion.Conexion.listadoClientes(self)
-            i=0
+            var.ui.tabClientes.setRowCount(0)
+            i = 0
             pagina = []
             paginas = []
             for cliente in listado:
-                if i>9:
-                    i=0
+                if i > 9:
+                    i = 0
                     paginas.append(pagina)
                     pagina = []
                 else:
                     pagina.append(cliente)
-                    i+=1
+                    i += 1
 
-            if i != 0:
+            if pagina != []:
                 paginas.append(pagina)
 
+            var.ui.btnSiguienteCli.setDisabled(True)
+            var.ui.btnAnteriorCli.setDisabled(True)
+
             if len(paginas) < var.paginaCli + 1:
+                if var.paginaCli == 0:
+                    return Clientes.setTablaVaciaCli(self)
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
                 mbox.setWindowTitle("Aviso")
-                mbox.setText("No hay mas paginas")
+                mbox.setText("No puedes estar en una pagina vacia")
                 mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
                 mbox.exec()
                 var.paginaCli -= 1
+                Clientes.cargaTablaClientes(self)
                 return
+
+            if len(paginas)  >=  var.paginaCli +2:
+                var.ui.btnSiguienteCli.setDisabled(False)
+
+
+            if var.paginaCli > 0:
+                var.ui.btnAnteriorCli.setDisabled(False)
 
 
             clientes = paginas[var.paginaCli]
@@ -139,10 +150,19 @@ class Clientes:
                 var.ui.tabClientes.item(i, 4).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft.AlignVCenter)
                 var.ui.tabClientes.item(i, 5).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft.AlignVCenter)
                 var.ui.tabClientes.item(i, 6).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+            if var.ui.tabClientes.rowCount() == 0:
+                Clientes.setTablaVaciaCli(self)
 
         except Exception as e:
             print("Error cargar Clientes", e)
 
+    def setTablaVaciaCli(self):
+        var.ui.tabClientes.setRowCount(0)
+        var.ui.tabClientes.setRowCount(1)
+        var.ui.tabClientes.setItem(0, 2, QtWidgets.QTableWidgetItem("No hay Clientes"))
+        var.ui.tabClientes.item(0, 2).setTextAlignment(
+            QtCore.Qt.AlignmentFlag.AlignLeft.AlignVCenter)
+        return
 
     def cargaCliente(self):
         try:
@@ -154,7 +174,7 @@ class Clientes:
                        var.ui.txtApelCli, var.ui.txtNomCli,
                        var.ui.txtEmailCli, var.ui.txtMovilCli,
                        var.ui.txtDirCli, var.ui.cmbProvCli,
-                       var.ui.cmbMuniCli,var.ui.txtBajaCli]
+                       var.ui.cmbMuniCli, var.ui.txtBajaCli]
 
             for i, casilla in enumerate(listado):
                 if isinstance(casilla, QtWidgets.QComboBox):
@@ -182,9 +202,9 @@ class Clientes:
                        var.ui.txtApelCli, var.ui.txtNomCli,
                        var.ui.txtEmailCli, var.ui.txtMovilCli,
                        var.ui.txtDirCli, var.ui.cmbProvCli,
-                       var.ui.cmbMuniCli,var.ui.txtBajaCli]
+                       var.ui.cmbMuniCli, var.ui.txtBajaCli]
 
-            for i,casilla in enumerate(listado):
+            for i, casilla in enumerate(listado):
                 if isinstance(casilla, QtWidgets.QComboBox):
                     casilla.setCurrentText(registro[i])
                 else:
@@ -248,7 +268,6 @@ class Clientes:
         except Exception as error:
             print("error modificar cliente", error)
 
-
     def bajaCliente(self):
         try:
             datos = [var.ui.txtBajaCli.text(), var.ui.txtDniCli.text()]
@@ -276,7 +295,6 @@ class Clientes:
         except Exception as error:
             print("Error en baja cliente: ", error)
 
-
     @staticmethod
     def checkTelefono(telefono):
         try:
@@ -297,6 +315,7 @@ class Clientes:
                 var.historico = 0
             else:
                 var.historico = 1
+            var.paginaCli = 0
             Clientes.cargaTablaClientes(self)
 
         except Exception as error:

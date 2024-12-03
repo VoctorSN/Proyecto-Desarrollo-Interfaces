@@ -22,6 +22,11 @@ QPushButton {
     border-radius: 5px;
 }
 
+QPushButton::disabled {
+    background-color: #D3D3D3;  /* Gris claro */
+    color: black;             /* Gris oscuro */
+}
+
 QTableWidget::item:selected {
     background-color: #b5e5e5;
 }
