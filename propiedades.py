@@ -1,4 +1,5 @@
 from datetime import datetime
+from multiprocessing.resource_tracker import register
 
 from PyQt6 import QtWidgets, QtGui, QtCore, QtSql
 
@@ -13,9 +14,26 @@ class Propiedades():
     def altaTipoPropiedad(self):
         try:
             tipo = var.dlgGestion.ui.txtGestTipoProp.text().title()
-            registro = conexion.Conexion.altaTipoPropiedad(tipo)
-            if registro:
+
+            if tipo != "" and conexion.Conexion.altaTipoPropiedad(tipo):
                 eventos.Eventos.cargarTipoPropiedad(self)
+                mbox = QtWidgets.QMessageBox()
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
+                mbox.setWindowIcon(QtGui.QIcon('img/casa.ico'))
+                mbox.setWindowTitle('Aviso')
+                mbox.setText('Tipo de propiedad añadida correctamente')
+                mbox.setStandardButtons(
+                    QtWidgets.QMessageBox.StandardButton.Ok)
+                mbox.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Ok)
+                mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
+                mbox.exec()
+            elif tipo == "":
+                mbox = QtWidgets.QMessageBox()
+                mbox.setWindowTitle("Error")
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Critical)
+                mbox.setText('Tipo vacio Invalido.')
+                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+                mbox.exec()
             else:
                 mbox = QtWidgets.QMessageBox()
                 mbox.setWindowTitle("Error")
@@ -30,17 +48,32 @@ class Propiedades():
     def bajaTipoPropiedad(self):
         try:
             tipo = var.dlgGestion.ui.txtGestTipoProp.text().title()
-            registro = conexion.Conexion.bajaTipoPropiedad(tipo)
-            if registro:
-                eventos.Eventos.cargarTipoPropiedad(self)
-            else:
-                mbox = QtWidgets.QMessageBox()
-                mbox.setWindowTitle("Error")
-                mbox.setIcon(QtWidgets.QMessageBox.Icon.Critical)
-                mbox.setText('No existe el tipo.')
-                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
-                mbox.exec()
+            tipos = conexion.Conexion.cargarTipoPropiedad(self)
+            existe = tipo in tipos
             var.dlgGestion.ui.txtGestTipoProp.setText('')
+            if existe:
+                eventos.Eventos.cargarTipoPropiedad(self)
+
+
+                if conexion.Conexion.bajaTipoPropiedad(tipo):
+                    mbox = QtWidgets.QMessageBox()
+                    mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
+                    mbox.setWindowIcon(QtGui.QIcon('img/casa.ico'))
+                    mbox.setWindowTitle('Aviso')
+                    mbox.setText('Tipo de propiedad eliminada correctamente')
+                    mbox.setStandardButtons(
+                        QtWidgets.QMessageBox.StandardButton.Ok)
+                    mbox.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Ok)
+                    mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
+                    mbox.exec()
+                    return
+
+            mbox = QtWidgets.QMessageBox()
+            mbox.setWindowTitle("Error")
+            mbox.setIcon(QtWidgets.QMessageBox.Icon.Critical)
+            mbox.setText('No existe el tipo.')
+            mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+            mbox.exec()
         except Exception as error:
             print("Error en baja tipo propiedad: ", error)
 
