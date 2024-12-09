@@ -95,7 +95,7 @@ class Clientes:
             pagina = []
             paginas = []
             for cliente in listado:
-                if i > 9:
+                if i > 14:
                     i = 0
                     paginas.append(pagina)
                     pagina = []

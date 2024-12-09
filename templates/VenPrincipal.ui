@@ -22,7 +22,7 @@
     <item row="0" column="1">
      <widget class="QTabWidget" name="panPrincipal">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="pesClientes">
        <attribute name="title">
@@ -828,9 +828,9 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tabConstruccion">
+      <widget class="QWidget" name="pesProp">
        <attribute name="title">
-        <string>Tab 2</string>
+        <string>PROPIEDADES</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_3">
         <item row="0" column="0">
@@ -2080,6 +2080,11 @@
          </layout>
         </item>
        </layout>
+      </widget>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>EXAMEN</string>
+       </attribute>
       </widget>
      </widget>
     </item>
