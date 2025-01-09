@@ -9,6 +9,14 @@ import var
 
 
 class Informes:
+
+    """
+    :param self: None
+    :type self: None
+    :return: False or True
+    :rtype:
+
+    """
     @staticmethod
     def reportClientes(self):
         try:

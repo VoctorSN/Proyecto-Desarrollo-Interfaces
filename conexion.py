@@ -18,6 +18,15 @@ class Conexion:
 
     @staticmethod
     def db_conexion(self):
+        """
+
+        :param self:
+        :type self:
+        :return: True or False depending on the connection status
+        :rtype: bool
+
+        Metodo que se encarga de conectar con la base de datos y devuelve un booleano dependiendo de si se ha conectado o no
+        """
         # Verifica si el archivo de base de datos existe
         if not os.path.isfile('bbdd.sqlite'):
             QtWidgets.QMessageBox.critical(None, 'Error', 'El archivo de la base de datos no existe.',
@@ -47,6 +56,15 @@ class Conexion:
 
     @staticmethod
     def listaProv(self):
+        """
+
+        :param self:
+        :type self:
+        :return: the list of provincias
+        :rtype: list
+
+        Metodo que devuelve una lista con las provincias
+        """
         listaprov = []
         query = QtSql.QSqlQuery()
         query.prepare('SELECT * FROM provincias')
@@ -58,6 +76,15 @@ class Conexion:
 
     @staticmethod
     def listaMunicipios(provincia):
+        """
+
+        :param provincia: la provincia por la que buscar los municipios
+        :type provincia: str
+        :return: la lista de municipios de una provincia
+        :rtype: list
+
+        Metodo que devuelve una lista con los municipios de una provincia que le pasas por parametro
+        """
         try:
             listamunicipios = []
             query = QtSql.QSqlQuery()
@@ -72,6 +99,15 @@ class Conexion:
             print("error lista muni: ", error)
 
     def altaCliente(self, nuevoCli):
+        """
+
+        :param nuevoCli: datos a insertar de un nuevo cliente
+        :type nuevoCli: list
+        :return: verdadero o falso dependiendo del éxito de la operación
+        :rtype: bool
+
+        Metodo que da de alta a un cliente cogiendo los datos de este de la lista que le pasas por parametro
+        """
         try:
             query = QtSql.QSqlQuery()
             query.prepare(
@@ -96,6 +132,14 @@ class Conexion:
             print("Error en alta cliente: ", error)
 
     def listadoClientes(self):
+        """
+
+        :return: lista de los clientes no dados de baja o ambos dependiendo de la variable historico
+        :rtype: list
+
+        Metodo que devuelve una lista con los datos de los clientes, coge los datos de todos
+         o solo de los que no están dados de baja dependiendo del estado de la variable historico
+        """
         try:
             listado = []
             if var.historico == 1:
@@ -117,7 +161,17 @@ class Conexion:
         except Exception as e:
             print("Error listado en conexion", e)
 
+
     def datosOneCliente(dni):
+        """
+
+        :param dni: dni por el que buscar los datos de un cliente
+        :type dni: string
+        :return: datos de un cliente en concreto
+        :rtype: list
+
+        Metodo que devuelve una lista con los datos de un cliente con el dni de este sacado por el parametro
+        """
         try:
             registro = []
             query = QtSql.QSqlQuery()
@@ -132,6 +186,16 @@ class Conexion:
             print("Error en datos cliente: ", error)
 
     def modifCliente(registro):
+        """
+
+        :param registro: datos del cliente a modificar
+        :type registro: list
+        :return: verdadero o falso dependiendo del éxito de la operación
+        :rtype: bool
+
+        Metodo que modifica los datos de un cliente cogiendo el dni del cual le pasas por parametro
+        y usando el resto de la lista que le pasas como los datos a modificar
+        """
         try:
             query = QtSql.QSqlQuery()
             query.prepare("select count(*) from clientes where dnicli = :dni")
@@ -161,6 +225,17 @@ class Conexion:
             print("error modificar cliente", error)
 
     def bajaCliente(datos):
+        """
+
+        :param datos: fecha de baja a introducir y dni del cliente al cual damos de baja
+        :type datos: list
+        :return: verdadero o falso dependiendo del éxito de la operación
+        :rtype: bool
+
+        Metodo que da de baja a un cliente cogiendo el dni del cliente del cual le pasas por parametro
+        Este metodo no elimina el cliente de la base de datos, solo le pone la fecha de baja y asi no
+         se ve en la tabla a menos que pulses en mostrar historico
+        """
         try:
             query = QtSql.QSqlQuery()
             query.prepare("UPDATE clientes set bajacli = :bajacli WHERE dnicli = :dnicli")
@@ -176,6 +251,15 @@ class Conexion:
     """
 
     def altaTipoPropiedad(tipo):
+        """
+
+        :param tipo: tipo de propiedad que dar de alta
+        :type tipo: str
+        :return: verdadero o falso dependiendo del éxito de la operación
+        :rtype: bool
+
+        Metodo que da de alta a un tipo de propiedad cogiendo el tipo de propiedad del cual le pasas por parametro
+        """
         try:
             query = QtSql.QSqlQuery()
             query.prepare("INSERT INTO tipoPropiedad (tipo) VALUES (:tipo)")
@@ -185,6 +269,15 @@ class Conexion:
             print("Error en alta tipo propiedad: ", error)
 
     def bajaTipoPropiedad(tipo):
+        """
+
+        :param tipo: tipo de propiedad que dar de baja
+        :type tipo: str
+        :return: verdadero o falso dependiendo del éxito de la operación
+        :rtype: bool
+
+        Metodo que da de baja a un tipo de propiedad cogiendo el tipo de propiedad del cual le pasas por parametro
+        """
         try:
             query = QtSql.QSqlQuery()
             query.prepare("DELETE FROM tipoPropiedad WHERE tipo = :tipo")
@@ -194,6 +287,13 @@ class Conexion:
             print("Error en baja tipo propiedad: ", error)
 
     def cargarTipoPropiedad(self):
+        """
+
+        :return: lista de los tipos de propiedad
+        :rtype: list
+
+        Metodo que devuelve una lista con los tipos de propiedad
+        """
         try:
             query = QtSql.QSqlQuery()
             query.prepare("SELECT tipo FROM tipoPropiedad")
@@ -206,6 +306,15 @@ class Conexion:
             print("Error en cargar tipo propiedad: ", error)
 
     def altaPropiedad(propiedad):
+        """
+
+        :param propiedad: datos de la propiedad que dar de alta
+        :type propiedad: list
+        :return: verdadero o falso dependiendo del éxito de la operación
+        :rtype: bool
+
+        Metodo que da de alta a una propiedad cogiendo los datos de esta de la lista que le pasas por parametro
+        """
         try:
             query = QtSql.QSqlQuery()
             query.prepare(
@@ -236,6 +345,14 @@ class Conexion:
 
 
     def listadoPropiedades(self):
+        """
+
+        :return: lista de los datos de las propiedades no dadas de baja o ambas dependiendo de la variable historico
+        :rtype: list
+
+        Metodo que devuelve una lista con los datos de las propiedades,
+        coge los datos de todas o solo de las que no están dadas de baja dependiendo del estado de la variable historico
+        """
         try:
             listado = []
             queryStr = ""
@@ -258,6 +375,15 @@ class Conexion:
 
 
     def datosOnePropiedad(codigo):
+        """
+
+        :param codigo: propiedad que dar de alta
+        :type codigo: String
+        :return: lista de los datos de una propiedad en concreto
+        :rtype: list
+
+        Metodo que devuelve una lista con los datos de una propiedad que tenga el mismop codigo que el codigo de esta sacado por el parametro
+        """
         try:
             registro = []
             query = QtSql.QSqlQuery()
@@ -273,6 +399,17 @@ class Conexion:
 
 
     def bajaPropiedad(datos):
+        """
+
+        :param datos: fecha de baja a introducir y codigo de la propiedad al cual damos de baja
+        :type datos: int
+        :return: verdadero o falso dependiendo del éxito de la operación
+        :rtype: bool
+
+        Metodo que da de baja a una propiedad cogiendo el codigo de la propiedad del cual le pasas por parametro
+        El metodo no elimina la propiedad de la base de datos, solo le pone la fecha de baja y
+         asi no se ve en la tabla a menos que pulses en mostrar historico
+        """
         try:
             query = QtSql.QSqlQuery()
             query.prepare("UPDATE propiedades SET bajaprop = :bajaprop WHERE codigo = :codigo")
@@ -284,6 +421,15 @@ class Conexion:
 
 
     def modifPropiedad(propiedad):
+        """
+
+        :param propiedad: propiedad a modificar
+        :type propiedad: propiedad
+        :return: verdadero o falso dependiendo del éxito de la operación
+        :rtype: bool
+
+        Metodo que modifica los datos de una propiedad cogiendo el codigo de la propiedad del cual le pasas por parametro
+        """
         try:
             query = QtSql.QSqlQuery()
             query.prepare("SELECT count(*) FROM propiedades WHERE codigo = :codigo")
@@ -322,6 +468,16 @@ class Conexion:
 
 
     def altaVen(self, nuevoVen):
+        """
+
+        :param nuevoVen: datos a insertar de un nuevo vendedor
+        :type nuevoVen: list
+        :return: verdadero o falso dependiendo del éxito de la operación
+        :rtype: bool
+
+        Metodo que da de alta a un vendendor cogiendo los datos de este de la lista
+         que le pasas por parametro y elige el vendedor con el dni que está en los datos de la lista pasada por parametro
+        """
         try:
             query = QtSql.QSqlQuery()
             query.prepare(
@@ -343,6 +499,14 @@ class Conexion:
             print("Error en alta vendedor: ", error)
 
     def listadoVendedores(self):
+        """
+
+        :return: lista de los vendedores no dados de baja o ambos dependiendo de la variable historico
+        :rtype: list
+
+        Metodo que devuelve una lista con los datos de los vendedores, coge los datos de todos o solo de
+        los que no están dados de baja dependiendo de el estado de la variable historico
+        """
         try:
             listado = []
             queryStr = ""
@@ -365,6 +529,17 @@ class Conexion:
 
 
     def bajaVendedor(datos):
+        """
+
+        :param datos: id del vendedor al cual damos de baja
+        :type datos: int
+        :return: verdadero o falso dependiendo del éxito de la operación
+        :rtype: bool
+
+        Metodo que da de baja a un vendedor cogiendo el id del vendedor del cual le pasas por parametro
+        No lo elimina completamente de la base de datos, solo le pone la fecha de baja y asi no se ve en
+        la tabla a menos que pulses en mostrar historico
+        """
         try:
             query = QtSql.QSqlQuery()
             query.prepare("UPDATE vendedores SET bajaVendedor = :bajaVendedor WHERE idVendedor = :idVendedor")
@@ -377,6 +552,15 @@ class Conexion:
 
 
     def datosOneVendedor(codigo):
+        """
+
+        :param codigo: id del vendedor del cual queremos obtener los datos
+        :type codigo: codigo del vendedor
+        :return: lista de los datos de un vendedor en concreto
+        :rtype: list
+
+        Metodo que devuelve una lista con los datos de un vendedor con el id de este sacado por el parametro
+        """
         try:
             registro = []
             query = QtSql.QSqlQuery()
@@ -392,6 +576,15 @@ class Conexion:
 
 
     def datosOneVendedorDNI(self,dni):
+        """
+
+        :param dni: dni del vendedor del cual queremos obtener los datos
+        :type dni: str
+        :return: datos de un vendedor en concreto
+        :rtype: list
+
+        Metodo que devuelve una lista con los datos de un vendedor con el dni de este sacado por el parametro
+        """
         try:
             registro = []
             query = QtSql.QSqlQuery()
@@ -406,6 +599,15 @@ class Conexion:
             print("Error en datos datosOneVendedor: ", error)
 
     def datosOneVendedorMovil(self,movil):
+        """
+
+        :param movil: movil del vendedor del cual queremos obtener los datos
+        :type movil: str
+        :return: datos de un vendedor en concreto
+        :rtype: list
+
+        Metodo que devuelve una lista con los datos de un vendedor con el movil de este sacado por el parametro
+        """
         try:
             registro = []
             query = QtSql.QSqlQuery()
@@ -421,6 +623,16 @@ class Conexion:
 
 
     def modifVen(vendedor):
+        """
+
+        :param vendedor: datos del vendedor a modificar
+        :type vendedor: list
+        :return: verdadero o falso dependiendo del éxito de la operación
+        :rtype: bool
+
+        Metodo que modifica los datos de un vendedor cogiendo el dni del cual le pasas por parametro y
+         usando el resto de la lista que le pasas como los datos a modificar
+        """
         try:
             query = QtSql.QSqlQuery()
             query.prepare(
