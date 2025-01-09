@@ -11,3 +11,4 @@ global dlgGestion
 global dlgAbout
 global paginaCli
 global paginaProp
+global report

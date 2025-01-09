@@ -12,12 +12,12 @@ from xml.etree.ElementTree import indent
 
 from PyQt6 import QtWidgets
 from PyQt6.uic.Compiler.qtproxies import QtGui
-from matplotlib.font_manager import json_dump
 
 import clientes
 import conexion
 import propiedades
 import var
+import vendedores
 from propiedades import Propiedades
 
 locale.setlocale(locale.LC_MONETARY, 'es_ES.UTF-8')
@@ -44,10 +44,13 @@ class Eventos():
         listaprov = conexion.Conexion.listaProv(self)
         cmbProvCli = var.ui.cmbProvCli
         cmbProvProp = var.ui.cmbProvProp
+        cmbProvVen = var.ui.cmbProvVen
         cmbProvCli.clear()
         cmbProvCli.addItems(listaprov)
         cmbProvProp.clear()
         cmbProvProp.addItems(listaprov)
+        cmbProvVen.clear()
+        cmbProvVen.addItems(listaprov)
 
     @staticmethod
     def cargarMuniCli():
@@ -86,7 +89,6 @@ class Eventos():
         try:
             var.btn = btn
             var.uicalendar.show()
-            propiedades.Propiedades.changeRadioProp(self,True)
         except Exception as error:
             print("error en abrir calendar ", error)
 
@@ -101,6 +103,10 @@ class Eventos():
                 var.ui.txtFechaProp.setText(str(data))
             elif var.btn == 3:
                 var.ui.txtFechaBajaProp.setText(str(data))
+            elif var.btn == 4:
+                var.ui.txtFechaVen.setText(str(data))
+            elif var.btn == 5:
+                var.ui.txtFechaBajaVen.setText(str(data))
             time.sleep(0.5)
             var.uicalendar.hide()
             return data
@@ -372,3 +378,48 @@ class Eventos():
             clientes.Clientes.cargaTablaClientes(self)
         except Exception as error:
             print("error en siguiente clientes: ", error)
+
+    def resizeTablaVendedores(self):
+        try:
+            header = var.ui.tabVendedores.horizontalHeader()
+            for i in range(header.count()):
+                if i == 1 or i == 3:
+                    header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeMode.Stretch)
+                else:
+                    header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeMode.ResizeToContents)
+                header_items = var.ui.tabVendedores.horizontalHeaderItem(i)
+                font = header_items.font()
+                font.setBold(True)
+                header_items.setFont(font)
+        except Exception as e:
+            print("error en resize tabla propiedades: ", e)
+
+    def exportJSONVen(self):
+        try:
+            fecha = datetime.today()
+            fecha = fecha.strftime('%Y_%m_%d_%H_%M_%S')
+            file = str(fecha + "DatosVendedores.json")
+            directorio,fichero = var.dlgabrir.getSaveFileName(None,"Exporta Datos en JSON", file,'.json')
+            if fichero:
+                keys = ["ID","DNI","Nombre","Alta","Baja","Movil","Email","Delegacion"]
+                historicoGuardar = var.historico
+                var.historico = 0
+                registros = conexion.Conexion.listadoVendedores(self)
+                var.historico = historicoGuardar
+                listaVendedores = [dict(zip(keys,registro)) for registro in registros]
+                with open(fichero,"w",newline="",encoding="utf-8") as jsonfile:
+                    json.dump(listaVendedores, jsonfile, ensure_ascii=False, indent = 4)
+                shutil.move(fichero,directorio)
+            else:
+                mbox = QtWidgets.QMessageBox()
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
+                mbox.setWindowIcon(QtGui.QIcon("./img/logo.ico"))
+                mbox.setWindowTitle('Error')
+                mbox.setText('Error en la exportacion de json en vendedores')
+                mbox.setStandardButtons(
+                    QtWidgets.QMessageBox.StandardButton.Ok)
+                mbox.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Ok)
+                mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
+                mbox.exec()
+        except Exception as e:
+            print(e)

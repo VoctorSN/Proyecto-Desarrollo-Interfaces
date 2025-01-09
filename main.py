@@ -7,6 +7,8 @@ import eventos
 import propiedades
 import styles
 import var
+import vendedores
+from informes import Informes
 from propiedades import Propiedades
 from venPrincipal import Ui_venPrincipal
 from venAux import *
@@ -37,6 +39,9 @@ class Main(QtWidgets.QMainWindow):
         propiedades.Propiedades.cargaTablaPropiedades(self,0)
         eventos.Eventos.resizeTablaPropiedades(self)
         var.ui.tabPropiedades.clicked.connect(propiedades.Propiedades.cargaPropiedad)
+        vendedores.Vendedores.cargaTablaVendedores(self,0)
+        eventos.Eventos.resizeTablaVendedores(self)
+        var.ui.tabVendedores.clicked.connect(vendedores.Vendedores.cargaVendedor)
 
         '''
         ZONA DE EVENTOS DEL MENUBAR
@@ -48,6 +53,8 @@ class Main(QtWidgets.QMainWindow):
         var.ui.actionExportar_Clientes_CSV.triggered.connect(eventos.Eventos.exportCSVProp)
         var.ui.actionExportar_Clientes_JSON.triggered.connect(eventos.Eventos.exportJSONProp)
         var.ui.actionAbout.triggered.connect(eventos.Eventos.abrirAbout)
+        var.ui.actionExportar_Vendedores_JSON.triggered.connect(eventos.Eventos.exportJSONVen)
+        var.ui.actionListado_Clientes.triggered.connect(Informes.reportClientes)
 
         '''
         ZONA DE EVENTOS DE BOTONES
@@ -68,6 +75,12 @@ class Main(QtWidgets.QMainWindow):
         var.ui.btnSiguienteProp.clicked.connect(lambda: eventos.Eventos.siguienteProp(self))
         var.ui.btnAnteriorCli.clicked.connect(lambda: eventos.Eventos.anteriorCli(self))
         var.ui.btnSiguienteCli.clicked.connect(lambda: eventos.Eventos.siguienteCli(self))
+        var.ui.btnGrabarVen.clicked.connect(vendedores.Vendedores.altaVendedor)
+        var.ui.btnModifVen.clicked.connect(vendedores.Vendedores.modifVen)
+        var.ui.btnDelVen.clicked.connect(vendedores.Vendedores.bajaVendedor)
+        var.ui.btnFechaVen.clicked.connect(lambda: eventos.Eventos.abrirCalendar(self,4))
+        var.ui.btnFechaBajaVen.clicked.connect(lambda: eventos.Eventos.abrirCalendar(self,5))
+        var.ui.btnBuscarMovilVen.clicked.connect(lambda: vendedores.Vendedores.cargaVendedorMovil(self))
 
         '''
         ZONA DE EVENTOS DE TEXTBOX  
@@ -78,6 +91,9 @@ class Main(QtWidgets.QMainWindow):
         var.ui.txtPrecioVentaProp.textEdited.connect(lambda: propiedades.Propiedades.checkVentaProp(self))
         var.ui.txtPrecioAlquilerProp.textChanged.connect(lambda: propiedades.Propiedades.checkAlquilerProp(self))
         var.ui.txtFechaBajaProp.textChanged.connect(lambda: propiedades.Propiedades.checkBajaProp(self))
+        var.ui.txtDniVen.editingFinished.connect(lambda: vendedores.Vendedores.checkDni(var.ui.txtDniVen.text()))
+        var.ui.txtEmailVen.editingFinished.connect(lambda: vendedores.Vendedores.checkEmail(var.ui.txtEmailVen.text()))
+        var.ui.txtMovilVen.editingFinished.connect(lambda: vendedores.Vendedores.checkTelefono(var.ui.txtMovilVen.text()))
 
         '''
         ZONA DE EVENTOS DE COMBOX  
@@ -101,6 +117,7 @@ class Main(QtWidgets.QMainWindow):
         '''
         var.ui.chkHistoriaCli.stateChanged.connect(clientes.Clientes.historicoCli)
         var.ui.chkHistoriaProp.stateChanged.connect(propiedades.Propiedades.historicoProp)
+        var.ui.chkHistoricoVen.stateChanged.connect(vendedores.Vendedores.historicoVen)
         propiedades.Propiedades.checkBajaProp(self)
         propiedades.Propiedades.checkVentaProp(self)
         propiedades.Propiedades.checkAlquilerProp(self)
