@@ -12,3 +12,4 @@ global dlgAbout
 global paginaCli
 global paginaProp
 global report
+global dlgListadoProp

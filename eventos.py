@@ -254,6 +254,12 @@ class Eventos():
         except Exception as error:
             print("error en abrir tipo propiedades: ", error)
 
+    def abrirListadoPropidades(self):
+        try:
+            var.dlgListadoProp.show()
+        except Exception as error:
+            print("error en abrir Listado Propidades: ", error)
+
     def cargarTipoPropiedad(self):
         try:
             registro = conexion.Conexion.cargarTipoPropiedad(self)

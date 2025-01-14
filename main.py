@@ -29,6 +29,7 @@ class Main(QtWidgets.QMainWindow):
         var.paginaCli = 0
         var.historico = 1
         conexion.Conexion.db_conexion(self)
+        var.dlgListadoProp = dlg_listadoPropiedades()
 
         '''
         EVENTOS DE TABLAS
@@ -55,6 +56,7 @@ class Main(QtWidgets.QMainWindow):
         var.ui.actionAbout.triggered.connect(eventos.Eventos.abrirAbout)
         var.ui.actionExportar_Vendedores_JSON.triggered.connect(eventos.Eventos.exportJSONVen)
         var.ui.actionListado_Clientes.triggered.connect(Informes.reportClientes)
+        var.ui.actionListado_Propiedades.triggered.connect(eventos.Eventos.abrirListadoPropidades)
 
         '''
         ZONA DE EVENTOS DE BOTONES

@@ -161,7 +161,6 @@ class Conexion:
         except Exception as e:
             print("Error listado en conexion", e)
 
-
     def datosOneCliente(dni):
         """
 
@@ -343,7 +342,6 @@ class Conexion:
         except Exception as e:
             print("error altaPropiedad en conexion", e)
 
-
     def listadoPropiedades(self):
         """
 
@@ -372,8 +370,6 @@ class Conexion:
         except Exception as e:
             print("Error listado en conexion", e)
 
-
-
     def datosOnePropiedad(codigo):
         """
 
@@ -397,7 +393,6 @@ class Conexion:
         except Exception as error:
             print("Error en datos datosOnePropiedad: ", error)
 
-
     def bajaPropiedad(datos):
         """
 
@@ -418,7 +413,6 @@ class Conexion:
             return query.exec()
         except Exception as error:
             print("Error en baja propiedad: ", error)
-
 
     def modifPropiedad(propiedad):
         """
@@ -464,8 +458,6 @@ class Conexion:
             return False
         except Exception as error:
             print("Error modificar propiedad", error)
-
-
 
     def altaVen(self, nuevoVen):
         """
@@ -526,8 +518,6 @@ class Conexion:
         except Exception as e:
             print("Error listado en conexion", e)
 
-
-
     def bajaVendedor(datos):
         """
 
@@ -548,8 +538,6 @@ class Conexion:
             return query.exec()
         except Exception as error:
             print("Error en baja propiedad: ", error)
-
-
 
     def datosOneVendedor(codigo):
         """
@@ -574,8 +562,7 @@ class Conexion:
         except Exception as error:
             print("Error en datos datosOneVendedor: ", error)
 
-
-    def datosOneVendedorDNI(self,dni):
+    def datosOneVendedorDNI(self, dni):
         """
 
         :param dni: dni del vendedor del cual queremos obtener los datos
@@ -598,7 +585,7 @@ class Conexion:
         except Exception as error:
             print("Error en datos datosOneVendedor: ", error)
 
-    def datosOneVendedorMovil(self,movil):
+    def datosOneVendedorMovil(self, movil):
         """
 
         :param movil: movil del vendedor del cual queremos obtener los datos
@@ -620,7 +607,6 @@ class Conexion:
             return registro
         except Exception as error:
             print("Error en datos datosOneVendedor: ", error)
-
 
     def modifVen(vendedor):
         """
@@ -651,3 +637,16 @@ class Conexion:
             return query.exec()
         except Exception as error:
             print("Error modificar vendedor", error)
+
+    def listaMunicipiosTexto(self):
+        try:
+            listamunicipios = []
+            query = QtSql.QSqlQuery()
+            print(query.exec("SELECT * FROM municipios"))
+            if query.exec("SELECT * FROM municipios"):
+                while query.next():
+                    listamunicipios.append(query.value("municipio"))
+            print(listamunicipios)
+            return listamunicipios
+        except Exception as error:
+            print("error lista muniText: ", error)
