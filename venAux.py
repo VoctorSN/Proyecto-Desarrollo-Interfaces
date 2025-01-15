@@ -52,7 +52,6 @@ class dlg_listadoPropiedades(QtWidgets.QDialog):
         provincias = conexion.Conexion.listaMunicipiosTexto(self)
         self.ui.chkElegirProp.addItem("")
         self.ui.chkElegirProp.addItems(provincias)
-        print(provincias)
 
         completer = QtWidgets.QCompleter(provincias,self)
         completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)

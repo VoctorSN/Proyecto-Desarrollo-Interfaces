@@ -38,7 +38,7 @@ class Informes:
             query0.exec("select count(*) from clientes")
             if(query0.next()):
                 registros = int(query0.value(0))
-                paginas = int(registros / 20) + 1
+                paginas = int(registros / 22) + 1
             Informes.footInforme(titulo, paginas)
             items = ['DNI', 'APELLIDOS', 'NOMBRE', 'MOVIL', 'PROVINCIA', 'MUNICIPIO']
             var.report.setFont('Helvetica-Bold', size=10)
@@ -90,11 +90,73 @@ class Informes:
             print(error)
 
     @staticmethod
-    def reportPropiedades(provincia):
+    def reportPropiedades(municipio):
         try:
-            paginas = 1
-            print("se ejecuto " + provincia)
+            rootPath = '.\\informes'
+            if not os.path.exists(rootPath):
+                os.makedirs(rootPath)
+            fecha = datetime.today()
+            fecha = fecha.strftime("%Y_%m_%d_%H_%M_%S")
+            nomepdfprop = fecha + "_listadopropiedades.pdf"
+            pdf_path = os.path.join(rootPath, nomepdfprop)
+            var.report = canvas.Canvas(pdf_path)
+            titulo = "Listado Propiedades"
+            Informes.topInforme(titulo)
 
+            # Calculate total pages
+
+            paginas = 0
+            query0 = QtSql.QSqlQuery()
+            print(municipio)
+            query0.exec("select count(*) from propiedades where muniprop = '" + municipio + "'")
+            if (query0.next()):
+                registros = int(query0.value(0))
+                print(registros)
+                paginas = int(registros / 22) + 1
+                print(paginas)
+            Informes.footInforme(titulo, paginas)
+            items = ['CODIGO', 'DIRECCIÓN', 'TIPO OPERACION', 'PRECIO ALQUILER', 'PRECIO VENTA']
+            var.report.setFont('Helvetica-Bold', size=10)
+            var.report.drawString(55, 650, str(items[0]))  # DNI
+            var.report.drawString(100, 650, str(items[1]))  # APELLIDOS
+            var.report.drawString(190, 650, str(items[2]))  # NOMBRE
+            var.report.drawString(280, 650, str(items[3]))  # MOVIL
+            var.report.drawString(360, 650, str(items[4]))  # PROVINCIA
+            var.report.line(50, 645, 525, 645)
+            query0.prepare("SELECT codigo, dirprop, tipooper, prealquiprop, prevenprop from propiedades where muniprop = '" + municipio + "'")
+            if query0.exec():
+                x = 60
+                y = 630
+                while query0.next():
+                    if y <= 90:
+                        var.report.setFont('Helvetica-Oblique', size=8)  # HELVETICA OBLIQUE PARA LA FUENTE ITALIC
+                        var.report.drawString(450, 80, 'Página siguiente...')
+                        var.report.showPage()  # CREAMOS UNA PAGINA NUEVA
+                        Informes.topInforme(titulo)
+                        Informes.footInforme(titulo, paginas)
+                        items = ['CODIGO', 'DIRECCIÓN', 'TIPO OPERACION', 'PRECIO ALQUILER', 'PRECIO VENTA']
+                        var.report.setFont('Helvetica-Bold', size=10)
+                        var.report.drawString(55, 650, str(items[0]))  # DNI
+                        var.report.drawString(100, 650, str(items[1]))  # APELLIDOS
+                        var.report.drawString(190, 650, str(items[2]))  # NOMBRE
+                        var.report.drawString(280, 650, str(items[3]))  # MOVIL
+                        var.report.drawString(360, 650, str(items[4]))  # PROVINCIA
+                        var.report.line(50, 645, 525, 645)
+                        x = 60
+                        y = 630
+
+                    var.report.setFont('Helvetica', size=8)
+                    var.report.drawCentredString(x + 5, y, str(query0.value(0)))  # DNI
+                    var.report.drawString(x + 40, y, str(query0.value(1)))  # APELLIDOS
+                    var.report.drawString(x + 130, y, str(query0.value(2)))  # NOMBRE
+                    var.report.drawString(x + 220, y, str(query0.value(3)) + '€')  # MOVIL
+                    var.report.drawString(x + 310, y, str(query0.value(4)) + '€')  # PROVINCIA
+                    y = y - 25.
+
+            var.report.save()
+            for file in os.listdir(rootPath):
+                if file.endswith(nomepdfprop):
+                    os.startfile(pdf_path)
         except Exception as error:
             print(error)
 

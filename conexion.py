@@ -642,11 +642,9 @@ class Conexion:
         try:
             listamunicipios = []
             query = QtSql.QSqlQuery()
-            print(query.exec("SELECT * FROM municipios"))
             if query.exec("SELECT * FROM municipios"):
                 while query.next():
                     listamunicipios.append(query.value("municipio"))
-            print(listamunicipios)
             return listamunicipios
         except Exception as error:
             print("error lista muniText: ", error)

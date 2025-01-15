@@ -182,6 +182,8 @@ class Clientes:
                 else:
                     casilla.setText(registro[i])
 
+            var.ui.txtDniFac.setText(registro[0])
+
         except Exception as e:
             print("Error cargar Clientes", e)
 

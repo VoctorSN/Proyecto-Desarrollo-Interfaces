@@ -70,6 +70,7 @@ class Main(QtWidgets.QMainWindow):
         var.ui.btnModifProp.clicked.connect(propiedades.Propiedades.modifPropiedad)
         var.ui.btnDelProp.clicked.connect(propiedades.Propiedades.bajaPropiedad)
         var.ui.btnFechaProp.clicked.connect(lambda: eventos.Eventos.abrirCalendar(self,2))
+        var.ui.btnCalendarFac.clicked.connect(lambda: eventos.Eventos.abrirCalendar(self,6))
         var.ui.btnFechaBajaProp.clicked.connect(lambda: eventos.Eventos.abrirCalendar(self,3))
         var.ui.btnTipoProp.clicked.connect(lambda: propiedades.Propiedades.cargaTablaPropiedades(self, 1))
         var.ui.btnBuscarDniCli.clicked.connect(lambda: clientes.Clientes.cargaClienteDni(self))

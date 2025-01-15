@@ -107,6 +107,8 @@ class Eventos():
                 var.ui.txtFechaVen.setText(str(data))
             elif var.btn == 5:
                 var.ui.txtFechaBajaVen.setText(str(data))
+            elif var.btn == 6:
+                var.ui.txtFechaFac.setText(str(data))
             time.sleep(0.5)
             var.uicalendar.hide()
             return data
