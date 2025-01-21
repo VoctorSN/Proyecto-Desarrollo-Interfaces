@@ -1,9 +1,11 @@
 import sys
+from math import factorial
 
 import clientes
 import conexion
 import conexionserver
 import eventos
+import facturas
 import propiedades
 import styles
 import var
@@ -43,6 +45,8 @@ class Main(QtWidgets.QMainWindow):
         vendedores.Vendedores.cargaTablaVendedores(self,0)
         eventos.Eventos.resizeTablaVendedores(self)
         var.ui.tabVendedores.clicked.connect(vendedores.Vendedores.cargaVendedor)
+        facturas.Facturas.cargaTablaFacturas(self)
+        eventos.Eventos.resizeTablaFacturas(self)
 
         '''
         ZONA DE EVENTOS DEL MENUBAR
@@ -84,6 +88,7 @@ class Main(QtWidgets.QMainWindow):
         var.ui.btnFechaVen.clicked.connect(lambda: eventos.Eventos.abrirCalendar(self,4))
         var.ui.btnFechaBajaVen.clicked.connect(lambda: eventos.Eventos.abrirCalendar(self,5))
         var.ui.btnBuscarMovilVen.clicked.connect(lambda: vendedores.Vendedores.cargaVendedorMovil(self))
+        var.ui.btnGrabarFacturaFac.clicked.connect(facturas.Facturas.altaFactura)
 
         '''
         ZONA DE EVENTOS DE TEXTBOX  

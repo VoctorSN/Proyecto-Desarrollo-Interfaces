@@ -431,3 +431,15 @@ class Eventos():
                 mbox.exec()
         except Exception as e:
             print(e)
+
+    def resizeTablaFacturas(self):
+        try:
+            header = var.ui.tabFacturas.horizontalHeader()
+            for i in range(header.count()):
+                header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeMode.Stretch)
+                header_items = var.ui.tabVendedores.horizontalHeaderItem(i)
+                font = header_items.font()
+                font.setBold(True)
+                header_items.setFont(font)
+        except Exception as e:
+            print("error en resize tabla facturas: ", e)

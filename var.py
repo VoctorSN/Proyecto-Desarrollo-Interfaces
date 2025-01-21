@@ -13,3 +13,4 @@ global paginaCli
 global paginaProp
 global report
 global dlgListadoProp
+global botondel

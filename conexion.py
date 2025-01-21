@@ -648,3 +648,55 @@ class Conexion:
             return listamunicipios
         except Exception as error:
             print("error lista muniText: ", error)
+
+
+    def altaFactura(self, nuevaFac):
+        """
+
+        :param nuevoVen: datos a insertar de un nuevo vendedor
+        :type nuevoVen: list
+        :return: verdadero o falso dependiendo del éxito de la operación
+        :rtype: bool
+
+        Metodo que da de alta a un vendendor cogiendo los datos de este de la lista
+         que le pasas por parametro y elige el vendedor con el dni que está en los datos de la lista pasada por parametro
+        """
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare(
+                "INSERT INTO facturas (dnifac,fechafac) "
+                " VALUES (:dni, :fecha)")
+            query.bindValue(":dni", str(nuevaFac[0]))
+            query.bindValue(":fecha", str(nuevaFac[1]))
+            if query.exec():
+                return True
+            else:
+                return False
+        except sqlite3.Error as e:
+            print(e)
+        except Exception as error:
+            print("Error en alta factura: ", error)
+
+
+    def listadoFacturas(self):
+        """
+
+        :return: lista de los datos de las propiedades no dadas de baja o ambas dependiendo de la variable historico
+        :rtype: list
+
+        Metodo que devuelve una lista con los datos de las propiedades,
+        coge los datos de todas o solo de las que no están dadas de baja dependiendo del estado de la variable historico
+        """
+        try:
+            listado = []
+            queryStr = "SELECT * FROM facturas "
+
+            query = QtSql.QSqlQuery()
+            query.prepare(queryStr)
+            if query.exec():
+                while query.next():
+                    fila = [query.value(i) for i in range(query.record().count())]
+                    listado.append(fila)
+            return listado
+        except Exception as e:
+            print("Error listado en facturas", e)
