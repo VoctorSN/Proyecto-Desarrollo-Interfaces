@@ -700,3 +700,26 @@ class Conexion:
             return listado
         except Exception as e:
             print("Error listado en facturas", e)
+
+    def datosOneFactura(codigo):
+        """
+
+        :param codigo: id del vendedor del cual queremos obtener los datos
+        :type codigo: codigo del vendedor
+        :return: lista de los datos de un vendedor en concreto
+        :rtype: list
+
+        Metodo que devuelve una lista con los datos de un vendedor con el id de este sacado por el parametro
+        """
+        try:
+            registro = []
+            query = QtSql.QSqlQuery()
+            query.prepare("SELECT * FROM facturas WHERE id = :idVendedor")
+            query.bindValue(":idVendedor", str(codigo))
+            if query.exec():
+                while query.next():
+                    for i in range(query.record().count()):
+                        registro.append(query.value(i))
+            return registro
+        except Exception as error:
+            print("Error en datos datosOneFactura: ", error)

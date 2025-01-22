@@ -105,3 +105,27 @@ class Facturas():
         var.ui.tabFacturas.setItem(0, 1, QtWidgets.QTableWidgetItem("No hay facturas"))
         var.ui.tabFacturas.item(0, 1).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft.AlignVCenter)
         return
+
+    def cargaOneFactura(self):
+        try:
+            fila = var.ui.tabFacturas.selectedItems()
+            datos = [dato.text() for dato in fila]
+            if(datos[0] == "No hay Facturas"):
+                return
+            registro = conexion.Conexion.datosOneFactura(str(datos[0]))
+
+            listado = [var.ui.txtNumFac, var.ui.txtFechaFac,
+                       var.ui.txtDniFac]
+
+            for i, casilla in enumerate(listado):
+                if isinstance(casilla, QtWidgets.QComboBox):
+                    casilla.setCurrentText(str(registro[i]))
+                elif isinstance(casilla, QtWidgets.QLabel):
+                    casilla.setText(str(registro[i]))
+                elif isinstance(casilla, QtWidgets.QLineEdit):
+                    casilla.setText(str(registro[i]))
+                else:
+                    casilla.setText(str(registro[i]))
+
+        except Exception as e:
+            print("Error cargar Vendedor", e)

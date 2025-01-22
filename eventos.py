@@ -387,6 +387,21 @@ class Eventos():
         except Exception as error:
             print("error en siguiente clientes: ", error)
 
+    def resizeTablaVentas(self):
+        try:
+            header = var.ui.tabVentasFac.horizontalHeader()
+            for i in range(header.count()):
+                if i not in (1,0,4):
+                    header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeMode.Stretch)
+                else:
+                    header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeMode.ResizeToContents)
+                header_items = var.ui.tabVendedores.horizontalHeaderItem(i)
+                font = header_items.font()
+                font.setBold(True)
+                header_items.setFont(font)
+        except Exception as e:
+            print("error en resize tabla ventas Ventas: ", e)
+
     def resizeTablaVendedores(self):
         try:
             header = var.ui.tabVendedores.horizontalHeader()
