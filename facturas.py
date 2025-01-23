@@ -15,9 +15,8 @@ from datetime import datetime
 
 class Facturas():
 
-    def deleteFactura(self):
-        print("borrando factura")
 
+    botonesdel = []
 
     def altaFactura(self):
         nuevaFac = [var.ui.txtDniFac.text(), var.ui.txtFechaFac.text()]
@@ -56,8 +55,6 @@ class Facturas():
             mbox.exec()
         Facturas.cargaTablaFacturas(self)
 
-
-
     def cargaTablaFacturas(self):
         try:
             listado = conexion.Conexion.listadoFacturas(self)
@@ -70,15 +67,15 @@ class Facturas():
 
                 var.ui.tabFacturas.setRowCount(i + 1)
 
-                container = QWidget()
-                layout = QVBoxLayout()
-                var.botondel = QPushButton()
-                var.botondel.setFixedSize(30, 20)
-                var.botondel.setIcon(QIcon("./img/papelera.ico"))
-                var.botondel.setStyleSheet("background-color: #efefef;")
-                var.botondel.clicked.connect(Facturas.deleteFactura)
-                layout.addWidget(var.botondel)
-                layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
+                container = QtWidgets.QWidget()
+                layout = QtWidgets.QVBoxLayout()          
+                Facturas.botonesdel.append(QtWidgets.QPushButton())
+                Facturas.botonesdel[-1].setFixedSize(30, 20)
+                Facturas.botonesdel[-1].setIcon(QtGui.QIcon("./img/papelera.ico"))
+                Facturas.botonesdel[-1].setStyleSheet("background-color: #efefef;")
+                Facturas.botonesdel[-1].clicked.connect(lambda checked: Facturas.eliminar_factura(self,str(registro[0])))
+                layout.addWidget(Facturas.botonesdel[-1])
+                layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
                 layout.setContentsMargins(0, 0, 0, 0)
                 layout.setSpacing(0)
                 container.setLayout(layout)
@@ -129,3 +126,29 @@ class Facturas():
 
         except Exception as e:
             print("Error cargar Vendedor", e)
+
+    def eliminar_factura(self,idFactura):
+        try:
+            msgbox = QtWidgets.QMessageBox()
+            msgbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
+            msgbox.setWindowIcon(QtGui.QIcon('./img/logo.ico'))
+            msgbox.setWindowTitle('Aviso')
+            msgbox.setText("Desea Eliminar la Factura")
+            msgbox.setStandardButtons(
+                QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No)
+            msgbox.button(QtWidgets.QMessageBox.StandardButton.Yes).setText('Si')
+            if msgbox.exec():
+                if conexion.Conexion.delFactura(self, int(idFactura)):
+                    msgbox = QtWidgets.QMessageBox()
+                    msgbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
+                    msgbox.setWindowIcon(QtGui.QIcon('./img/logo.ico'))
+                    msgbox.setWindowTitle('Aviso')
+                    msgbox.setText("Factura Eliminada")
+                    msgbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+                    msgbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
+                    msgbox.exec()
+                    Facturas.cargaTablaFacturas(self)
+            else:
+                msgbox.hide()
+        except Exception as error:
+            print("Eliminar facturade ", error)

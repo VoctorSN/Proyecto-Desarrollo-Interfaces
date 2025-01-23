@@ -15,6 +15,7 @@ from PyQt6.uic.Compiler.qtproxies import QtGui
 
 import clientes
 import conexion
+import facturas
 import propiedades
 import var
 import vendedores
@@ -186,55 +187,48 @@ class Eventos():
 
     def limpiarPanel(self):
         try:
-            if var.ui.panPrincipal.currentIndex() == 0:
-                listado = [var.ui.txtDniCli, var.ui.txtCalendarCli,
+
+
+            listado = [var.ui.txtDniCli, var.ui.txtCalendarCli,
                            var.ui.txtApelCli, var.ui.txtNomCli,
                            var.ui.txtEmailCli, var.ui.txtMovilCli,
                            var.ui.txtDirCli, var.ui.cmbProvCli, var.ui.cmbMuniCli,
-                           var.ui.txtBajaCli]
+                           var.ui.txtBajaCli,var.ui.lblProp, var.ui.txtFechaProp,
+                       var.ui.txtFechaBajaProp, var.ui.txtDirProp,
+                       var.ui.cmbProvProp, var.ui.cmbMuniProp,
+                       var.ui.cmbTipoProp, var.ui.spinHabProp, var.ui.spinBanosProp,
+                       var.ui.txtSuperProp, var.ui.txtPrecioAlquilerProp, var.ui.txtPrecioVentaProp,
+                       var.ui.txtCPProp, var.ui.areatxtDescripProp, var.ui.chkAlquilerProp,
+                       var.ui.chkIntercambioProp, var.ui.chkVentaProp, var.ui.rbtEstadoDisponibleProp,
+                       var.ui.rbtEstadoAlquiladoProp, var.ui.rbtEstadoVendidoProp, var.ui.txtNomeProp,
+                       var.ui.txtMovilProp,var.ui.lblVen,var.ui.lblProvVen,var.ui.cmbProvVen,
+                       var.ui.txtDniVen,var.ui.txtMovilVen,var.ui.txtEmailVen,var.ui.txtNombreVen,
+                       var.ui.txtFechaBajaVen,var.ui.txtFechaVen,var.ui.txtDniFac,var.ui.txtFechaFac,
+                       var.ui.txtNumFac,var.ui.txtIdVendedorFac,var.ui.txtApelFac,var.ui.txtNomFac,
+                       var.ui.txtDirFac,var.ui.txtTipoFac,var.ui.txtLocalidadFac,var.ui.txtPrecioFac,
+                       var.ui.txtCodigoVentaFac]
 
-                for casilla in listado:
-                    if isinstance(casilla, QtWidgets.QComboBox):
-                        casilla.setCurrentText("")
-                    elif isinstance(casilla, QtWidgets.QTextEdit):
-                        casilla.setPlainText("")
-                    else:
-                        casilla.setText("")
-
-                Eventos.cargarProv(self)
-                var.ui.cmbMuniCli.clear()
-                clientes.Clientes.cargaTablaClientes(self)
-                propiedades.Propiedades.cargaTablaPropiedades(self, 0)
-
-            elif var.ui.panPrincipal.currentIndex() == 1:
-                listado = [var.ui.lblProp, var.ui.txtFechaProp,
-                           var.ui.txtFechaBajaProp, var.ui.txtDirProp,
-                           var.ui.cmbProvProp, var.ui.cmbMuniProp,
-                           var.ui.cmbTipoProp, var.ui.spinHabProp, var.ui.spinBanosProp,
-                           var.ui.txtSuperProp, var.ui.txtPrecioAlquilerProp, var.ui.txtPrecioVentaProp,
-                           var.ui.txtCPProp, var.ui.areatxtDescripProp, var.ui.chkAlquilerProp,
-                           var.ui.chkIntercambioProp, var.ui.chkVentaProp, var.ui.rbtEstadoDisponibleProp,
-                           var.ui.rbtEstadoAlquiladoProp, var.ui.rbtEstadoVendidoProp, var.ui.txtNomeProp,
-                           var.ui.txtMovilProp]
-
-                for casilla in listado:
-                    if isinstance(casilla, QtWidgets.QComboBox):
-                        casilla.setCurrentText("")
-                    elif isinstance(casilla, QtWidgets.QCheckBox):
-                        casilla.setChecked(False)
-                    elif isinstance(casilla, QtWidgets.QRadioButton):
-                        var.ui.rbtEstadoDisponibleProp.setChecked(True)
-                    elif isinstance(casilla, QtWidgets.QSpinBox):
-                        casilla.setValue(0)
-                    elif isinstance(casilla, QtWidgets.QTextEdit):
-                        casilla.setPlainText("")
-                    else:
-                        casilla.setText("")
+            for casilla in listado:
+                if isinstance(casilla, QtWidgets.QComboBox):
+                    casilla.setCurrentText("")
+                elif isinstance(casilla, QtWidgets.QCheckBox):
+                    casilla.setChecked(False)
+                elif isinstance(casilla, QtWidgets.QRadioButton):
+                    var.ui.rbtEstadoDisponibleProp.setChecked(True)
+                elif isinstance(casilla, QtWidgets.QSpinBox):
+                    casilla.setValue(0)
+                elif isinstance(casilla, QtWidgets.QTextEdit):
+                    casilla.setPlainText("")
+                else:
+                    casilla.setText("")
 
                 Eventos.cargarProv(self)
                 var.ui.cmbMuniCli.clear()
+                var.ui.cmbMuniProp.clear()
                 clientes.Clientes.cargaTablaClientes(self)
                 propiedades.Propiedades.cargaTablaPropiedades(self, 0)
+                vendedores.Vendedores.cargaTablaVendedores(self,0)
+                facturas.Facturas.cargaTablaFacturas(self)
 
         except Exception as error:
             print("Error en limpiar panel: ", error)

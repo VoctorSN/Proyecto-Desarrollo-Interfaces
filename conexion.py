@@ -701,6 +701,32 @@ class Conexion:
         except Exception as e:
             print("Error listado en facturas", e)
 
+    def delFactura(self, idFactura):
+        """
+
+        :param nuevoVen: datos a insertar de un nuevo vendedor
+        :type nuevoVen: list
+        :return: verdadero o falso dependiendo del éxito de la operación
+        :rtype: bool
+
+        Metodo que da de alta a un vendendor cogiendo los datos de este de la lista
+         que le pasas por parametro y elige el vendedor con el dni que está en los datos de la lista pasada por parametro
+        """
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare(
+                "DELETE FROM  facturas "
+                " WHERE id = :idFactura")
+            query.bindValue(":idFactura", idFactura)
+            if query.exec():
+                return True
+            else:
+                return False
+        except sqlite3.Error as e:
+            print(e)
+        except Exception as error:
+            print("Error en eliminar factura: ", error)
+
     def datosOneFactura(codigo):
         """
 
