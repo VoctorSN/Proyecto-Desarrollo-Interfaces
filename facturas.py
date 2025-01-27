@@ -90,7 +90,7 @@ class Facturas():
                 var.ui.tabFacturas.item(i, 2).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
                 i += 1
 
-            if var.ui.tabPropiedades.rowCount() == 0:
+            if var.ui.tabFacturas.rowCount() == 0:
                 return Facturas.setTablaVaciaFac(self)
 
         except Exception as e:
@@ -112,7 +112,7 @@ class Facturas():
             registro = conexion.Conexion.datosOneFactura(str(datos[0]))
 
             listado = [var.ui.txtNumFac, var.ui.txtFechaFac,
-                       var.ui.txtDniFac]
+                       var.ui.txtDniFac, var.ui.txtNomFac, var.ui.txtApelFac]
 
             for i, casilla in enumerate(listado):
                 if isinstance(casilla, QtWidgets.QComboBox):

@@ -187,8 +187,6 @@ class Eventos():
 
     def limpiarPanel(self):
         try:
-
-
             listado = [var.ui.txtDniCli, var.ui.txtCalendarCli,
                            var.ui.txtApelCli, var.ui.txtNomCli,
                            var.ui.txtEmailCli, var.ui.txtMovilCli,
@@ -389,10 +387,6 @@ class Eventos():
                     header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeMode.Stretch)
                 else:
                     header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeMode.ResizeToContents)
-                header_items = var.ui.tabVendedores.horizontalHeaderItem(i)
-                font = header_items.font()
-                font.setBold(True)
-                header_items.setFont(font)
         except Exception as e:
             print("error en resize tabla ventas Ventas: ", e)
 

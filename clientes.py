@@ -72,9 +72,9 @@ class Clientes:
         except Exception as error:
             print("Error en validar dni ", error)
 
-    def checkEmail(mail):
+    def checkEmail(self,mail):
         try:
-            if eventos.Eventos.validarMail(str(var.ui.txtEmailCli.text())):
+            if eventos.Eventos.validarMail(self,str(var.ui.txtEmailCli.text())):
                 var.ui.txtEmailCli.setStyleSheet('background-color: rgb(255, 255, 255);')
                 var.ui.txtEmailCli.setText(mail.lower())
 
@@ -183,6 +183,8 @@ class Clientes:
                     casilla.setText(registro[i])
 
             var.ui.txtDniFac.setText(registro[0])
+            var.ui.txtNomFac.setText(registro[3])
+            var.ui.txtApelFac.setText(registro[2])
 
         except Exception as e:
             print("Error cargar Clientes", e)

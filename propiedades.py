@@ -288,6 +288,11 @@ class Propiedades():
                     casilla.setPlainText(str(registro[i]))
                 else:
                     casilla.setText(str(registro[i]))
+            var.ui.txtCodigoVentaFac.setText(str(registro[0]))
+            var.ui.txtDirFac.setText(registro[3])
+            var.ui.txtTipoFac.setText(registro[6])
+            var.ui.txtLocalidadFac.setText(registro[5])
+            var.ui.txtPrecioFac.setText(str(registro[11]))
 
         except Exception as e:
             print("Error cargar Propiedad", e)

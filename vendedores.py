@@ -123,6 +123,7 @@ class Vendedores():
                     casilla.setText(str(registro[i]))
                 else:
                     casilla.setText(str(registro[i]))
+            var.ui.txtIdVendedorFac.setText(str(registro[0]))
 
         except Exception as e:
             print("Error cargar Vendedor", e)
@@ -275,9 +276,9 @@ class Vendedores():
         except Exception as error:
             print("Error en validar dni ", error)
 
-    def checkEmail(mail):
+    def checkEmail(self,mail):
         try:
-            if eventos.Eventos.validarMail(1,str(var.ui.txtEmailVen.text())):
+            if eventos.Eventos.validarMail(self,str(var.ui.txtEmailVen.text())):
                 var.ui.txtEmailVen.setStyleSheet('background-color: rgb(255, 255, 255);')
                 var.ui.txtEmailVen.setText(mail.lower())
 

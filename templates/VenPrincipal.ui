@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1697</width>
+    <width>1779</width>
     <height>874</height>
    </rect>
   </property>
@@ -3082,6 +3082,9 @@
           </item>
           <item>
            <widget class="QLineEdit" name="txtIdVendedorFac">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -3153,6 +3156,9 @@
           </item>
           <item row="1" column="1">
            <widget class="QLineEdit" name="txtApelFac">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -3185,6 +3191,9 @@
           </item>
           <item row="1" column="3">
            <widget class="QLineEdit" name="txtNomFac">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -3266,6 +3275,9 @@
           </item>
           <item row="1" column="3" colspan="3">
            <widget class="QLineEdit" name="txtTipoFac">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -3301,6 +3313,9 @@
           </item>
           <item row="1" column="7">
            <widget class="QLineEdit" name="txtPrecioFac">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -3336,6 +3351,9 @@
           </item>
           <item row="2" column="1" colspan="3">
            <widget class="QLineEdit" name="txtDirFac">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -3371,6 +3389,9 @@
           </item>
           <item row="2" column="5" colspan="3">
            <widget class="QLineEdit" name="txtLocalidadFac">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -3498,7 +3519,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1697</width>
+     <width>1779</width>
      <height>21</height>
     </rect>
    </property>

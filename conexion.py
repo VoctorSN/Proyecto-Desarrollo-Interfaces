@@ -740,7 +740,10 @@ class Conexion:
         try:
             registro = []
             query = QtSql.QSqlQuery()
-            query.prepare("SELECT * FROM facturas WHERE id = :idVendedor")
+            query.prepare("SELECT f.id, f.fechafac, f.dnifac, cl.nomecli, cl.apelcli"
+                          " FROM facturas AS f "
+                          " INNER JOIN clientes AS cl ON cl.dnicli = f.dnifac"
+                          " WHERE f.id = :idVendedor ")
             query.bindValue(":idVendedor", str(codigo))
             if query.exec():
                 while query.next():
@@ -749,3 +752,111 @@ class Conexion:
             return registro
         except Exception as error:
             print("Error en datos datosOneFactura: ", error)
+
+
+    def listadoVentas(self):
+        """
+
+        :return: lista de los datos de las propiedades no dadas de baja o ambas dependiendo de la variable historico
+        :rtype: list
+
+        Metodo que devuelve una lista con los datos de las propiedades,
+        coge los datos de todas o solo de las que no están dadas de baja dependiendo del estado de la variable historico
+        """
+        try:
+            listado = []
+            queryStr = """
+                        SELECT 
+                            v.id, 
+                            v.idPropiedad, 
+                            p.dirprop, 
+                            p.muniprop, 
+                            p.tipoprop, 
+                            p.prevenprop 
+                        FROM 
+                            ventas AS v 
+                        INNER JOIN 
+                            propiedades AS p 
+                        ON 
+                            p.codigo = v.idPropiedad
+                    """
+            query = QtSql.QSqlQuery()
+            query.prepare(queryStr)
+            if query.exec():
+                while query.next():
+                    fila = [query.value(i) for i in range(query.record().count())]
+                    listado.append(fila)
+            return listado
+        except Exception as e:
+            print("Error listado en facturas", e)
+
+
+
+    def datosOneVenta(codigo):
+        """
+
+        :param codigo: id del vendedor del cual queremos obtener los datos
+        :type codigo: codigo del vendedor
+        :return: lista de los datos de un vendedor en concreto
+        :rtype: list
+
+        Metodo que devuelve una lista con los datos de un vendedor con el id de este sacado por el parametro
+        """
+        try:
+            registro = []
+            query = QtSql.QSqlQuery()
+            query.prepare("""
+                SELECT 
+                       v.idVendedor, 
+                       f.id, f.fechafac, f.dnifac,
+                       cl.nomecli, cl.apelcli, 
+                       p.codigo, p.dirprop, p.tipoprop, p.muniprop, p.prevenprop
+                FROM ventas AS v
+                INNER JOIN clientes AS cl ON f.dnifac = cl.dnicli
+                INNER JOIN facturas AS f ON v.idFactura = f.id
+                INNER JOIN propiedades AS p ON p.codigo = v.idPropiedad
+                WHERE v.id = :codigo
+            """)
+            query.bindValue(":codigo", str(codigo))
+
+
+            if query.exec():
+                while query.next():
+                    for i in range(query.record().count()):
+                        registro.append(query.value(i))
+                    return registro
+        except Exception as error:
+            print("Error en datos datosOneVenta: ", error)
+
+
+    def altaVenta(self, nuevaVenta):
+        """
+
+        :param nuevoVen: datos a insertar de un nuevo vendedor
+        :type nuevoVen: list
+        :return: verdadero o falso dependiendo del éxito de la operación
+        :rtype: bool
+
+        Metodo que da de alta a un vendendor cogiendo los datos de este de la lista
+         que le pasas por parametro y elige el vendedor con el dni que está en los datos de la lista pasada por parametro
+        """
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare(
+                "INSERT INTO ventas (idPropiedad, idFactura, idVendedor) "
+                " VALUES (:propiedad, :factura, :vendedor)")
+            query.bindValue(":propiedad", str(nuevaVenta[0]))
+            query.bindValue(":factura", str(nuevaVenta[1]))
+            query.bindValue(":vendedor", str(nuevaVenta[2]))
+            if query.exec():
+                query.prepare(
+                              "UPDATE propiedades SET bajaprop = :bajaPropiedad, estadoprop = 'Vendido' WHERE codigo = :codigo ")
+                query.bindValue(":codigo", str(nuevaVenta[0]))
+                query.bindValue(":bajaPropiedad", datetime.now().strftime("%d/%m/%Y"))
+                return True
+            else:
+                return False
+        except sqlite3.Error as e:
+            print(e)
+        except Exception as error:
+            print("Error en alta venta: ", error)

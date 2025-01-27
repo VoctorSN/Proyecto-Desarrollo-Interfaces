@@ -10,6 +10,7 @@ import propiedades
 import styles
 import var
 import vendedores
+import ventas
 from informes import Informes
 from propiedades import Propiedades
 from venPrincipal import Ui_venPrincipal
@@ -48,6 +49,8 @@ class Main(QtWidgets.QMainWindow):
         facturas.Facturas.cargaTablaFacturas(self)
         var.ui.tabFacturas.clicked.connect(facturas.Facturas.cargaOneFactura)
         eventos.Eventos.resizeTablaFacturas(self)
+        ventas.Ventas.cargaTablaVentas(self)
+        var.ui.tabVentasFac.clicked.connect(ventas.Ventas.cargaOneVenta)
         eventos.Eventos.resizeTablaVentas(self)
 
         '''
@@ -91,18 +94,19 @@ class Main(QtWidgets.QMainWindow):
         var.ui.btnFechaBajaVen.clicked.connect(lambda: eventos.Eventos.abrirCalendar(self,5))
         var.ui.btnBuscarMovilVen.clicked.connect(lambda: vendedores.Vendedores.cargaVendedorMovil(self))
         var.ui.btnGrabarFacturaFac.clicked.connect(facturas.Facturas.altaFactura)
+        var.ui.btnGrabarVentaFac.clicked.connect(ventas.Ventas.altaVenta)
 
         '''
         ZONA DE EVENTOS DE TEXTBOX  
         '''
         var.ui.txtDniCli.editingFinished.connect(lambda: clientes.Clientes.checkDni(var.ui.txtDniCli.text()))
-        var.ui.txtEmailCli.editingFinished.connect(lambda: clientes.Clientes.checkEmail(var.ui.txtEmailCli.text()))
+        var.ui.txtEmailCli.editingFinished.connect(lambda: clientes.Clientes.checkEmail(self,var.ui.txtEmailCli.text()))
         var.ui.txtMovilCli.editingFinished.connect(lambda: clientes.Clientes.checkTelefono(var.ui.txtMovilCli.text()))
         var.ui.txtPrecioVentaProp.textEdited.connect(lambda: propiedades.Propiedades.checkVentaProp(self))
         var.ui.txtPrecioAlquilerProp.textChanged.connect(lambda: propiedades.Propiedades.checkAlquilerProp(self))
         var.ui.txtFechaBajaProp.textChanged.connect(lambda: propiedades.Propiedades.checkBajaProp(self))
         var.ui.txtDniVen.editingFinished.connect(lambda: vendedores.Vendedores.checkDni(var.ui.txtDniVen.text()))
-        var.ui.txtEmailVen.editingFinished.connect(lambda: vendedores.Vendedores.checkEmail(var.ui.txtEmailVen.text()))
+        var.ui.txtEmailVen.editingFinished.connect(lambda: vendedores.Vendedores.checkEmail(self,var.ui.txtEmailVen.text()))
         var.ui.txtMovilVen.editingFinished.connect(lambda: vendedores.Vendedores.checkTelefono(var.ui.txtMovilVen.text()))
 
         '''
