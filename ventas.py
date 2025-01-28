@@ -2,6 +2,7 @@ from PyQt6 import QtWidgets, QtGui, QtCore
 
 import conexion
 import var
+from propiedades import Propiedades
 
 
 class Ventas():
@@ -39,10 +40,11 @@ class Ventas():
             mbox = QtWidgets.QMessageBox()
             mbox.setWindowTitle("Error")
             mbox.setIcon(QtWidgets.QMessageBox.Icon.Critical)
-            mbox.setText('Error al insertar la factura. Intente nuevamente.')
+            mbox.setText('Error al insertar la venta. Intente nuevamente.')
             mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
             mbox.exec()
         Ventas.cargaTablaVentas(self)
+        Propiedades.cargaTablaPropiedades(self,0)
 
     def cargaTablaVentas(self):
         try:

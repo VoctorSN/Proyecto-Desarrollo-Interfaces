@@ -138,7 +138,8 @@ class Facturas():
                 QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No)
             msgbox.button(QtWidgets.QMessageBox.StandardButton.Yes).setText('Si')
             if msgbox.exec():
-                if conexion.Conexion.delFactura(self, int(idFactura)):
+                facturaUtilizada = conexion.Conexion.facturaUtilizada(self, int(idFactura))
+                if facturaUtilizada and conexion.Conexion.delFactura(self, int(idFactura)):
                     msgbox = QtWidgets.QMessageBox()
                     msgbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
                     msgbox.setWindowIcon(QtGui.QIcon('./img/logo.ico'))
@@ -148,6 +149,15 @@ class Facturas():
                     msgbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
                     msgbox.exec()
                     Facturas.cargaTablaFacturas(self)
+                elif facturaUtilizada:
+                    msgbox = QtWidgets.QMessageBox()
+                    msgbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
+                    msgbox.setWindowIcon(QtGui.QIcon('./img/logo.ico'))
+                    msgbox.setWindowTitle('Aviso')
+                    msgbox.setText("La factura no puede ser eliminada porque está siendo utilizada.")
+                    msgbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+                    msgbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
+                    msgbox.exec()
             else:
                 msgbox.hide()
         except Exception as error:

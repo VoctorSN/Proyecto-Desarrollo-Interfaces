@@ -849,10 +849,7 @@ class Conexion:
             query.bindValue(":factura", str(nuevaVenta[1]))
             query.bindValue(":vendedor", str(nuevaVenta[2]))
             if query.exec():
-                query.prepare(
-                              "UPDATE propiedades SET bajaprop = :bajaPropiedad, estadoprop = 'Vendido' WHERE codigo = :codigo ")
-                query.bindValue(":codigo", str(nuevaVenta[0]))
-                query.bindValue(":bajaPropiedad", datetime.now().strftime("%d/%m/%Y"))
+                Conexion.darVendidaPropiedad(self,nuevaVenta[0])
                 return True
             else:
                 return False
@@ -860,3 +857,39 @@ class Conexion:
             print(e)
         except Exception as error:
             print("Error en alta venta: ", error)
+
+    def darVendidaPropiedad(self, codigo):
+        query = QtSql.QSqlQuery()
+        query.prepare(
+            "UPDATE propiedades SET bajaprop = :bajaPropiedad, estadoprop = 'Vendido' WHERE codigo = :codigo ")
+        query.bindValue(":bajaPropiedad", datetime.now().strftime("%d/%m/%Y"))
+        query.bindValue(":codigo", str(codigo))
+        print(query.exec())
+
+
+    def facturaUtilizada(self, idFactura):
+        try:
+            registro = []
+            query = QtSql.QSqlQuery()
+            query.prepare("""
+                SELECT 
+                       v.idVendedor, 
+                       f.id, f.fechafac, f.dnifac,
+                       cl.nomecli, cl.apelcli, 
+                       p.codigo, p.dirprop, p.tipoprop, p.muniprop, p.prevenprop
+                FROM ventas AS v
+                INNER JOIN clientes AS cl ON f.dnifac = cl.dnicli
+                INNER JOIN facturas AS f ON v.idFactura = f.id
+                INNER JOIN propiedades AS p ON p.codigo = v.idPropiedad
+                WHERE v.id = :codigo
+            """)
+            query.bindValue(":codigo", str(codigo))
+
+
+            if query.exec():
+                while query.next():
+                    for i in range(query.record().count()):
+                        registro.append(query.value(i))
+                    return registro
+        except Exception as error:
+            print("Error en datos datosOneVenta: ", error)
