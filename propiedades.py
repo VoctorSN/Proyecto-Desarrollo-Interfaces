@@ -95,8 +95,8 @@ class Propiedades():
             "Falta ingresar número de habitaciones",
             "Falta ingresar número de baños",
             "Falta ingresar superficie",
-            "Falta ingresar precio de alquiler",
-            "Falta ingresar precio de venta",
+            None,
+            None,
             "Falta ingresar código postal",
             None,  # No validation for description
             "Falta ingresar nombre del propietario",
@@ -104,7 +104,7 @@ class Propiedades():
         ]
 
         for i, dato in enumerate(nuevaProp):
-            if i == 11:  # Skip validation for description (index 11)
+            if i in (11,9,8):  # Skip validation for description (index 11)
                 continue
             if dato == '':
                 mbox = QtWidgets.QMessageBox()
@@ -239,7 +239,7 @@ class Propiedades():
     def setTablaVaciaProp(self):
         var.ui.tabPropiedades.setRowCount(1)
         var.ui.tabPropiedades.setItem(0, 2, QtWidgets.QTableWidgetItem("No hay propiedades"))
-        var.ui.tabPropiedades.item(0, 2).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft.AlignVCenter)
+        var.ui.tabPropiedades.item(0, 2).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft.AlignCenter)
         return
 
     def cargaPropiedad(self):
@@ -292,6 +292,7 @@ class Propiedades():
             var.ui.txtDirFac.setText(registro[3])
             var.ui.txtTipoFac.setText(registro[6])
             var.ui.txtLocalidadFac.setText(registro[5])
+
             var.ui.txtPrecioFac.setText(str(registro[11]))
 
         except Exception as e:

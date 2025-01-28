@@ -7,13 +7,16 @@ from propiedades import Propiedades
 
 class Ventas():
 
+    botonesdel = []
+
     def altaVenta(self):
-        nuevaVenta = [var.ui.txtCodigoVentaFac.text(), var.ui.txtNumFac.text(), var.ui.txtIdVendedorFac.text()]
+        nuevaVenta = [var.ui.txtCodigoVentaFac.text(), var.ui.txtNumFac.text(), var.ui.txtIdVendedorFac.text(), var.ui.txtPrecioFac.text()]
 
         mensajes_error = [
             "Falta agregar la propiedad",
             "Falta agregar la factura",
-            "Falta agregar al vendedor"
+            "Falta agregar al vendedor",
+            "Esta propiedad no esta a la venta, (No tiene precio de Venta)"
         ]
 
         for i, dato in enumerate(nuevaVenta):
@@ -46,31 +49,58 @@ class Ventas():
         Ventas.cargaTablaVentas(self)
         Propiedades.cargaTablaPropiedades(self,0)
 
-    def cargaTablaVentas(self):
+    def cargaTablaVentas(self, idFactura=None):
         try:
-            listado = conexion.Conexion.listadoVentas(self)
+            if idFactura is None:
+                listado = conexion.Conexion.listadoVentas(self)
+            else:
+                listado = conexion.Conexion.listadoVentas(self, idFactura)
+
 
             var.ui.tabVentasFac.setRowCount(0)
 
             i = 0
+            total = 0
 
             for registro in listado:
                 var.ui.tabVentasFac.setRowCount(i + 1)
+
+
+
+                container = QtWidgets.QWidget()
+                layout = QtWidgets.QVBoxLayout()
+                Ventas.botonesdel.append(QtWidgets.QPushButton())
+                Ventas.botonesdel[-1].setFixedSize(30, 20)
+                Ventas.botonesdel[-1].setIcon(QtGui.QIcon("./img/papelera.ico"))
+                Ventas.botonesdel[-1].setStyleSheet("background-color: #efefef;")
+                Ventas.botonesdel[-1].clicked.connect(lambda checked: Ventas.eliminar_venta(self, str(registro[0], str(registro[1]))))
+                layout.addWidget(Ventas.botonesdel[-1])
+                layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                layout.setContentsMargins(0, 0, 0, 0)
+                layout.setSpacing(0)
+                container.setLayout(layout)
 
                 var.ui.tabVentasFac.setItem(i, 0, QtWidgets.QTableWidgetItem(str(registro[0])))
                 var.ui.tabVentasFac.setItem(i, 1, QtWidgets.QTableWidgetItem(str(registro[1])))
                 var.ui.tabVentasFac.setItem(i, 2, QtWidgets.QTableWidgetItem(str(registro[2])))
                 var.ui.tabVentasFac.setItem(i, 3, QtWidgets.QTableWidgetItem(str(registro[3])))
                 var.ui.tabVentasFac.setItem(i, 4, QtWidgets.QTableWidgetItem(str(registro[4])))
-                var.ui.tabVentasFac.setItem(i, 5, QtWidgets.QTableWidgetItem(str(registro[5])))
+                var.ui.tabVentasFac.setItem(i, 5, QtWidgets.QTableWidgetItem(str(registro[5]) + " €"))
+                var.ui.tabVentasFac.setCellWidget(i, 6, container)
 
                 var.ui.tabVentasFac.item(i, 0).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
                 var.ui.tabVentasFac.item(i, 1).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-                var.ui.tabVentasFac.item(i, 2).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                var.ui.tabVentasFac.item(i, 2).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft)
                 var.ui.tabVentasFac.item(i, 3).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft)
                 var.ui.tabVentasFac.item(i, 4).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft)
                 var.ui.tabVentasFac.item(i, 5).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
                 i += 1
+
+                total += float(registro[5])
+
+            var.ui.lblPrecioBrutoFac.setText(str(total) + "€")
+            var.ui.lblImpuestosFac.setText(str(total * 0.21) + "€")
+            var.ui.lblTotalFac.setText(str(total + (total * 0.21)) + "€")
 
             if var.ui.tabVentasFac.rowCount() == 0:
                 return Ventas.setTablaVaciaVenta(self)
@@ -80,8 +110,8 @@ class Ventas():
 
     def setTablaVaciaVenta(self):
         var.ui.tabVentasFac.setRowCount(1)
-        var.ui.tabVentasFac.setItem(0, 1, QtWidgets.QTableWidgetItem("No hay ventas"))
-        var.ui.tabVentasFac.item(0, 1).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft.AlignVCenter)
+        var.ui.tabVentasFac.setItem(0, 3, QtWidgets.QTableWidgetItem("No hay ventas"))
+        var.ui.tabVentasFac.item(0, 3).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft.AlignCenter)
         return
 
     def cargaOneVenta(self):
@@ -113,23 +143,23 @@ class Ventas():
         except Exception as e:
             print("Error cargar Vendedor", e)
 
-    def eliminar_factura(self, idFactura):
+    def eliminar_venta(self, idVenta, idPropiedad):
         try:
             msgbox = QtWidgets.QMessageBox()
             msgbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
             msgbox.setWindowIcon(QtGui.QIcon('./img/logo.ico'))
             msgbox.setWindowTitle('Aviso')
-            msgbox.setText("Desea Eliminar la Factura")
+            msgbox.setText("Desea Eliminar la Venta")
             msgbox.setStandardButtons(
                 QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No)
             msgbox.button(QtWidgets.QMessageBox.StandardButton.Yes).setText('Si')
             if msgbox.exec():
-                if conexion.Conexion.delFactura(self, int(idFactura)):
+                if conexion.Conexion.delVenta(self, idPropiedad, int(idVenta)):
                     msgbox = QtWidgets.QMessageBox()
                     msgbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
                     msgbox.setWindowIcon(QtGui.QIcon('./img/logo.ico'))
                     msgbox.setWindowTitle('Aviso')
-                    msgbox.setText("Factura Eliminada")
+                    msgbox.setText("Venta Eliminada")
                     msgbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
                     msgbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
                     msgbox.exec()
@@ -137,4 +167,4 @@ class Ventas():
             else:
                 msgbox.hide()
         except Exception as error:
-            print("Eliminar facturade ", error)
+            print("Eliminar venta ", error)

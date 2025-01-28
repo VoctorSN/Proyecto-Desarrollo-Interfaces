@@ -12,6 +12,9 @@ import var
 
 from datetime import datetime
 
+import ventas
+from ventas import Ventas
+
 
 class Facturas():
 
@@ -123,6 +126,7 @@ class Facturas():
                     casilla.setText(str(registro[i]))
                 else:
                     casilla.setText(str(registro[i]))
+            ventas.Ventas.cargaTablaVentas(self, str(datos[0]))
 
         except Exception as e:
             print("Error cargar Vendedor", e)
@@ -138,8 +142,8 @@ class Facturas():
                 QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No)
             msgbox.button(QtWidgets.QMessageBox.StandardButton.Yes).setText('Si')
             if msgbox.exec():
-                facturaUtilizada = conexion.Conexion.facturaUtilizada(self, int(idFactura))
-                if facturaUtilizada and conexion.Conexion.delFactura(self, int(idFactura)):
+                facturaUtilizada = conexion.Conexion.facturaUtilizada(self, int(idFactura)) != []
+                if not facturaUtilizada and conexion.Conexion.delFactura(self, int(idFactura)):
                     msgbox = QtWidgets.QMessageBox()
                     msgbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
                     msgbox.setWindowIcon(QtGui.QIcon('./img/logo.ico'))

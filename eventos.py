@@ -383,7 +383,7 @@ class Eventos():
         try:
             header = var.ui.tabVentasFac.horizontalHeader()
             for i in range(header.count()):
-                if i not in (1,0,4):
+                if i not in (1,0,4,6):
                     header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeMode.Stretch)
                 else:
                     header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeMode.ResizeToContents)
