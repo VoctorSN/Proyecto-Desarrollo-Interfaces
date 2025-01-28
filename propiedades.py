@@ -300,12 +300,55 @@ class Propiedades():
 
 
     def modifPropiedad(self):
+
+        nuevaProp = [var.ui.txtFechaProp.text(), var.ui.txtDirProp.text(),
+                     var.ui.cmbProvProp.currentText(), var.ui.cmbMuniProp.currentText(),
+                     var.ui.cmbTipoProp.currentText(), var.ui.spinHabProp.text(),
+                     var.ui.spinBanosProp.text(), var.ui.txtSuperProp.text(),
+                     var.ui.txtPrecioAlquilerProp.text(), var.ui.txtPrecioVentaProp.text(),
+                     var.ui.txtCPProp.text(), var.ui.areatxtDescripProp.toPlainText(),
+                     var.ui.txtNomeProp.text(), var.ui.txtMovilProp.text()]
+
+        mensajes_error = [
+            "Falta ingresar fecha de alta",
+            "Falta ingresar dirección",
+            "Falta seleccionar provincia",
+            "Falta seleccionar municipio",
+            "Falta seleccionar tipo de propiedad",
+            "Falta ingresar número de habitaciones",
+            "Falta ingresar número de baños",
+            "Falta ingresar superficie",
+            None,
+            None,
+            "Falta ingresar código postal",
+            None,  # No validation for description
+            "Falta ingresar nombre del propietario",
+            "Falta ingresar móvil del propietario"
+        ]
+
+        for i, dato in enumerate(nuevaProp):
+            if i in (11, 9, 8):  # Skip validation for description (index 11)
+                continue
+            if dato == '':
+                mbox = QtWidgets.QMessageBox()
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
+                mbox.setWindowTitle("Error en los datos")
+                mbox.setText(mensajes_error[i])
+                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+                mbox.exec()
+                return
         try:
+            precioven = var.ui.txtPrecioVentaProp.text()
+            if precioven == "":
+                precioven = 0
+            precioalq = var.ui.txtPrecioAlquilerProp.text()
+            if precioalq == "":
+                precioalq = 0
             registro = [var.ui.lblProp.text(), var.ui.txtFechaProp.text(), var.ui.txtDirProp.text(),
                         var.ui.cmbProvProp.currentText(), var.ui.cmbMuniProp.currentText(),
                         var.ui.cmbTipoProp.currentText(), var.ui.spinHabProp.text(),
                         var.ui.spinBanosProp.text(), var.ui.txtSuperProp.text(),
-                        var.ui.txtPrecioAlquilerProp.text(), var.ui.txtPrecioVentaProp.text(),
+                        precioalq, precioven,
                         var.ui.txtCPProp.text(), var.ui.areatxtDescripProp.toPlainText(),
                         ]
             tipooper = []

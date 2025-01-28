@@ -457,7 +457,7 @@ class Conexion:
                 return query.exec()
             return False
         except Exception as error:
-            print("Error modificar propiedad", error)
+            print("Error modificar propiedad conexion ", error)
 
     def altaVen(self, nuevoVen):
         """
@@ -876,9 +876,11 @@ class Conexion:
         query.prepare(
             "UPDATE propiedades SET bajaprop = :bajaPropiedad, estadoprop = :estado WHERE codigo = :codigo ")
         query.bindValue(":bajaPropiedad", datetime.now().strftime("%d/%m/%Y"))
+        if estado == "Disponible":
+            query.bindValue(":bajaPropiedad", None)
         query.bindValue(":codigo", str(codigo))
         query.bindValue(":estado", str(estado))
-        print(query.exec())
+        query.exec()
 
     def facturaUtilizada(self, idFactura):
         try:
@@ -901,7 +903,7 @@ class Conexion:
             print("Error en facturaUtilizada: ", error)
 
 
-    def delVenta(self, idVenta, idPropiedad):
+    def delVenta(self, idPropiedad, idVenta):
         """
 
         :param nuevoVen: datos a insertar de un nuevo vendedor
@@ -919,7 +921,7 @@ class Conexion:
                 " WHERE id = :idVenta")
             query.bindValue(":idVenta", idVenta)
             if query.exec():
-                Conexion.cambiarEstadoPropiedad(self, idPropiedad, "Vendido")
+                Conexion.cambiarEstadoPropiedad(self, idPropiedad, "Disponible")
                 return True
             else:
                 return False

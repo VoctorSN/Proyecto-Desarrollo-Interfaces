@@ -73,7 +73,7 @@ class Ventas():
                 Ventas.botonesdel[-1].setFixedSize(30, 20)
                 Ventas.botonesdel[-1].setIcon(QtGui.QIcon("./img/papelera.ico"))
                 Ventas.botonesdel[-1].setStyleSheet("background-color: #efefef;")
-                Ventas.botonesdel[-1].clicked.connect(lambda checked: Ventas.eliminar_venta(self, str(registro[0], str(registro[1]))))
+                Ventas.botonesdel[-1].clicked.connect(lambda checked: Ventas.eliminar_venta(self, str(registro[0])))
                 layout.addWidget(Ventas.botonesdel[-1])
                 layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
                 layout.setContentsMargins(0, 0, 0, 0)
@@ -143,7 +143,7 @@ class Ventas():
         except Exception as e:
             print("Error cargar Vendedor", e)
 
-    def eliminar_venta(self, idVenta, idPropiedad):
+    def eliminar_venta(self, idVenta):
         try:
             msgbox = QtWidgets.QMessageBox()
             msgbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
@@ -153,6 +153,7 @@ class Ventas():
             msgbox.setStandardButtons(
                 QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No)
             msgbox.button(QtWidgets.QMessageBox.StandardButton.Yes).setText('Si')
+            idPropiedad = conexion.Conexion.datosOneVenta(idVenta)[6]
             if msgbox.exec():
                 if conexion.Conexion.delVenta(self, idPropiedad, int(idVenta)):
                     msgbox = QtWidgets.QMessageBox()
