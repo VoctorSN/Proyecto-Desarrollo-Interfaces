@@ -3703,6 +3703,7 @@
     </property>
     <addaction name="actionListado_Clientes"/>
     <addaction name="actionListado_Propiedades"/>
+    <addaction name="actionListado_Facturas"/>
    </widget>
    <addaction name="menuArchivo"/>
    <addaction name="menuGestion"/>
@@ -3824,6 +3825,11 @@
   <action name="actionListado_Propiedades">
    <property name="text">
     <string>Listado Propiedades</string>
+   </property>
+  </action>
+  <action name="actionListado_Facturas">
+   <property name="text">
+    <string>Listado Facturas</string>
    </property>
   </action>
  </widget>

@@ -106,28 +106,26 @@ class Informes:
             # Calculate total pages
 
             paginas = 0
-            query0 = QtSql.QSqlQuery()
-            print(municipio)
-            query0.exec("select count(*) from propiedades where muniprop = '" + municipio + "'")
-            if (query0.next()):
-                registros = int(query0.value(0))
-                print(registros)
+            query = QtSql.QSqlQuery()
+            query.exec("select count(*) from propiedades where muniprop = '" + municipio + "'")
+            if (query.next()):
+                registros = int(query.value(0))
                 paginas = int(registros / 22) + 1
-                print(paginas)
             Informes.footInforme(titulo, paginas)
             items = ['CODIGO', 'DIRECCIÓN', 'TIPO OPERACION', 'PRECIO ALQUILER', 'PRECIO VENTA']
-            var.report.setFont('Helvetica-Bold', size=10)
-            var.report.drawString(55, 650, str(items[0]))  # DNI
-            var.report.drawString(100, 650, str(items[1]))  # APELLIDOS
-            var.report.drawString(190, 650, str(items[2]))  # NOMBRE
-            var.report.drawString(280, 650, str(items[3]))  # MOVIL
-            var.report.drawString(360, 650, str(items[4]))  # PROVINCIA
-            var.report.line(50, 645, 525, 645)
-            query0.prepare("SELECT codigo, dirprop, tipooper, prealquiprop, prevenprop from propiedades where muniprop = '" + municipio + "'")
-            if query0.exec():
+            var.report.setFont('Helvetica-Bold',size=10)
+            var.report.drawString(55,680,str(items[0]))
+            var.report.drawString(100,680,str(items[1]))
+            var.report.drawString(210, 680, str(items[2]))
+            var.report.drawString(295, 680, str(items[3]))
+            var.report.drawString(380, 680, str(items[4]))
+            var.report.drawString(460, 680, str(items[5]))
+            var.report.line(40, 675, 540, 675)
+            query.prepare("SELECT codigo, dirprop, tipooper, prealquiprop, prevenprop from propiedades where muniprop = '" + municipio + "'")
+            if query.exec():
                 x = 60
                 y = 630
-                while query0.next():
+                while query.next():
                     if y <= 90:
                         var.report.setFont('Helvetica-Oblique', size=8)  # HELVETICA OBLIQUE PARA LA FUENTE ITALIC
                         var.report.drawString(450, 80, 'Página siguiente...')
@@ -135,22 +133,27 @@ class Informes:
                         Informes.topInforme(titulo)
                         Informes.footInforme(titulo, paginas)
                         items = ['CODIGO', 'DIRECCIÓN', 'TIPO OPERACION', 'PRECIO ALQUILER', 'PRECIO VENTA']
-                        var.report.setFont('Helvetica-Bold', size=10)
-                        var.report.drawString(55, 650, str(items[0]))  # DNI
-                        var.report.drawString(100, 650, str(items[1]))  # APELLIDOS
-                        var.report.drawString(190, 650, str(items[2]))  # NOMBRE
-                        var.report.drawString(280, 650, str(items[3]))  # MOVIL
-                        var.report.drawString(360, 650, str(items[4]))  # PROVINCIA
-                        var.report.line(50, 645, 525, 645)
+                        var.report.setFont('Helvetica-Bold',size=10)
+                        var.report.drawString(55,680,str(items[0]))
+                        var.report.drawString(100,680,str(items[1]))
+                        var.report.drawString(210, 680, str(items[2]))
+                        var.report.drawString(295, 680, str(items[3]))
+                        var.report.drawString(380, 680, str(items[4]))
+                        var.report.drawString(460, 680, str(items[5]))
+                        var.report.line(40, 675, 540, 675)
                         x = 60
                         y = 630
 
-                    var.report.setFont('Helvetica', size=8)
-                    var.report.drawCentredString(x + 5, y, str(query0.value(0)))  # DNI
-                    var.report.drawString(x + 40, y, str(query0.value(1)))  # APELLIDOS
-                    var.report.drawString(x + 130, y, str(query0.value(2)))  # NOMBRE
-                    var.report.drawString(x + 220, y, str(query0.value(3)) + '€')  # MOVIL
-                    var.report.drawString(x + 310, y, str(query0.value(4)) + '€')  # PROVINCIA
+                    var.report.setFont('Helvetica',size=9)
+                    var.report.drawString(x + 5, y, str(query.value(0)))
+                    var.report.drawString(x + 40, y, str(query.value(1)))
+                    var.report.drawString(x + 150, y, str(query.value(2)))
+                    operacion = query.value(3).replace("[","").replace("]","").replace("'","")
+                    var.report.drawString(x + 240, y, str(operacion))
+                    alquiler = "-" if not str(query.value(4)) else str(query.value(4))
+                    var.report.drawRightString(x + 380, y, alquiler+" €")
+                    compra = "-" if not str(query.value(5)) else str(query.value(5))
+                    var.report.drawRightString(x + 470, y, compra+" €")
                     y = y - 25.
 
             var.report.save()
@@ -201,3 +204,7 @@ class Informes:
 
         except Exception as error:
             print('Error en pie informe de cualquier tipo: ', error)
+
+
+    def reportFacturas(self):
+        print("d")

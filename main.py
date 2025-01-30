@@ -66,7 +66,7 @@ class Main(QtWidgets.QMainWindow):
         var.ui.actionExportar_Vendedores_JSON.triggered.connect(eventos.Eventos.exportJSONVen)
         var.ui.actionListado_Clientes.triggered.connect(Informes.reportClientes)
         var.ui.actionListado_Propiedades.triggered.connect(eventos.Eventos.abrirListadoPropidades)
-
+        var.ui.actionListado_Facturas.triggered.connect(Informes.reportFacturas)
         '''
         ZONA DE EVENTOS DE BOTONES
         '''

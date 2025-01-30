@@ -107,8 +107,8 @@ class Ventas():
                 total += float(registro[5])
 
             var.ui.lblPrecioBrutoFac.setText(str(total) + "€")
-            var.ui.lblImpuestosFac.setText(str(total * 0.21) + "€")
-            var.ui.lblTotalFac.setText(str(total + (total * 0.21)) + "€")
+            var.ui.lblImpuestosFac.setText(str(total * 0.1)[:4] + "€")
+            var.ui.lblTotalFac.setText(str(total + (total * 0.1)) + "€")
 
             if var.ui.tabVentasFac.rowCount() == 0:
                 return Ventas.setTablaVaciaVenta(self)
