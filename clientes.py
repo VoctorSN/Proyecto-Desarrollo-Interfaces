@@ -23,14 +23,14 @@ class Clientes:
             "Falta ingresar apellido",
             "Falta ingresar nombre",
             None,
-            "Falta ingresar móvil",
-            "Falta ingresar dirección",
+            None,
+            "Falta ingresar direccion",
             "Falta seleccionar provincia",
             "Falta seleccionar municipio"
         ]
 
         for i, dato in enumerate(nuevoCli):
-            if i == 4:  # Saltamos la validación para el email (índice 4)
+            if i in (4,5):  # Saltamos la validación para el email (índice 4)
                 continue
             if dato == '':
                 mbox = QtWidgets.QMessageBox()
@@ -232,14 +232,15 @@ class Clientes:
                 "Falta ingresar apellido",
                 "Falta ingresar nombre",
                 None,
-                "Falta ingresar móvil",
+                None,
                 "Falta ingresar dirección",
                 "Falta seleccionar provincia",
-                "Falta seleccionar municipio"
+                "Falta seleccionar municipio",
+                None
             ]
 
             for i, dato in enumerate(registro):
-                if i == 4:  # Saltamos la validación para el email (índice 4)
+                if i in (4,5,9):  # Saltamos la validación para el email, direccion y baja (índice 4)
                     continue
                 if dato == '':
                     mbox = QtWidgets.QMessageBox()

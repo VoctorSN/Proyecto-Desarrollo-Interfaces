@@ -929,3 +929,15 @@ class Conexion:
             print(e)
         except Exception as error:
             print("Error en eliminar Venta: ", error)
+
+    def isFacturada(self,idVenta):
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare(
+                "SELECT * FROM ventas WHERE idPropiedad = :idVenta")
+            query.bindValue(":idVenta", idVenta)
+            return query.exec()
+        except sqlite3.Error as e:
+            print(e)
+        except Exception as error:
+            print("Error en idFacturada conexion: ", error)

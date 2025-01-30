@@ -603,7 +603,11 @@
           <item row="0" column="2">
            <layout class="QHBoxLayout" name="horizontalLayout_17">
             <item>
-             <widget class="QLineEdit" name="txtDniCli"/>
+             <widget class="QLineEdit" name="txtDniCli">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 216);</string>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QPushButton" name="btnBuscarDniCli">
@@ -1528,6 +1532,9 @@
                 <height>20</height>
                </size>
               </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 216);</string>
+              </property>
               <property name="text">
                <string/>
               </property>
@@ -2046,6 +2053,9 @@
                 <width>80</width>
                 <height>16777215</height>
                </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 216);</string>
               </property>
              </widget>
             </item>
@@ -2838,6 +2848,9 @@
           </item>
           <item row="1" column="2">
            <widget class="QLineEdit" name="txtFechaFac">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 216);</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -2884,6 +2897,9 @@
           </item>
           <item row="2" column="2">
            <widget class="QLineEdit" name="txtDniFac">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 216);</string>
+            </property>
             <property name="text">
              <string/>
             </property>

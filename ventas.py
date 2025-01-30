@@ -30,7 +30,15 @@ class Ventas():
                 return
 
         try:
-            if conexion.Conexion.altaVenta(self, nuevaVenta):
+            if conexion.Conexion.isFacturada(self,nuevaVenta[0]):
+                mbox = QtWidgets.QMessageBox()
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
+                mbox.setWindowTitle("Error en grabar Venta")
+                mbox.setText("Esta venta ya esta en una factura")
+                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+                mbox.exec()
+                return
+            elif conexion.Conexion.altaVenta(self, nuevaVenta):
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
                 mbox.setWindowTitle("Aviso")
