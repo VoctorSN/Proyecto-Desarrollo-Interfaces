@@ -329,8 +329,14 @@ class Conexion:
             query.bindValue(":habprop", int(propiedad[5]))
             query.bindValue(":banprop", int(propiedad[6]))
             query.bindValue(":superprop", float(propiedad[7]))
-            query.bindValue(":prealquiprop", float(propiedad[8]))
-            query.bindValue(":prevenprop", float(propiedad[9]))
+            if propiedad[8] == "":
+                query.bindValue(":prealquiprop", None)
+            else:
+                query.bindValue(":prealquiprop", float(propiedad[8]))
+            if propiedad[9] == "":
+                query.bindValue(":prealquiprop", None)
+            else:
+                query.bindValue(":prealquiprop", float(propiedad[9]))
             query.bindValue(":cpprop", str(propiedad[10]))
             query.bindValue(":obserprop", str(propiedad[11]))
             query.bindValue(":tipooper", str(propiedad[14]))

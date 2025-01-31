@@ -38,7 +38,7 @@ class Informes:
             query0.exec("select count(*) from clientes")
             if(query0.next()):
                 registros = int(query0.value(0))
-                paginas = int(registros / 22) + 1
+                paginas = int(registros / 23) + 1
             Informes.footInforme(titulo, paginas)
             items = ['DNI', 'APELLIDOS', 'NOMBRE', 'MOVIL', 'PROVINCIA', 'MUNICIPIO']
             var.report.setFont('Helvetica-Bold', size=10)
@@ -110,17 +110,16 @@ class Informes:
             query.exec("select count(*) from propiedades where muniprop = '" + municipio + "'")
             if (query.next()):
                 registros = int(query.value(0))
-                paginas = int(registros / 22) + 1
+                paginas = int(registros / 23) + 1
             Informes.footInforme(titulo, paginas)
             items = ['CODIGO', 'DIRECCIÓN', 'TIPO OPERACION', 'PRECIO ALQUILER', 'PRECIO VENTA']
             var.report.setFont('Helvetica-Bold',size=10)
-            var.report.drawString(55,680,str(items[0]))
-            var.report.drawString(100,680,str(items[1]))
-            var.report.drawString(210, 680, str(items[2]))
-            var.report.drawString(295, 680, str(items[3]))
-            var.report.drawString(380, 680, str(items[4]))
-            var.report.drawString(460, 680, str(items[5]))
-            var.report.line(40, 675, 540, 675)
+            var.report.drawString(55,650,str(items[0]))
+            var.report.drawString(100,650,str(items[1]))
+            var.report.drawString(245, 650, str(items[2]))
+            var.report.drawString(350, 650, str(items[3]))
+            var.report.drawString(450, 650, str(items[4]))
+            var.report.line(50, 645, 525, 645)
             query.prepare("SELECT codigo, dirprop, tipooper, prealquiprop, prevenprop from propiedades where muniprop = '" + municipio + "'")
             if query.exec():
                 x = 60
@@ -133,28 +132,30 @@ class Informes:
                         Informes.topInforme(titulo)
                         Informes.footInforme(titulo, paginas)
                         items = ['CODIGO', 'DIRECCIÓN', 'TIPO OPERACION', 'PRECIO ALQUILER', 'PRECIO VENTA']
-                        var.report.setFont('Helvetica-Bold',size=10)
-                        var.report.drawString(55,680,str(items[0]))
-                        var.report.drawString(100,680,str(items[1]))
-                        var.report.drawString(210, 680, str(items[2]))
-                        var.report.drawString(295, 680, str(items[3]))
-                        var.report.drawString(380, 680, str(items[4]))
-                        var.report.drawString(460, 680, str(items[5]))
-                        var.report.line(40, 675, 540, 675)
+                        var.report.setFont('Helvetica-Bold', size=10)
+                        var.report.drawString(55, 650, str(items[0]))  # DNI
+                        var.report.drawString(100, 650, str(items[1]))  # APELLIDOS
+                        operacion = query.value(2).replace("[","").replace("]","").replace("'","")
+                        var.report.drawString(245, y, operacion)  # MOVIL
+                        alquiler = "-" if not str(query.value(3)) else str(query.value(3))
+                        var.report.drawString(350, y, alquiler)  # PROVINCIA
+                        compra = "-" if not str(query.value(4)) else str(query.value(4))
+                        var.report.drawString(450, y, compra)  # MUNICIPIO
+                        var.report.line(50, 645, 525, 645)
                         x = 60
                         y = 630
 
-                    var.report.setFont('Helvetica',size=9)
-                    var.report.drawString(x + 5, y, str(query.value(0)))
-                    var.report.drawString(x + 40, y, str(query.value(1)))
-                    var.report.drawString(x + 150, y, str(query.value(2)))
-                    operacion = query.value(3).replace("[","").replace("]","").replace("'","")
-                    var.report.drawString(x + 240, y, str(operacion))
-                    alquiler = "-" if not str(query.value(4)) else str(query.value(4))
-                    var.report.drawRightString(x + 380, y, alquiler+" €")
-                    compra = "-" if not str(query.value(5)) else str(query.value(5))
-                    var.report.drawRightString(x + 470, y, compra+" €")
+                    var.report.setFont('Helvetica', size=8)
+                    var.report.drawString(55, y, str(query.value(0)))  # APELLIDOS
+                    var.report.drawString(100, y, str(query.value(1)))  # NOMBRE
+                    operacion = query.value(2).replace("[","").replace("]","").replace("'","")
+                    var.report.drawString(245, y, operacion)  # MOVIL
+                    alquiler = "-" if not str(query.value(3)) else str(query.value(3))
+                    var.report.drawString(350, y, alquiler + "€")  # PROVINCIA
+                    compra = "-" if not str(query.value(4)) else str(query.value(4))
+                    var.report.drawString(450, y, compra + "€")  # MUNICIPIO
                     y = y - 25.
+
 
             var.report.save()
             for file in os.listdir(rootPath):
@@ -162,6 +163,7 @@ class Informes:
                     os.startfile(pdf_path)
         except Exception as error:
             print(error)
+
 
 
     def topInforme(titulo):
