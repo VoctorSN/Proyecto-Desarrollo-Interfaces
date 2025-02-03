@@ -9,7 +9,6 @@ import var
 
 
 class Informes:
-
     """
     :param self: None
     :type self: None
@@ -17,6 +16,7 @@ class Informes:
     :rtype:
 
     """
+
     @staticmethod
     def reportClientes(self):
         try:
@@ -36,7 +36,7 @@ class Informes:
             paginas = 0
             query0 = QtSql.QSqlQuery()
             query0.exec("select count(*) from clientes")
-            if(query0.next()):
+            if (query0.next()):
                 registros = int(query0.value(0))
                 paginas = int(registros / 23) + 1
             Informes.footInforme(titulo, paginas)
@@ -113,14 +113,15 @@ class Informes:
                 paginas = int(registros / 23) + 1
             Informes.footInforme(titulo, paginas)
             items = ['CODIGO', 'DIRECCIÓN', 'TIPO OPERACION', 'PRECIO ALQUILER', 'PRECIO VENTA']
-            var.report.setFont('Helvetica-Bold',size=10)
-            var.report.drawString(55,650,str(items[0]))
-            var.report.drawString(100,650,str(items[1]))
+            var.report.setFont('Helvetica-Bold', size=10)
+            var.report.drawString(55, 650, str(items[0]))
+            var.report.drawString(100, 650, str(items[1]))
             var.report.drawString(245, 650, str(items[2]))
             var.report.drawString(350, 650, str(items[3]))
             var.report.drawString(450, 650, str(items[4]))
             var.report.line(50, 645, 525, 645)
-            query.prepare("SELECT codigo, dirprop, tipooper, prealquiprop, prevenprop from propiedades where muniprop = '" + municipio + "'")
+            query.prepare(
+                "SELECT codigo, dirprop, tipooper, prealquiprop, prevenprop from propiedades where muniprop = '" + municipio + "'")
             if query.exec():
                 x = 60
                 y = 630
@@ -135,7 +136,7 @@ class Informes:
                         var.report.setFont('Helvetica-Bold', size=10)
                         var.report.drawString(55, 650, str(items[0]))  # DNI
                         var.report.drawString(100, 650, str(items[1]))  # APELLIDOS
-                        operacion = query.value(2).replace("[","").replace("]","").replace("'","")
+                        operacion = query.value(2).replace("[", "").replace("]", "").replace("'", "")
                         var.report.drawString(245, y, operacion)  # MOVIL
                         alquiler = "-" if not str(query.value(3)) else str(query.value(3))
                         var.report.drawString(350, y, alquiler)  # PROVINCIA
@@ -148,14 +149,13 @@ class Informes:
                     var.report.setFont('Helvetica', size=8)
                     var.report.drawString(55, y, str(query.value(0)))  # APELLIDOS
                     var.report.drawString(100, y, str(query.value(1)))  # NOMBRE
-                    operacion = query.value(2).replace("[","").replace("]","").replace("'","")
+                    operacion = query.value(2).replace("[", "").replace("]", "").replace("'", "")
                     var.report.drawString(245, y, operacion)  # MOVIL
                     alquiler = "-" if not str(query.value(3)) else str(query.value(3))
                     var.report.drawString(350, y, alquiler + "€")  # PROVINCIA
                     compra = "-" if not str(query.value(4)) else str(query.value(4))
                     var.report.drawString(450, y, compra + "€")  # MUNICIPIO
                     y = y - 25.
-
 
             var.report.save()
             for file in os.listdir(rootPath):
@@ -165,6 +165,82 @@ class Informes:
             print(error)
 
 
+    def reportFacturas(self):
+        factura = var.ui.txtNumFac.text()
+        if factura == "":
+            print("No se encontro la factura")
+            return None
+        try:
+            rootPath = '.\\informes'
+            if not os.path.exists(rootPath):
+                os.makedirs(rootPath)
+            fecha = datetime.today()
+            fecha = fecha.strftime("%Y_%m_%d_%H_%M_%S")
+            nomepdfprop = fecha + "_listadofacturas.pdf"
+            pdf_path = os.path.join(rootPath, nomepdfprop)
+            var.report = canvas.Canvas(pdf_path)
+            titulo = "Listado Factura " + factura
+            Informes.topInforme(titulo)
+
+            # Calculate total pages
+
+            paginas = 0
+            query = QtSql.QSqlQuery()
+            query.exec("select count(*) from ventas where idFactura = '" + factura + "'")
+            if (query.next()):
+                registros = int(query.value(0))
+                paginas = int(registros / 23) + 1
+            Informes.footInforme(titulo, paginas)
+            items = ['VENTA', 'PROPIEDAD', 'TIPO PROPIEDAD', 'LOCALIDAD', 'DIRECCION', 'PRECIO']
+            var.report.setFont('Helvetica-Bold', size=10)
+            var.report.drawString(55, 650, str(items[0]))
+            var.report.drawString(100, 650, str(items[1]))
+            var.report.drawString(170, 650, str(items[2]))
+            var.report.drawString(265, 650, str(items[3]))
+            var.report.drawString(350, 650, str(items[4]))
+            var.report.drawString(450, 650, str(items[5]))
+            var.report.line(50, 645, 525, 645)
+            query.prepare(
+                "SELECT v.id, p.codigo, p.tipoprop, p.muniprop, p.dirprop, p.prevenprop "
+                " FROM ventas AS v"
+                " INNER JOIN propiedades AS p ON v.idPropiedad = p.codigo"
+                " WHERE idFactura = '" + factura + "'")
+            if query.exec():
+                y = 630
+                while query.next():
+                    if y <= 90:
+                        var.report.setFont('Helvetica-Oblique', size=8)  # HELVETICA OBLIQUE PARA LA FUENTE ITALIC
+                        var.report.drawString(450, 80, 'Página siguiente...')
+                        var.report.showPage()  # CREAMOS UNA PAGINA NUEVA
+                        Informes.topInforme(titulo)
+                        Informes.footInforme(titulo, paginas)
+                        items = ['VENTA', 'PROPIEDAD', 'TIPO PROPIEDAD', 'LOCALIDAD', 'DIRECCION', 'PRECIO']
+                        var.report.setFont('Helvetica-Bold', size=10)
+                        var.report.drawString(55, 650, str(items[0]))
+                        var.report.drawString(100, 650, str(items[1]))
+                        var.report.drawString(170, 650, str(items[2]))
+                        var.report.drawString(265, 650, str(items[3]))
+                        var.report.drawString(350, 650, str(items[4]))
+                        var.report.drawString(450, 650, str(items[5]))
+                        var.report.line(50, 645, 525, 645)
+                        y = 630
+
+                    var.report.setFont('Helvetica', size=8)
+                    var.report.drawString(55, y, str(query.value(0)))  # DNI
+                    var.report.drawString(100, y, str(query.value(1)))  # APELLIDOS
+                    var.report.drawString(170, y, str(query.value(2)))  # APELLIDOS
+                    var.report.drawString(265, y, query.value(3))  # MOVIL
+                    var.report.drawString(350, y, query.value(4))  # PROVINCIA
+                    compra = "-" if not str(query.value(4)) else str(query.value(5)) + '€'
+                    var.report.drawString(450, y, compra)  # MUNICIPIO
+                    y = y - 25.
+
+            var.report.save()
+            for file in os.listdir(rootPath):
+                if file.endswith(nomepdfprop):
+                    os.startfile(pdf_path)
+        except Exception as error:
+            print(error)
 
     def topInforme(titulo):
         try:
@@ -193,8 +269,7 @@ class Informes:
         except Exception as error:
             print('Error en cabecera informe:', error)
 
-
-    def footInforme(titulo,paginas):
+    def footInforme(titulo, paginas):
         try:
             var.report.line(50, 50, 525, 50)
             fecha = datetime.today()
@@ -206,7 +281,3 @@ class Informes:
 
         except Exception as error:
             print('Error en pie informe de cualquier tipo: ', error)
-
-
-    def reportFacturas(self):
-        print("d")
