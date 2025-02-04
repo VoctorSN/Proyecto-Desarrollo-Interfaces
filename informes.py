@@ -2,7 +2,10 @@ import os
 from datetime import datetime
 
 from PIL import Image
-from PyQt6 import QtSql
+
+
+from PyQt6 import QtWidgets, QtGui, QtCore, QtSql
+from pyexpat import features
 from reportlab.pdfgen import canvas
 
 import var
@@ -168,7 +171,12 @@ class Informes:
     def reportFacturas(self):
         factura = var.ui.txtNumFac.text()
         if factura == "":
-            print("No se encontro la factura")
+            mbox = QtWidgets.QMessageBox()
+            mbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
+            mbox.setWindowTitle("Error generando Factura")
+            mbox.setText("No se encontro la factura")
+            mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+            mbox.exec()
             return None
         try:
             rootPath = '.\\informes'
@@ -179,13 +187,18 @@ class Informes:
             nomepdfprop = fecha + "_listadofacturas.pdf"
             pdf_path = os.path.join(rootPath, nomepdfprop)
             var.report = canvas.Canvas(pdf_path)
+            query = QtSql.QSqlQuery()
+            query.exec("select fechafac from facturas where id = '" + factura + "'")
+            query.next()
+            fechaFac = str(query.value(0))
+            var.report.setFont('Helvetica', size=9)
+            var.report.drawString(55, 670, 'Fecha Factura: ' + fechaFac)
             titulo = "Listado Factura " + factura
             Informes.topInforme(titulo)
 
             # Calculate total pages
 
             paginas = 0
-            query = QtSql.QSqlQuery()
             query.exec("select count(*) from ventas where idFactura = '" + factura + "'")
             if (query.next()):
                 registros = int(query.value(0))
@@ -196,9 +209,9 @@ class Informes:
             var.report.drawString(55, 650, str(items[0]))
             var.report.drawString(100, 650, str(items[1]))
             var.report.drawString(170, 650, str(items[2]))
-            var.report.drawString(265, 650, str(items[3]))
-            var.report.drawString(350, 650, str(items[4]))
-            var.report.drawString(450, 650, str(items[5]))
+            var.report.drawString(285, 650, str(items[3]))
+            var.report.drawString(380, 650, str(items[4]))
+            var.report.drawString(475, 650, str(items[5]))
             var.report.line(50, 645, 525, 645)
             query.prepare(
                 "SELECT v.id, p.codigo, p.tipoprop, p.muniprop, p.dirprop, p.prevenprop "
@@ -207,6 +220,7 @@ class Informes:
                 " WHERE idFactura = '" + factura + "'")
             if query.exec():
                 y = 630
+                total = 0
                 while query.next():
                     if y <= 90:
                         var.report.setFont('Helvetica-Oblique', size=8)  # HELVETICA OBLIQUE PARA LA FUENTE ITALIC
@@ -219,27 +233,49 @@ class Informes:
                         var.report.drawString(55, 650, str(items[0]))
                         var.report.drawString(100, 650, str(items[1]))
                         var.report.drawString(170, 650, str(items[2]))
-                        var.report.drawString(265, 650, str(items[3]))
-                        var.report.drawString(350, 650, str(items[4]))
-                        var.report.drawString(450, 650, str(items[5]))
+                        var.report.drawString(285, 650, str(items[3]))
+                        var.report.drawString(380, 650, str(items[4]))
+                        var.report.drawString(475, 650, str(items[5]))
                         var.report.line(50, 645, 525, 645)
                         y = 630
 
                     var.report.setFont('Helvetica', size=8)
-                    var.report.drawString(55, y, str(query.value(0)))  # DNI
-                    var.report.drawString(100, y, str(query.value(1)))  # APELLIDOS
-                    var.report.drawString(170, y, str(query.value(2)))  # APELLIDOS
-                    var.report.drawString(265, y, query.value(3))  # MOVIL
-                    var.report.drawString(350, y, query.value(4))  # PROVINCIA
-                    compra = "-" if not str(query.value(4)) else str(query.value(5)) + '€'
-                    var.report.drawString(450, y, compra)  # MUNICIPIO
+                    var.report.drawCentredString(70, y, str(query.value(0)))
+                    var.report.drawCentredString(115, y, str(query.value(1)))
+                    var.report.drawString(170, y, str(query.value(2)))
+                    var.report.drawString(285, y, query.value(3))
+                    var.report.drawString(380, y, query.value(4))
+                    compra = "-" if not str(query.value(5)) else str(query.value(5)) + '€'
+                    var.report.drawRightString(525, y, compra)
                     y = y - 25.
+                    total += query.value(5)
+
+                var.report.line(50, 110, 525, 110)
+                var.report.drawString(400, 100, "Subtotal: ")
+                var.report.drawString(400, 80, "Impuestos: ")
+                var.report.drawString(400, 60, "Total: ")
+                var.report.drawRightString(525, 100, str(total) + "€")
+                var.report.drawRightString(525, 80, str(round(total*0.1,3)) + "€")
+                var.report.drawRightString(525, 60, str(round(total*1.1,3)) + "€")
 
             var.report.save()
             for file in os.listdir(rootPath):
                 if file.endswith(nomepdfprop):
                     os.startfile(pdf_path)
+            mbox = QtWidgets.QMessageBox()
+            mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
+            mbox.setWindowTitle("Aviso")
+            mbox.setText("Se creado el informe.")
+            mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+            mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
+            mbox.exec()
         except Exception as error:
+            mbox = QtWidgets.QMessageBox()
+            mbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
+            mbox.setWindowTitle("Error generando Factura")
+            mbox.setText("Ocurrio un error en la generacion de la factura")
+            mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+            mbox.exec()
             print(error)
 
     def topInforme(titulo):
