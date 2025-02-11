@@ -294,6 +294,8 @@ class Propiedades():
                 var.ui.txtTipoFac.setText(registro[6])
                 var.ui.txtLocalidadFac.setText(registro[5])
                 var.ui.txtPrecioFac.setText(str(registro[11]))
+                if registro[10] != "":
+                    var.ui.txtPropiedadAlq.setText(str(registro[0]))
 
         except Exception as e:
             print("Error cargar Propiedad", e)

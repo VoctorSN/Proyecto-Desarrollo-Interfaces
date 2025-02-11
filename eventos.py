@@ -110,6 +110,12 @@ class Eventos():
                 var.ui.txtFechaBajaVen.setText(str(data))
             elif var.btn == 6:
                 var.ui.txtFechaFac.setText(str(data))
+            elif var.btn == 7:
+                var.ui.txtFechaAlq.setText(str(data))
+            elif var.btn == 8:
+                var.ui.txtFechaInicioMens.setText(str(data))
+            elif var.btn == 9:
+                var.ui.txtFechaFinMens.setText(str(data))
             time.sleep(0.5)
             var.uicalendar.hide()
             return data
@@ -387,6 +393,22 @@ class Eventos():
                     header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeMode.Stretch)
                 else:
                     header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeMode.ResizeToContents)
+        except Exception as e:
+            print("error en resize tabla ventas Ventas: ", e)
+
+    def resizeTablaContratos(self):
+        try:
+            header = var.ui.tabContratos.horizontalHeader()
+            for i in range(header.count()):
+                header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeMode.Stretch)
+        except Exception as e:
+            print("error en resize tabla ventas Ventas: ", e)
+
+    def resizeTablaMensualidades(self):
+        try:
+            header = var.ui.tabMensualidadesAlq.horizontalHeader()
+            for i in range(header.count()):
+                header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeMode.Stretch)
         except Exception as e:
             print("error en resize tabla ventas Ventas: ", e)
 

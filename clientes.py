@@ -185,6 +185,7 @@ class Clientes:
             var.ui.txtDniFac.setText(registro[0])
             var.ui.txtNomFac.setText(registro[3])
             var.ui.txtApelFac.setText(registro[2])
+            var.ui.txtDniAlq.setText(registro[0])
 
         except Exception as e:
             print("Error cargar Clientes", e)

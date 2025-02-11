@@ -4,6 +4,7 @@ from math import factorial
 import clientes
 import conexion
 import conexionserver
+import contrato
 import eventos
 import facturas
 import propiedades
@@ -52,6 +53,15 @@ class Main(QtWidgets.QMainWindow):
         ventas.Ventas.cargaTablaVentas(self)
         var.ui.tabVentasFac.clicked.connect(ventas.Ventas.cargaOneVenta)
         eventos.Eventos.resizeTablaVentas(self)
+        ventas.Ventas.cargaTablaVentas(self)
+        var.ui.tabVentasFac.clicked.connect(ventas.Ventas.cargaOneVenta)
+        eventos.Eventos.resizeTablaVentas(self)
+        contrato.Contrato.cargaTablaContratos(self)
+        eventos.Eventos.resizeTablaContratos(self)
+
+        var.ui.tabContratos.clicked.connect(contrato.Contrato.cargaOneContrato)
+
+        eventos.Eventos.resizeTablaMensualidades(self)
 
         '''
         ZONA DE EVENTOS DEL MENUBAR
@@ -95,6 +105,10 @@ class Main(QtWidgets.QMainWindow):
         var.ui.btnBuscarMovilVen.clicked.connect(lambda: vendedores.Vendedores.cargaVendedorMovil(self))
         var.ui.btnGrabarFacturaFac.clicked.connect(facturas.Facturas.altaFactura)
         var.ui.btnGrabarVentaFac.clicked.connect(ventas.Ventas.altaVenta)
+        var.ui.btnCalendarAlq.clicked.connect(lambda: eventos.Eventos.abrirCalendar(self,7))
+        var.ui.btnCalendarInicioMens.clicked.connect(lambda: eventos.Eventos.abrirCalendar(self,8))
+        var.ui.btnCalendarFinMens.clicked.connect(lambda: eventos.Eventos.abrirCalendar(self,9))
+        var.ui.btnGrabarContratoAlq.clicked.connect(contrato.Contrato.altaContrato)
 
         '''
         ZONA DE EVENTOS DE TEXTBOX  

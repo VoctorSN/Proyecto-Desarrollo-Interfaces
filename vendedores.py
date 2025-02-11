@@ -124,6 +124,7 @@ class Vendedores():
                 else:
                     casilla.setText(str(registro[i]))
             var.ui.txtIdVendedorFac.setText(str(registro[0]))
+            var.ui.txtVendedorAlq.setText(str(registro[0]))
 
         except Exception as e:
             print("Error cargar Vendedor", e)

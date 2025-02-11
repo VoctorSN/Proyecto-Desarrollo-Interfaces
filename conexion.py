@@ -947,3 +947,140 @@ class Conexion:
             print(e)
         except Exception as error:
             print("Error en idFacturada conexion: ", error)
+
+
+    def listadoContratos(self):
+        """
+
+        :return: lista de los datos de las propiedades no dadas de baja o ambas dependiendo de la variable historico
+        :rtype: list
+
+        Metodo que devuelve una lista con los datos de las propiedades,
+        coge los datos de todas o solo de las que no están dadas de baja dependiendo del estado de la variable historico
+        """
+        try:
+            listado = []
+            query = QtSql.QSqlQuery()
+            query.prepare("""
+                        SELECT 
+                            c.id,
+                            c.dniCli
+                        FROM 
+                            contratos AS c
+                          """)
+            if query.exec():
+                while query.next():
+                    fila = [query.value(i) for i in range(query.record().count())]
+                    listado.append(fila)
+            return listado
+        except Exception as e:
+            print("Error listado en facturas", e)
+
+
+    def datosOneContrato(codigo):
+        """
+
+        :param codigo: id del vendedor del cual queremos obtener los datos
+        :type codigo: codigo del vendedor
+        :return: lista de los datos de un vendedor en concreto
+        :rtype: list
+
+        Metodo que devuelve una lista con los datos de un vendedor con el id de este sacado por el parametro
+        """
+        try:
+            registro = []
+            query = QtSql.QSqlQuery()
+            query.prepare("""
+                SELECT 
+                   c.id,
+                   c.fecha_contrato,
+                   c.dniCli,
+                   c.prop,
+                   c.vendedor
+                FROM contratos AS c
+                WHERE c.id = :codigo
+            """)
+            query.bindValue(":codigo", str(codigo))
+
+            if query.exec():
+                while query.next():
+                    for i in range(query.record().count()):
+                        registro.append(query.value(i))
+                    return registro
+        except Exception as error:
+            print("Error en datos datosOneContrato: ", error)
+
+    def isDisponible(self, idPropiedad):
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare(
+                "SELECT * FROM propiedades WHERE codigo = :idPropiedad AND estadoprop = 'Disponible'")
+            query.bindValue(":idPropiedad", idPropiedad)
+            query.exec()
+            return query.next()
+        except sqlite3.Error as e:
+            print(e)
+        except Exception as error:
+            print("Error en isAlquilable conexion: ", error)
+        return False
+
+    def altaContrato(self, nuevoContrato):
+        """
+
+        :param nuevoVen: datos a insertar de un nuevo vendedor
+        :type nuevoVen: list
+        :return: verdadero o falso dependiendo del éxito de la operación
+        :rtype: bool
+
+        Metodo que da de alta a un vendendor cogiendo los datos de este de la lista
+         que le pasas por parametro y elige el vendedor con el dni que está en los datos de la lista pasada por parametro
+        """
+        try:
+            if datetime.now().strftime("%d/%m/%Y") > nuevoContrato[0]:
+                return False
+            query = QtSql.QSqlQuery()
+            query.prepare(
+                "INSERT INTO contratos (fecha_contrato, dniCli, prop, vendedor, fecha_inicio) "
+                " VALUES (:fecha_contrato, :dniCli, :prop, :vendedor, :fecha_inicio)")
+            query.bindValue(":fecha_contrato", str(nuevoContrato[0]))
+            query.bindValue(":dniCli", str(nuevoContrato[1]))
+            query.bindValue(":prop", str(nuevoContrato[2]))
+            query.bindValue(":vendedor", str(nuevoContrato[3]))
+            query.bindValue(":fecha_inicio", datetime.now().strftime("%d/%m/%Y"))
+            if query.exec():
+                Conexion.cambiarEstadoPropiedad(self, nuevoContrato[2], "Vendido")
+                return True
+            else:
+                return False
+        except sqlite3.Error as e:
+            print(e)
+        except Exception as error:
+            print("Error en alta contrato: ", error)
+
+
+    def delContrato(self, idPropiedad, idContrato):
+        """
+
+        :param nuevoVen: datos a insertar de un nuevo vendedor
+        :type nuevoVen: list
+        :return: verdadero o falso dependiendo del éxito de la operación
+        :rtype: bool
+
+        Metodo que da de alta a un vendendor cogiendo los datos de este de la lista
+         que le pasas por parametro y elige el vendedor con el dni que está en los datos de la lista pasada por parametro
+        """
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare(
+                "DELETE FROM  contratos "
+                " WHERE id = :idContrato")
+            query.bindValue(":idContrato", idContrato)
+            if query.exec():
+                Conexion.cambiarEstadoPropiedad(self, idPropiedad, "Disponible")
+                return True
+            else:
+                return False
+        except sqlite3.Error as e:
+            print(e)
+        except Exception as error:
+            print("Error en eliminar Contrato: ", error)
