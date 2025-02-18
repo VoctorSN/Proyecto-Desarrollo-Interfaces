@@ -3,7 +3,6 @@ import sqlite3
 from datetime import datetime
 
 from PyQt6 import QtSql, QtWidgets
-
 import var
 
 
@@ -1046,10 +1045,11 @@ class Conexion:
             query.bindValue(":dniCli", str(nuevoContrato[1]))
             query.bindValue(":prop", str(nuevoContrato[2]))
             query.bindValue(":vendedor", str(nuevoContrato[3]))
-            query.bindValue(":fecha_inicio", datetime.now().strftime("%d/%m/%Y"))
+            fechaInicio = datetime.now().strftime("%d/%m/%Y")
+            query.bindValue(":fecha_inicio", fechaInicio)
             if query.exec():
                 Conexion.cambiarEstadoPropiedad(self, nuevoContrato[2], "Vendido")
-                return True
+                return Conexion.crearMensualidades(self, nuevoContrato[2],fechaInicio, nuevoContrato[0])
             else:
                 return False
         except sqlite3.Error as e:
@@ -1084,3 +1084,98 @@ class Conexion:
             print(e)
         except Exception as error:
             print("Error en eliminar Contrato: ", error)
+
+
+    def crearMensualidades(self, idPropiedad, fechaInicio, fechaFin):
+        """
+
+        :param nuevoVen: datos a insertar de un nuevo vendedor
+        :type nuevoVen: list
+        :return: verdadero o falso dependiendo del éxito de la operación
+        :rtype: bool
+
+        Metodo que da de alta a un vendendor cogiendo los datos de este de la lista
+         que le pasas por parametro y elige el vendedor con el dni que está en los datos de la lista pasada por parametro
+        """
+        try:
+            formato = "%d/%m/%Y"
+            date1 = datetime.strptime(fechaInicio, formato)
+            date2 = datetime.strptime(fechaFin, formato)
+            meses = Conexion.diferencia_meses(self,date1, date2) + 1
+            query = QtSql.QSqlQuery()
+            contrato = Conexion.getContratoByPropiedad(self, idPropiedad)[0]
+            while date1 <= date2:
+                query.prepare(
+                    "INSERT INTO mensualidades (contrato, mes, pagado) "
+                    " VALUES (:contrato, :mes, :pagado)")
+                query.bindValue(":contrato", contrato)
+                query.bindValue(":mes", date1.strftime("%d/%m/%Y"))
+                query.bindValue(":pagado", False)
+                query.exec()
+                date1   = Conexion.sumar_un_mes(self, date1)
+            return True
+        except sqlite3.Error as e:
+            print(e)
+        except Exception as error:
+            print("Error en eliminar Contrato: ", error)
+        return False
+
+    def getContratoByPropiedad(self, idPropiedad):
+        """
+        :param idPropiedad: id de la propiedad para la cual queremos obtener los contratos
+        :type idPropiedad: int
+        :return: lista de contratos asociados a la propiedad
+        :rtype: list
+
+        Metodo que devuelve una lista con los contratos asociados a una propiedad específica
+        """
+        try:
+            contratos = []
+            query = QtSql.QSqlQuery()
+            query.prepare("""
+                SELECT c.id, c.fecha_contrato, c.dniCli, c.prop, c.vendedor, c.fecha_inicio
+                FROM contratos AS c
+                WHERE c.prop = :idPropiedad
+            """)
+            query.bindValue(":idPropiedad", idPropiedad)
+            if query.exec():
+                while query.next():
+                    contrato = [
+                        query.value(0),
+                        query.value(1),
+                        query.value(2),
+                         query.value(3),
+                        query.value(4),
+                        query.value(5)
+                    ]
+                    contratos.append(contrato)
+            return contratos
+        except Exception as error:
+            print("Error en getContratoByPropiedad: ", error)
+            return [[]]
+
+    def diferencia_meses(self,fecha1, fecha2):
+        formato = "%d/%m/%Y"
+
+        # Calcular la diferencia en años y meses
+        years_diff = fecha2.year - fecha1.year
+        months_diff = fecha2.month - fecha1.month
+
+        # Calcular la diferencia total en meses
+        total_months_diff = years_diff * 12 + months_diff
+
+        return total_months_diff
+
+    def sumar_un_mes(self, fecha):
+        # Sumar un mes a la fecha
+        mes = fecha.month
+        año = fecha.year
+
+        if mes == 12:
+            mes = 1
+            año += 1
+        else:
+            mes += 1
+
+        # Devolver la nueva fecha con el mes incrementado
+        return fecha.replace(year=año, month=mes)

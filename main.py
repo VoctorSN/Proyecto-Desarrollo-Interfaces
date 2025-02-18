@@ -53,6 +53,7 @@ class Main(QtWidgets.QMainWindow):
         ventas.Ventas.cargaTablaVentas(self)
         var.ui.tabVentasFac.clicked.connect(ventas.Ventas.cargaOneVenta)
         eventos.Eventos.resizeTablaVentas(self)
+
         ventas.Ventas.cargaTablaVentas(self)
         var.ui.tabVentasFac.clicked.connect(ventas.Ventas.cargaOneVenta)
         eventos.Eventos.resizeTablaVentas(self)

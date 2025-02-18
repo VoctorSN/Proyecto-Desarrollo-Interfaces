@@ -49,6 +49,7 @@ class Contrato():
                 mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
                 mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
                 mbox.exec()
+                Contrato.cargaTablaContratos(self)
         except Exception as e:
             print(e)
             mbox = QtWidgets.QMessageBox()
