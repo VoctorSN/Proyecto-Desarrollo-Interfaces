@@ -54,15 +54,13 @@ class Main(QtWidgets.QMainWindow):
         var.ui.tabVentasFac.clicked.connect(ventas.Ventas.cargaOneVenta)
         eventos.Eventos.resizeTablaVentas(self)
 
-        ventas.Ventas.cargaTablaVentas(self)
-        var.ui.tabVentasFac.clicked.connect(ventas.Ventas.cargaOneVenta)
-        eventos.Eventos.resizeTablaVentas(self)
         contrato.Contrato.cargaTablaContratos(self)
+        var.ui.tabContratos.clicked.connect(contrato.Contrato.cargaOneContrato)
         eventos.Eventos.resizeTablaContratos(self)
 
-        var.ui.tabContratos.clicked.connect(contrato.Contrato.cargaOneContrato)
 
         eventos.Eventos.resizeTablaMensualidades(self)
+        contrato.Contrato.cargaTablaMensualidades(self)
 
         '''
         ZONA DE EVENTOS DEL MENUBAR
@@ -110,6 +108,8 @@ class Main(QtWidgets.QMainWindow):
         var.ui.btnCalendarInicioMens.clicked.connect(lambda: eventos.Eventos.abrirCalendar(self,8))
         var.ui.btnCalendarFinMens.clicked.connect(lambda: eventos.Eventos.abrirCalendar(self,9))
         var.ui.btnGrabarContratoAlq.clicked.connect(contrato.Contrato.altaContrato)
+        var.ui.btnCargarMensualidades.clicked.connect(contrato.Contrato.cargaTablaMensualidades(self,1))
+
 
         '''
         ZONA DE EVENTOS DE TEXTBOX  

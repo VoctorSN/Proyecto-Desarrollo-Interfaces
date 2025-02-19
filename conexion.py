@@ -1179,3 +1179,32 @@ class Conexion:
 
         # Devolver la nueva fecha con el mes incrementado
         return fecha.replace(year=año, month=mes)
+
+
+    def listadomensualidades(self, contrato):
+        """
+
+        :return: lista de los datos de las propiedades no dadas de baja o ambas dependiendo de la variable historico
+        :rtype: list
+
+        Metodo que devuelve una lista con los datos de las propiedades,
+        coge los datos de todas o solo de las que no están dadas de baja dependiendo del estado de la variable historico
+        """
+        try:
+            listado = []
+            query = QtSql.QSqlQuery()
+            query.prepare("""
+                        SELECT 
+                            m.id
+                        FROM 
+                            mensualidades AS m 
+                            WHERE m.contrato = :contrato
+                          """)
+            query.bindValue(":contrato",contrato)
+            if query.exec():
+                while query.next():
+                    fila = [query.value(i) for i in range(query.record().count())]
+                    listado.append(fila)
+            return listado
+        except Exception as e:
+            print("Error listado en mensualidades", e)

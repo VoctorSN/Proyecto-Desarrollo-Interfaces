@@ -8,6 +8,7 @@ from propiedades import Propiedades
 class Contrato():
 
     botonesdel = []
+    botonespagar = []
 
     def altaContrato(self):
         nuevoContrato = [
@@ -104,9 +105,15 @@ class Contrato():
             print("Error cargar tabla contrato", e)
 
     def setTablaVaciaContrato(self):
-        var.ui.tabVentasFac.setRowCount(1)
-        var.ui.tabVentasFac.setItem(0, 1, QtWidgets.QTableWidgetItem("No hay contratos"))
-        var.ui.tabVentasFac.item(0, 1).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft.AlignCenter)
+        var.ui.tabContratos.setRowCount(1)
+        var.ui.tabContratos.setItem(0, 1, QtWidgets.QTableWidgetItem("No hay contratos"))
+        var.ui.tabContratos.item(0, 1).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft.AlignCenter)
+        return
+
+    def setTablaVaciaMensualidades(self):
+        var.ui.tabMensualidadesAlq.setRowCount(1)
+        var.ui.tabMensualidadesAlq.setItem(0, 1, QtWidgets.QTableWidgetItem("No hay mensualidades"))
+        var.ui.tabMensualidadesAlq.item(0, 1).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft.AlignCenter)
         return
 
     def cargaOneContrato(self):
@@ -165,3 +172,46 @@ class Contrato():
                 msgbox.hide()
         except Exception as error:
             print("Error Eliminar contrato ", error)
+
+
+    def cargaTablaMensualidades(self, contrato=0):
+        if contrato==0 :
+            return Contrato.setTablaVaciaMensualidades(self)
+        try:
+            contrato = var.ui.txtNumContratoAlq.text()
+            listado = conexion.Conexion.listadomensualidades(self, contrato)
+
+            var.ui.tabMensualidadesAlq.setRowCount(0)
+
+            i = 0
+
+            for registro in listado:
+                var.ui.tabMensualidadesAlq.setRowCount(i + 1)
+
+                container = QtWidgets.QWidget()
+                layout = QtWidgets.QVBoxLayout()
+                Contrato.botonespagar.append(QtWidgets.QPushButton())
+                Contrato.botonespagar[-1].setFixedSize(30, 20)
+                Contrato.botonespagar[-1].setIcon(QtGui.QIcon("./img/cruz.png"))
+                Contrato.botonespagar[-1].setStyleSheet("background-color: #efefef;")
+                Contrato.botonespagar[-1].clicked.connect(
+                    lambda checked: Contrato.botonespagar[-1].setIcon(QtGui.QIcon("./img/tick.png")))
+                layout.addWidget(Contrato.botonespagar[-1])
+                layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                layout.setContentsMargins(0, 0, 0, 0)
+                layout.setSpacing(0)
+                container.setLayout(layout)
+
+                #var.ui.tabContratos.setItem(i, 0, QtWidgets.QTableWidgetItem(str(registro[0])))
+                #var.ui.tabContratos.setItem(i, 1, QtWidgets.QTableWidgetItem(str(registro[1])))
+                var.ui.tabContratos.setCellWidget(i, 4, container)
+
+                #var.ui.tabContratos.item(i, 0).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                #var.ui.tabContratos.item(i, 1).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                i += 1
+
+            if var.ui.tabMensualidadesAlq.rowCount() == 0:
+                return Contrato.setTablaVaciaMensualidades(self)
+
+        except Exception as e:
+            print("Error cargar tabla mensualidades", e)

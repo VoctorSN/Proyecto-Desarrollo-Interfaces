@@ -4311,7 +4311,7 @@
             <item row="3" column="3">
              <layout class="QHBoxLayout" name="horizontalLayout_30">
               <item>
-               <widget class="QPushButton" name="btnGrabarVentaFac_3">
+               <widget class="QPushButton" name="btnCargarMensualidades">
                 <property name="minimumSize">
                  <size>
                   <width>100</width>
