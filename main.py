@@ -58,8 +58,8 @@ class Main(QtWidgets.QMainWindow):
         var.ui.tabContratos.clicked.connect(contrato.Contrato.cargaOneContrato)
         eventos.Eventos.resizeTablaContratos(self)
 
-
         eventos.Eventos.resizeTablaMensualidades(self)
+        var.ui.tabMensualidadesAlq.clicked.connect(contrato.Contrato.cargaOneMensualidad)
         contrato.Contrato.cargaTablaMensualidades(self)
 
         '''
@@ -108,7 +108,7 @@ class Main(QtWidgets.QMainWindow):
         var.ui.btnCalendarInicioMens.clicked.connect(lambda: eventos.Eventos.abrirCalendar(self,8))
         var.ui.btnCalendarFinMens.clicked.connect(lambda: eventos.Eventos.abrirCalendar(self,9))
         var.ui.btnGrabarContratoAlq.clicked.connect(contrato.Contrato.altaContrato)
-        var.ui.btnCargarMensualidades.clicked.connect(contrato.Contrato.cargaTablaMensualidades(self,1))
+        var.ui.btnCargarMensualidades.clicked.connect(contrato.Contrato.cargaTablaMensualidades)
 
 
         '''

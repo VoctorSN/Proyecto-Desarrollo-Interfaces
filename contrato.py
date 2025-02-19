@@ -112,9 +112,10 @@ class Contrato():
 
     def setTablaVaciaMensualidades(self):
         var.ui.tabMensualidadesAlq.setRowCount(1)
-        var.ui.tabMensualidadesAlq.setItem(0, 1, QtWidgets.QTableWidgetItem("No hay mensualidades"))
-        var.ui.tabMensualidadesAlq.item(0, 1).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft.AlignCenter)
+        var.ui.tabMensualidadesAlq.setItem(0, 2, QtWidgets.QTableWidgetItem("No hay mensualidades"))
+        var.ui.tabMensualidadesAlq.item(0, 2).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft.AlignCenter)
         return
+
 
     def cargaOneContrato(self):
         try:
@@ -122,12 +123,45 @@ class Contrato():
             datos = [dato.text() for dato in fila]
             if datos[0] == "No hay Contratos":
                 return
-            registro = conexion.Conexion.datosOneContrato(str(datos[0]))
+            registro = Contrato.cargarContrato(self,datos)
+
+            var.ui.txtNumContratoMens.setText(str(registro[0]))
+            var.ui.txtPropiedadMens.setText(str(registro[3]))
+
+
+
+        except Exception as e:
+            print("Error cargar Contrato", e)
+
+    def cargarContrato(self, datos):
+        registro = conexion.Conexion.datosOneContrato(str(datos[0]))
+        listado = [
+            var.ui.txtNumContratoAlq, var.ui.txtFechaAlq,
+            var.ui.txtDniAlq, var.ui.txtPropiedadAlq,
+            var.ui.txtVendedorAlq
+        ]
+        for i, casilla in enumerate(listado):
+            if isinstance(casilla, QtWidgets.QComboBox):
+                casilla.setCurrentText(str(registro[i]))
+            elif isinstance(casilla, QtWidgets.QLabel):
+                casilla.setText(str(registro[i]))
+            elif isinstance(casilla, QtWidgets.QLineEdit):
+                casilla.setText(str(registro[i]))
+            else:
+                casilla.setText(str(registro[i]))
+        return registro
+
+    def cargaOneMensualidad(self):
+        try:
+            fila = var.ui.tabMensualidadesAlq.selectedItems()
+            datos = [dato.text() for dato in fila]
+            if datos[0] == "No hay Mensualidades":
+                return
+            registro = conexion.Conexion.datosOneMensualidad(str(datos[0]))
 
             listado = [
-                var.ui.txtNumContratoAlq, var.ui.txtFechaAlq,
-                var.ui.txtDniAlq, var.ui.txtPropiedadAlq,
-                var.ui.txtVendedorAlq
+                var.ui.txtNumContratoMens, var.ui.txtPropiedadMens,
+                var.ui.txtFechaInicioMens, var.ui.txtFechaFinMens
             ]
 
             for i, casilla in enumerate(listado):
@@ -140,8 +174,8 @@ class Contrato():
                 else:
                     casilla.setText(str(registro[i]))
 
-            var.ui.txtNumContratoMens.setText(str(registro[0]))
-            var.ui.txtPropiedadMens.setText(str(registro[3]))
+            Contrato.cargarContrato(self, [registro[0]])
+
 
         except Exception as e:
             print("Error cargar Contrato", e)
@@ -174,12 +208,13 @@ class Contrato():
             print("Error Eliminar contrato ", error)
 
 
-    def cargaTablaMensualidades(self, contrato=0):
-        if contrato==0 :
+    def cargaTablaMensualidades(self):
+        contrato = var.ui.txtNumContratoMens.text()
+        if contrato=='':
             return Contrato.setTablaVaciaMensualidades(self)
         try:
-            contrato = var.ui.txtNumContratoAlq.text()
-            listado = conexion.Conexion.listadomensualidades(self, contrato)
+
+            listado = conexion.Conexion.listadomensualidades(self, int(contrato))
 
             var.ui.tabMensualidadesAlq.setRowCount(0)
 
@@ -193,21 +228,27 @@ class Contrato():
                 Contrato.botonespagar.append(QtWidgets.QPushButton())
                 Contrato.botonespagar[-1].setFixedSize(30, 20)
                 Contrato.botonespagar[-1].setIcon(QtGui.QIcon("./img/cruz.png"))
+                if registro[4]:
+                    Contrato.botonespagar[-1].setIcon(QtGui.QIcon("./img/tick.png"))
                 Contrato.botonespagar[-1].setStyleSheet("background-color: #efefef;")
                 Contrato.botonespagar[-1].clicked.connect(
-                    lambda checked: Contrato.botonespagar[-1].setIcon(QtGui.QIcon("./img/tick.png")))
+                    lambda checked, idMensualidad=registro[0]: Contrato.pagarMensualidad(self, idMensualidad))
                 layout.addWidget(Contrato.botonespagar[-1])
                 layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
                 layout.setContentsMargins(0, 0, 0, 0)
                 layout.setSpacing(0)
                 container.setLayout(layout)
 
-                #var.ui.tabContratos.setItem(i, 0, QtWidgets.QTableWidgetItem(str(registro[0])))
-                #var.ui.tabContratos.setItem(i, 1, QtWidgets.QTableWidgetItem(str(registro[1])))
-                var.ui.tabContratos.setCellWidget(i, 4, container)
+                var.ui.tabMensualidadesAlq.setItem(i, 0, QtWidgets.QTableWidgetItem(str(registro[0])))
+                var.ui.tabMensualidadesAlq.setItem(i, 1, QtWidgets.QTableWidgetItem(str(registro[1])))
+                var.ui.tabMensualidadesAlq.setItem(i, 2, QtWidgets.QTableWidgetItem(str(registro[2])))
+                var.ui.tabMensualidadesAlq.setItem(i, 3, QtWidgets.QTableWidgetItem(str(registro[3])))
+                var.ui.tabMensualidadesAlq.setCellWidget(i, 4, container)
 
-                #var.ui.tabContratos.item(i, 0).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-                #var.ui.tabContratos.item(i, 1).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                var.ui.tabMensualidadesAlq.item(i, 0).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                var.ui.tabMensualidadesAlq.item(i, 1).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                var.ui.tabMensualidadesAlq.item(i, 2).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                var.ui.tabMensualidadesAlq.item(i, 3).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
                 i += 1
 
             if var.ui.tabMensualidadesAlq.rowCount() == 0:
@@ -215,3 +256,8 @@ class Contrato():
 
         except Exception as e:
             print("Error cargar tabla mensualidades", e)
+
+
+    def pagarMensualidad(self,idMensualidad):
+        conexion.Conexion.pagarMensualidad(self, idMensualidad)
+        Contrato.cargaTablaMensualidades(self)

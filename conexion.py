@@ -975,8 +975,40 @@ class Conexion:
         except Exception as e:
             print("Error listado en facturas", e)
 
-
     def datosOneContrato(codigo):
+        """
+
+        :param codigo: id del vendedor del cual queremos obtener los datos
+        :type codigo: codigo del vendedor
+        :return: lista de los datos de un vendedor en concreto
+        :rtype: list
+
+        Metodo que devuelve una lista con los datos de un vendedor con el id de este sacado por el parametro
+        """
+        try:
+            registro = []
+            query = QtSql.QSqlQuery()
+            query.prepare("""
+                SELECT 
+                   c.id,
+                   c.fecha_contrato,
+                   c.dniCli,
+                   c.prop,
+                   c.vendedor
+                FROM contratos AS c
+                WHERE c.id = :codigo
+            """)
+            query.bindValue(":codigo", str(codigo))
+
+            if query.exec():
+                while query.next():
+                    for i in range(query.record().count()):
+                        registro.append(query.value(i))
+                    return registro
+        except Exception as error:
+            print("Error en datos datosOneContrato: ", error)
+
+    def datosOneMensualidad(codigo):
         """
 
         :param codigo: id del vendedor del cual queremos obtener los datos
@@ -1108,7 +1140,7 @@ class Conexion:
                 query.prepare(
                     "INSERT INTO mensualidades (contrato, mes, pagado) "
                     " VALUES (:contrato, :mes, :pagado)")
-                query.bindValue(":contrato", contrato)
+                query.bindValue(":contrato", contrato[0])
                 query.bindValue(":mes", date1.strftime("%d/%m/%Y"))
                 query.bindValue(":pagado", False)
                 query.exec()
@@ -1195,9 +1227,12 @@ class Conexion:
             query = QtSql.QSqlQuery()
             query.prepare("""
                         SELECT 
-                            m.id
-                        FROM 
-                            mensualidades AS m 
+                            m.id, c.prop, m.mes, p.prealquiprop, m.pagado
+                        FROM mensualidades AS m 
+                        INNER JOIN contratos AS c
+                        ON c.id = m.contrato
+                        INNER JOIN propiedades AS p
+                        ON p.codigo = c.prop
                             WHERE m.contrato = :contrato
                           """)
             query.bindValue(":contrato",contrato)
@@ -1208,3 +1243,28 @@ class Conexion:
             return listado
         except Exception as e:
             print("Error listado en mensualidades", e)
+
+
+    def pagarMensualidad(self, idContrato):
+        """
+
+        :param nuevoVen: datos a insertar de un nuevo vendedor
+        :type nuevoVen: list
+        :return: verdadero o falso dependiendo del éxito de la operación
+        :rtype: bool
+
+        Metodo que da de alta a un vendendor cogiendo los datos de este de la lista
+         que le pasas por parametro y elige el vendedor con el dni que está en los datos de la lista pasada por parametro
+        """
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare(
+                "UPDATE mensualidades SET pagado = TRUE "
+                " WHERE id = :id")
+            query.bindValue(":id", idContrato)
+            return query.exec()
+        except sqlite3.Error as e:
+            print(e)
+        except Exception as error:
+            print("Error en pagar Contrato: ", error)
+        return False
