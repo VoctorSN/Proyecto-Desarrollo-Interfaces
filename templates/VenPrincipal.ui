@@ -3651,7 +3651,7 @@
           <x>30</x>
           <y>20</y>
           <width>391</width>
-          <height>241</height>
+          <height>341</height>
          </rect>
         </property>
         <property name="frameShape">
@@ -3663,14 +3663,14 @@
         <widget class="QWidget" name="layoutWidget_2">
          <property name="geometry">
           <rect>
-           <x>60</x>
+           <x>30</x>
            <y>10</y>
-           <width>261</width>
-           <height>211</height>
+           <width>324</width>
+           <height>294</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_8">
-          <item row="5" column="2">
+          <item row="8" column="2">
            <widget class="QLineEdit" name="txtVendedorAlq">
             <property name="enabled">
              <bool>false</bool>
@@ -3683,42 +3683,6 @@
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="1">
-           <widget class="QLabel" name="lblDniCliAlq_2">
-            <property name="text">
-             <string>Vendedor</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="3">
-           <widget class="QPushButton" name="btnCalendarAlq">
-            <property name="minimumSize">
-             <size>
-              <width>29</width>
-              <height>29</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>29</width>
-              <height>29</height>
-             </size>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset>
-              <normaloff>../img/calendar.png</normaloff>../img/calendar.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>28</width>
-              <height>28</height>
-             </size>
             </property>
            </widget>
           </item>
@@ -3756,60 +3720,46 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="2">
-           <widget class="QLineEdit" name="txtFechaAlq">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 216);</string>
+          <item row="8" column="1">
+           <widget class="QLabel" name="lblDniCliAlq_2">
+            <property name="text">
+             <string>Vendedor</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3">
+           <widget class="QPushButton" name="btnCalendarAlq">
+            <property name="minimumSize">
+             <size>
+              <width>29</width>
+              <height>29</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>29</width>
+              <height>29</height>
+             </size>
             </property>
             <property name="text">
              <string/>
             </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
+            <property name="icon">
+             <iconset>
+              <normaloff>../img/calendar.png</normaloff>../img/calendar.png</iconset>
             </property>
-           </widget>
-          </item>
-          <item row="7" column="1" colspan="2">
-           <widget class="QPushButton" name="btnGrabarContratoAlq">
-            <property name="text">
-             <string>Grabar contrato</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="3">
-           <spacer name="horizontalSpacer_54">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
+            <property name="iconSize">
              <size>
-              <width>40</width>
-              <height>20</height>
+              <width>28</width>
+              <height>28</height>
              </size>
             </property>
-           </spacer>
-          </item>
-          <item row="7" column="0">
-           <spacer name="horizontalSpacer_53">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLabel" name="lblNumFac_2">
-            <property name="text">
-             <string>Nº Contrato</string>
-            </property>
            </widget>
           </item>
-          <item row="4" column="2">
+          <item row="6" column="2">
            <widget class="QLineEdit" name="txtPropiedadAlq">
             <property name="enabled">
              <bool>false</bool>
@@ -3825,10 +3775,78 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
-           <widget class="QLabel" name="lblDniCliAlq">
+          <item row="2" column="2">
+           <widget class="QLineEdit" name="txtFechaAlq">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 216);</string>
+            </property>
             <property name="text">
-             <string>Propiedad</string>
+             <string/>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="lblNumFac_2">
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+            <property name="text">
+             <string>Nº Contrato</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="3">
+           <spacer name="horizontalSpacer_54">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="10" column="0">
+           <spacer name="horizontalSpacer_53">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="10" column="1" colspan="2">
+           <widget class="QPushButton" name="btnGrabarContratoAlq">
+            <property name="text">
+             <string>Grabar contrato</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="2">
+           <widget class="QLineEdit" name="txtDniAlq">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 216);</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
@@ -3848,18 +3866,158 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
+          <item row="5" column="1">
            <widget class="QLabel" name="lblDniCliAlq_3">
             <property name="text">
              <string>Dni Cliente</string>
             </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QLabel" name="lblDniCliAlq">
+            <property name="text">
+             <string>Propiedad</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLabel" name="lblFechaFac_3">
+            <property name="text">
+             <string>Fecha Inicio</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="3">
+           <widget class="QPushButton" name="btnCalendarInicioMens">
+            <property name="minimumSize">
+             <size>
+              <width>29</width>
+              <height>29</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>29</width>
+              <height>29</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>../img/calendar.png</normaloff>../img/calendar.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>28</width>
+              <height>28</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="3">
+           <widget class="QPushButton" name="btnCalendarFinMens">
+            <property name="minimumSize">
+             <size>
+              <width>29</width>
+              <height>29</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>29</width>
+              <height>29</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>../img/calendar.png</normaloff>../img/calendar.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>28</width>
+              <height>28</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLabel" name="lblFechaFac_4">
+            <property name="text">
+             <string>Fecha Fin</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="3">
+           <spacer name="horizontalSpacer_55">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="11" column="0">
+           <spacer name="horizontalSpacer_59">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="11" column="1" colspan="2">
+           <widget class="QPushButton" name="btnCargarMensualidades">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Cargar Mensualidades</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2">
+           <widget class="QLineEdit" name="txtFechaFinMens">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 216);</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
            </widget>
           </item>
           <item row="3" column="2">
-           <widget class="QLineEdit" name="txtDniAlq">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
+           <widget class="QLineEdit" name="txtFechaInicioMens">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 216);</string>
             </property>
@@ -3878,9 +4036,9 @@
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>260</y>
+          <y>350</y>
           <width>391</width>
-          <height>441</height>
+          <height>351</height>
          </rect>
         </property>
         <property name="frameShape">
@@ -3892,10 +4050,10 @@
         <widget class="QTableWidget" name="tabContratos">
          <property name="geometry">
           <rect>
-           <x>30</x>
-           <y>30</y>
+           <x>20</x>
+           <y>0</y>
            <width>351</width>
-           <height>401</height>
+           <height>341</height>
           </rect>
          </property>
          <property name="sizePolicy">
@@ -3940,9 +4098,9 @@
         <property name="geometry">
          <rect>
           <x>430</x>
-          <y>160</y>
+          <y>20</y>
           <width>1271</width>
-          <height>541</height>
+          <height>681</height>
          </rect>
         </property>
         <property name="frameShape">
@@ -3957,7 +4115,7 @@
            <x>10</x>
            <y>10</y>
            <width>1251</width>
-           <height>521</height>
+           <height>651</height>
           </rect>
          </property>
          <property name="sizePolicy">
@@ -4006,383 +4164,11 @@
            <string>GESTION</string>
           </property>
          </column>
-        </widget>
-       </widget>
-       <widget class="QFrame" name="frame_8">
-        <property name="geometry">
-         <rect>
-          <x>440</x>
-          <y>20</y>
-          <width>1261</width>
-          <height>131</height>
-         </rect>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <widget class="QWidget" name="horizontalLayoutWidget_7">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>1261</width>
-           <height>126</height>
-          </rect>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_37">
-          <item>
-           <spacer name="horizontalSpacer_63">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <layout class="QGridLayout" name="gridLayout_11">
-            <item row="2" column="0">
-             <layout class="QHBoxLayout" name="horizontalLayout_32">
-              <item>
-               <spacer name="horizontalSpacer_60">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QLabel" name="lblFechaFac_3">
-                <property name="text">
-                 <string>Fecha Inicio</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="txtFechaInicioMens">
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 216);</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="2" column="5">
-             <layout class="QHBoxLayout" name="horizontalLayout_36">
-              <item>
-               <widget class="QLabel" name="lblFechaFac_4">
-                <property name="text">
-                 <string>Fecha Fin</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="txtFechaFinMens">
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 216);</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="btnCalendarFinMens">
-                <property name="minimumSize">
-                 <size>
-                  <width>29</width>
-                  <height>29</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>29</width>
-                  <height>29</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="icon">
-                 <iconset>
-                  <normaloff>../img/calendar.png</normaloff>../img/calendar.png</iconset>
-                </property>
-                <property name="iconSize">
-                 <size>
-                  <width>28</width>
-                  <height>28</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer_61">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
-            </item>
-            <item row="1" column="5">
-             <layout class="QHBoxLayout" name="horizontalLayout_35">
-              <item>
-               <widget class="QLabel" name="lblNumFac_5">
-                <property name="text">
-                 <string>Propiedad</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="txtPropiedadMens">
-                <property name="minimumSize">
-                 <size>
-                  <width>100</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                 </font>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 216);</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer_62">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
-            </item>
-            <item row="1" column="0">
-             <layout class="QHBoxLayout" name="horizontalLayout_34">
-              <item>
-               <spacer name="horizontalSpacer_65">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QLabel" name="lblNumFac_4">
-                <property name="text">
-                 <string>Contrato</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="txtNumContratoMens">
-                <property name="minimumSize">
-                 <size>
-                  <width>100</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                 </font>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 216);</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="0" column="3">
-             <widget class="QLabel" name="lblNumFac_6">
-              <property name="minimumSize">
-               <size>
-                <width>24</width>
-                <height>24</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>MENSUALIDADES</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="5">
-             <spacer name="horizontalSpacer_58">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="2" column="3">
-             <spacer name="horizontalSpacer_55">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="1" column="3">
-             <spacer name="horizontalSpacer_56">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="3" column="3">
-             <layout class="QHBoxLayout" name="horizontalLayout_30">
-              <item>
-               <widget class="QPushButton" name="btnCargarMensualidades">
-                <property name="minimumSize">
-                 <size>
-                  <width>100</width>
-                  <height>25</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Cargar Mensualidades</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="3" column="0">
-             <spacer name="horizontalSpacer_57">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="2" column="1">
-             <widget class="QPushButton" name="btnCalendarInicioMens">
-              <property name="minimumSize">
-               <size>
-                <width>29</width>
-                <height>29</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>29</width>
-                <height>29</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset>
-                <normaloff>../img/calendar.png</normaloff>../img/calendar.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>28</width>
-                <height>28</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_64">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
+         <column>
+          <property name="text">
+           <string>IMPRIMIR</string>
+          </property>
+         </column>
         </widget>
        </widget>
       </widget>

@@ -3,6 +3,7 @@ import sqlite3
 from datetime import datetime
 
 from PyQt6 import QtSql, QtWidgets
+
 import var
 
 
@@ -907,7 +908,6 @@ class Conexion:
         except Exception as error:
             print("Error en facturaUtilizada: ", error)
 
-
     def delVenta(self, idPropiedad, idVenta):
         """
 
@@ -935,7 +935,7 @@ class Conexion:
         except Exception as error:
             print("Error en eliminar Venta: ", error)
 
-    def isFacturada(self,idVenta):
+    def isFacturada(self, idVenta):
         try:
             query = QtSql.QSqlQuery()
             query.prepare(
@@ -946,7 +946,6 @@ class Conexion:
             print(e)
         except Exception as error:
             print("Error en idFacturada conexion: ", error)
-
 
     def listadoContratos(self):
         """
@@ -992,6 +991,8 @@ class Conexion:
                 SELECT 
                    c.id,
                    c.fecha_contrato,
+                   c.fecha_inicio,
+                   c.fecha_fin,
                    c.dniCli,
                    c.prop,
                    c.vendedor
@@ -1022,15 +1023,17 @@ class Conexion:
             registro = []
             query = QtSql.QSqlQuery()
             query.prepare("""
-                SELECT 
-                   c.id,
-                   c.fecha_contrato,
-                   c.dniCli,
-                   c.prop,
-                   c.vendedor
-                FROM contratos AS c
-                WHERE c.id = :codigo
-            """)
+                            SELECT 
+                               m.id,
+                               c.prop,
+                               c.fecha_contrato,
+                               c.fecha_inicio,
+                               c.id
+                            FROM mensualidades AS m
+                            INNER JOIN contratos AS c 
+                            ON c.id = m.contrato
+                            WHERE m.id = :codigo
+                        """)
             query.bindValue(":codigo", str(codigo))
 
             if query.exec():
@@ -1067,28 +1070,29 @@ class Conexion:
          que le pasas por parametro y elige el vendedor con el dni que está en los datos de la lista pasada por parametro
         """
         try:
-            if datetime.now().strftime("%d/%m/%Y") > nuevoContrato[0]:
-                return False
+
             query = QtSql.QSqlQuery()
+            if nuevoContrato[4] > nuevoContrato[5]:
+                return False
             query.prepare(
-                "INSERT INTO contratos (fecha_contrato, dniCli, prop, vendedor, fecha_inicio) "
-                " VALUES (:fecha_contrato, :dniCli, :prop, :vendedor, :fecha_inicio)")
-            query.bindValue(":fecha_contrato", str(nuevoContrato[0]))
+                "INSERT INTO contratos (fecha_contrato, dniCli, prop, vendedor, fecha_inicio, fecha_fin) "
+                " VALUES (:fecha_contrato, :dniCli, :prop, :vendedor, :fecha_inicio, :fecha_fin)")
+            query.bindValue(":fecha_contrato", nuevoContrato[0])
             query.bindValue(":dniCli", str(nuevoContrato[1]))
             query.bindValue(":prop", str(nuevoContrato[2]))
             query.bindValue(":vendedor", str(nuevoContrato[3]))
-            fechaInicio = datetime.now().strftime("%d/%m/%Y")
-            query.bindValue(":fecha_inicio", fechaInicio)
+            query.bindValue(":fecha_inicio", nuevoContrato[4])
+            query.bindValue(":fecha_fin", nuevoContrato[5])
             if query.exec():
                 Conexion.cambiarEstadoPropiedad(self, nuevoContrato[2], "Vendido")
-                return Conexion.crearMensualidades(self, nuevoContrato[2],fechaInicio, nuevoContrato[0])
-            else:
-                return False
+                if Conexion.crearMensualidades(self, nuevoContrato[2], nuevoContrato[4], nuevoContrato[5]):
+
+                    return True
         except sqlite3.Error as e:
             print(e)
         except Exception as error:
             print("Error en alta contrato: ", error)
-
+        return False
 
     def delContrato(self, idPropiedad, idContrato):
         """
@@ -1117,7 +1121,6 @@ class Conexion:
         except Exception as error:
             print("Error en eliminar Contrato: ", error)
 
-
     def crearMensualidades(self, idPropiedad, fechaInicio, fechaFin):
         """
 
@@ -1133,7 +1136,7 @@ class Conexion:
             formato = "%d/%m/%Y"
             date1 = datetime.strptime(fechaInicio, formato)
             date2 = datetime.strptime(fechaFin, formato)
-            meses = Conexion.diferencia_meses(self,date1, date2) + 1
+            meses = Conexion.diferencia_meses(self, date1, date2) + 1
             query = QtSql.QSqlQuery()
             contrato = Conexion.getContratoByPropiedad(self, idPropiedad)[0]
             while date1 <= date2:
@@ -1144,7 +1147,7 @@ class Conexion:
                 query.bindValue(":mes", date1.strftime("%d/%m/%Y"))
                 query.bindValue(":pagado", False)
                 query.exec()
-                date1   = Conexion.sumar_un_mes(self, date1)
+                date1 = Conexion.sumar_un_mes(self, date1)
             return True
         except sqlite3.Error as e:
             print(e)
@@ -1176,7 +1179,7 @@ class Conexion:
                         query.value(0),
                         query.value(1),
                         query.value(2),
-                         query.value(3),
+                        query.value(3),
                         query.value(4),
                         query.value(5)
                     ]
@@ -1186,7 +1189,7 @@ class Conexion:
             print("Error en getContratoByPropiedad: ", error)
             return [[]]
 
-    def diferencia_meses(self,fecha1, fecha2):
+    def diferencia_meses(self, fecha1, fecha2):
         formato = "%d/%m/%Y"
 
         # Calcular la diferencia en años y meses
@@ -1212,7 +1215,6 @@ class Conexion:
         # Devolver la nueva fecha con el mes incrementado
         return fecha.replace(year=año, month=mes)
 
-
     def listadomensualidades(self, contrato):
         """
 
@@ -1235,7 +1237,7 @@ class Conexion:
                         ON p.codigo = c.prop
                             WHERE m.contrato = :contrato
                           """)
-            query.bindValue(":contrato",contrato)
+            query.bindValue(":contrato", contrato)
             if query.exec():
                 while query.next():
                     fila = [query.value(i) for i in range(query.record().count())]
@@ -1243,7 +1245,6 @@ class Conexion:
             return listado
         except Exception as e:
             print("Error listado en mensualidades", e)
-
 
     def pagarMensualidad(self, idContrato):
         """

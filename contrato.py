@@ -2,6 +2,7 @@ from PyQt6 import QtWidgets, QtGui, QtCore
 
 import conexion
 import var
+from informes import Informes
 from propiedades import Propiedades
 
 
@@ -9,18 +10,22 @@ class Contrato():
 
     botonesdel = []
     botonespagar = []
+    botonesimpresion = []
 
     def altaContrato(self):
         nuevoContrato = [
                          var.ui.txtFechaAlq.text(),var.ui.txtDniAlq.text(),
-                         var.ui.txtPropiedadAlq.text(),var.ui.txtVendedorAlq.text(),1
+                         var.ui.txtPropiedadAlq.text(),var.ui.txtVendedorAlq.text(),
+                         var.ui.txtFechaInicioMens.text(),var.ui.txtFechaFinMens.text()
                          ]
 
         mensajes_error = [
             "Falta agregar la fecha",
             "Falta agregar el cliente",
             "Falta agregar la propiedad",
-            "Falta agregar al vendedor"
+            "Falta agregar al vendedor",
+            "Falta agregar la fecha de inicio",
+            "Falta agregar la fecha de fin"
         ]
 
         for i, dato in enumerate(nuevoContrato):
@@ -46,17 +51,25 @@ class Contrato():
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
                 mbox.setWindowTitle("Aviso")
-                mbox.setText("Se ha insertado la venta correctamente.")
+                mbox.setText("Se ha insertado el contrato correctamente.")
                 mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
                 mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
                 mbox.exec()
                 Contrato.cargaTablaContratos(self)
+            else:
+                mbox = QtWidgets.QMessageBox()
+                mbox.setWindowTitle("Error")
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Critical)
+                mbox.setText('La fecha de inicio tiene que ser menor a la de fin.')
+                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+                mbox.exec()
+
         except Exception as e:
             print(e)
             mbox = QtWidgets.QMessageBox()
             mbox.setWindowTitle("Error")
             mbox.setIcon(QtWidgets.QMessageBox.Icon.Critical)
-            mbox.setText('Error al insertar la venta. Intente nuevamente.')
+            mbox.setText('Error al insertar el contrato. Intente nuevamente.')
             mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
             mbox.exec()
         Contrato.cargaTablaContratos(self)
@@ -112,8 +125,8 @@ class Contrato():
 
     def setTablaVaciaMensualidades(self):
         var.ui.tabMensualidadesAlq.setRowCount(1)
-        var.ui.tabMensualidadesAlq.setItem(0, 2, QtWidgets.QTableWidgetItem("No hay mensualidades"))
-        var.ui.tabMensualidadesAlq.item(0, 2).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft.AlignCenter)
+        var.ui.tabMensualidadesAlq.setItem(0, 3, QtWidgets.QTableWidgetItem("No hay mensualidades"))
+        var.ui.tabMensualidadesAlq.item(0, 3).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft.AlignCenter)
         return
 
 
@@ -123,10 +136,7 @@ class Contrato():
             datos = [dato.text() for dato in fila]
             if datos[0] == "No hay Contratos":
                 return
-            registro = Contrato.cargarContrato(self,datos)
-
-            var.ui.txtNumContratoMens.setText(str(registro[0]))
-            var.ui.txtPropiedadMens.setText(str(registro[3]))
+            Contrato.cargarContrato(self,datos)
 
 
 
@@ -137,6 +147,7 @@ class Contrato():
         registro = conexion.Conexion.datosOneContrato(str(datos[0]))
         listado = [
             var.ui.txtNumContratoAlq, var.ui.txtFechaAlq,
+            var.ui.txtFechaInicioMens,var.ui.txtFechaFinMens,
             var.ui.txtDniAlq, var.ui.txtPropiedadAlq,
             var.ui.txtVendedorAlq
         ]
@@ -145,6 +156,7 @@ class Contrato():
                 casilla.setCurrentText(str(registro[i]))
             elif isinstance(casilla, QtWidgets.QLabel):
                 casilla.setText(str(registro[i]))
+                continue
             elif isinstance(casilla, QtWidgets.QLineEdit):
                 casilla.setText(str(registro[i]))
             else:
@@ -161,7 +173,7 @@ class Contrato():
 
             listado = [
                 var.ui.txtNumContratoMens, var.ui.txtPropiedadMens,
-                var.ui.txtFechaInicioMens, var.ui.txtFechaFinMens
+                var.ui.txtFechaFinMens, var.ui.txtFechaInicioMens
             ]
 
             for i, casilla in enumerate(listado):
@@ -174,7 +186,7 @@ class Contrato():
                 else:
                     casilla.setText(str(registro[i]))
 
-            Contrato.cargarContrato(self, [registro[0]])
+            Contrato.cargarContrato(self, [registro[4]])
 
 
         except Exception as e:
@@ -197,7 +209,7 @@ class Contrato():
                     msgbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
                     msgbox.setWindowIcon(QtGui.QIcon('./img/logo.ico'))
                     msgbox.setWindowTitle('Aviso')
-                    msgbox.setText("Venta Eliminada")
+                    msgbox.setText("Contrato Eliminado")
                     msgbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
                     msgbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
                     msgbox.exec()
@@ -209,7 +221,7 @@ class Contrato():
 
 
     def cargaTablaMensualidades(self):
-        contrato = var.ui.txtNumContratoMens.text()
+        contrato = var.ui.txtNumContratoAlq.text()
         if contrato=='':
             return Contrato.setTablaVaciaMensualidades(self)
         try:
@@ -239,11 +251,27 @@ class Contrato():
                 layout.setSpacing(0)
                 container.setLayout(layout)
 
+
+                container1 = QtWidgets.QWidget()
+                layout1 = QtWidgets.QVBoxLayout()
+                Contrato.botonesimpresion.append(QtWidgets.QPushButton())
+                Contrato.botonesimpresion[-1].setFixedSize(30, 20)
+                Contrato.botonesimpresion[-1].setIcon(QtGui.QIcon("./img/impresora.png"))
+                Contrato.botonesimpresion[-1].setStyleSheet("background-color: #efefef;")
+                Contrato.botonesimpresion[-1].clicked.connect(
+                    lambda checked, idMensualidad=registro[0]: Informes.reportMensualidadActual(idMensualidad))
+                layout1.addWidget(Contrato.botonesimpresion[-1])
+                layout1.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                layout1.setContentsMargins(0, 0, 0, 0)
+                layout1.setSpacing(0)
+                container1.setLayout(layout1)
+
                 var.ui.tabMensualidadesAlq.setItem(i, 0, QtWidgets.QTableWidgetItem(str(registro[0])))
                 var.ui.tabMensualidadesAlq.setItem(i, 1, QtWidgets.QTableWidgetItem(str(registro[1])))
                 var.ui.tabMensualidadesAlq.setItem(i, 2, QtWidgets.QTableWidgetItem(str(registro[2])))
                 var.ui.tabMensualidadesAlq.setItem(i, 3, QtWidgets.QTableWidgetItem(str(registro[3])))
                 var.ui.tabMensualidadesAlq.setCellWidget(i, 4, container)
+                var.ui.tabMensualidadesAlq.setCellWidget(i, 5, container1)
 
                 var.ui.tabMensualidadesAlq.item(i, 0).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
                 var.ui.tabMensualidadesAlq.item(i, 1).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)

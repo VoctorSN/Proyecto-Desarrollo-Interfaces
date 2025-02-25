@@ -59,7 +59,6 @@ class Main(QtWidgets.QMainWindow):
         eventos.Eventos.resizeTablaContratos(self)
 
         eventos.Eventos.resizeTablaMensualidades(self)
-        var.ui.tabMensualidadesAlq.clicked.connect(contrato.Contrato.cargaOneMensualidad)
         contrato.Contrato.cargaTablaMensualidades(self)
 
         '''
