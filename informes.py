@@ -333,7 +333,6 @@ class Informes:
             query.bindValue(":idMensualidad", idMensualidad)
             if query.exec():
                 y = 625
-                print("Pre-while")
                 while query.next():
                     if y <= 90:
                         var.report.setFont('Helvetica-Oblique', size=9)
