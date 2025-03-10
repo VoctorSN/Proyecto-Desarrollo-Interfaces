@@ -204,6 +204,16 @@ class Contrato():
             msgbox.button(QtWidgets.QMessageBox.StandardButton.Yes).setText('Si')
             idPropiedad = conexion.Conexion.datosOneContrato(idContrato)[3]
             if msgbox.exec():
+                if conexion.Conexion.checkMensualidadesPagadas(self, int(idContrato)) != []:
+                    msgbox = QtWidgets.QMessageBox()
+                    msgbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
+                    msgbox.setWindowIcon(QtGui.QIcon('./img/logo.ico'))
+                    msgbox.setWindowTitle('Aviso')
+                    msgbox.setText("No se puede eliminar un contrato con mensualidades pagadas")
+                    msgbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+                    msgbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
+                    msgbox.exec()
+                    return
                 if conexion.Conexion.delContrato(self, idPropiedad, int(idContrato)):
                     msgbox = QtWidgets.QMessageBox()
                     msgbox.setIcon(QtWidgets.QMessageBox.Icon.Information)

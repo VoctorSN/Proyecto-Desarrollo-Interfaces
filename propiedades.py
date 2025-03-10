@@ -309,7 +309,7 @@ class Propiedades():
                      var.ui.spinBanosProp.text(), var.ui.txtSuperProp.text(),
                      var.ui.txtPrecioAlquilerProp.text(), var.ui.txtPrecioVentaProp.text(),
                      var.ui.txtCPProp.text(), var.ui.areatxtDescripProp.toPlainText(),
-                     var.ui.txtNomeProp.text(), var.ui.txtMovilProp.text()]
+                     var.ui.txtNomeProp.text(), var.ui.txtMovilProp.text(), var.ui.txtFechaBajaProp.text()]
 
         mensajes_error = [
             "Falta ingresar fecha de alta",
@@ -325,11 +325,12 @@ class Propiedades():
             "Falta ingresar código postal",
             None,  # No validation for description
             "Falta ingresar nombre del propietario",
-            "Falta ingresar móvil del propietario"
+            "Falta ingresar móvil del propietario",
+            None
         ]
 
         for i, dato in enumerate(nuevaProp):
-            if i in (11, 9, 8):  # Skip validation for description (index 11)
+            if i in (11, 9, 8,14):  # Skip validation for description (index 11)
                 continue
             if dato == '':
                 mbox = QtWidgets.QMessageBox()
@@ -372,6 +373,7 @@ class Propiedades():
             registro.append(var.ui.txtMovilProp.text())
             baja = var.ui.txtFechaBajaProp.text()
             disponible = not var.ui.rbtEstadoDisponibleProp.isChecked() and baja ==  "\""
+            registro.append(baja)
 
             if conexion.Conexion.modifPropiedad(registro) and not disponible:
                 mbox = QtWidgets.QMessageBox()

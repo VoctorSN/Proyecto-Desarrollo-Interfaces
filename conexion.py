@@ -440,7 +440,7 @@ class Conexion:
                     "muniprop = :muniprop, tipoprop = :tipoprop, habprop = :habprop, banprop = :banprop, "
                     "superprop = :superprop, prealquiprop = :prealquiprop, prevenprop = :prevenprop, cpprop = :cpprop, "
                     "obserprop = :obserprop, tipooper = :tipooper, estadoprop = :estadoprop, nomeprop = :nomeprop, "
-                    "movilprop = :movilprop WHERE codigo = :codigo"
+                    "movilprop = :movilprop, bajaprop = :bajaprop WHERE codigo = :codigo"
                 )
                 query.bindValue(":altaprop", str(propiedad[1]))
                 query.bindValue(":dirprop", str(propiedad[2]))
@@ -459,6 +459,7 @@ class Conexion:
                 query.bindValue(":nomeprop", str(propiedad[15]))
                 query.bindValue(":movilprop", str(propiedad[16]))
                 query.bindValue(":codigo", int(propiedad[0]))
+                query.bindValue(":bajaprop", str(propiedad[17]))
 
                 return query.exec()
             return False
@@ -883,7 +884,7 @@ class Conexion:
             "UPDATE propiedades SET bajaprop = :bajaPropiedad, estadoprop = :estado WHERE codigo = :codigo ")
         query.bindValue(":bajaPropiedad", datetime.now().strftime("%d/%m/%Y"))
         if estado == "Disponible":
-            query.bindValue(":bajaPropiedad", None)
+            query.bindValue(":bajaPropiedad", "")
         query.bindValue(":codigo", str(codigo))
         query.bindValue(":estado", str(estado))
         query.exec()
@@ -1072,7 +1073,11 @@ class Conexion:
         try:
 
             query = QtSql.QSqlQuery()
-            if nuevoContrato[4] > nuevoContrato[5]:
+            formato = "%d/%m/%Y"
+            date1 = datetime.strptime(nuevoContrato[4], formato)
+            date2 = datetime.strptime(nuevoContrato[5], formato)
+            es_mayor = Conexion.diferencia_meses(self, date1, date2) < 0
+            if es_mayor:
                 return False
             query.prepare(
                 "INSERT INTO contratos (fecha_contrato, dniCli, prop, vendedor, fecha_inicio, fecha_fin) "
@@ -1084,7 +1089,7 @@ class Conexion:
             query.bindValue(":fecha_inicio", nuevoContrato[4])
             query.bindValue(":fecha_fin", nuevoContrato[5])
             if query.exec():
-                Conexion.cambiarEstadoPropiedad(self, nuevoContrato[2], "Vendido")
+                Conexion.cambiarEstadoPropiedad(self, nuevoContrato[2], "Alquilado")
                 if Conexion.crearMensualidades(self, nuevoContrato[2], nuevoContrato[4], nuevoContrato[5]):
 
                     return True
@@ -1264,6 +1269,37 @@ class Conexion:
                 " WHERE id = :id")
             query.bindValue(":id", idContrato)
             return query.exec()
+        except sqlite3.Error as e:
+            print(e)
+        except Exception as error:
+            print("Error en pagar Contrato: ", error)
+        return False
+
+    def checkMensualidadesPagadas(self, idContrato):
+        """
+
+        :param nuevoVen: datos a insertar de un nuevo vendedor
+        :type nuevoVen: list
+        :return: verdadero o falso dependiendo del éxito de la operación
+        :rtype: bool
+
+        Metodo que da de alta a un vendendor cogiendo los datos de este de la lista
+         que le pasas por parametro y elige el vendedor con el dni que está en los datos de la lista pasada por parametro
+        """
+        try:
+            listado = []
+            query = QtSql.QSqlQuery()
+            query.prepare(
+                "SELECT *"
+                " FROM MENSUALIDADES"
+                " WHERE contrato = :id"
+                " AND pagado = TRUE")
+            query.bindValue(":id", idContrato)
+            if query.exec():
+                while query.next():
+                    fila = [query.value(i) for i in range(query.record().count())]
+                    listado.append(fila)
+            return listado
         except sqlite3.Error as e:
             print(e)
         except Exception as error:
