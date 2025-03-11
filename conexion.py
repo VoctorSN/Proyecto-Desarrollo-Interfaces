@@ -334,9 +334,9 @@ class Conexion:
             else:
                 query.bindValue(":prealquiprop", float(propiedad[8]))
             if propiedad[9] == "":
-                query.bindValue(":prealquiprop", None)
+                query.bindValue(":prevenprop", None)
             else:
-                query.bindValue(":prealquiprop", float(propiedad[9]))
+                query.bindValue(":prevenprop", float(propiedad[9]))
             query.bindValue(":cpprop", str(propiedad[10]))
             query.bindValue(":obserprop", str(propiedad[11]))
             query.bindValue(":tipooper", str(propiedad[14]))
@@ -361,7 +361,7 @@ class Conexion:
             listado = []
             queryStr = ""
             if var.historico == 1:
-                queryStr = "SELECT * FROM propiedades WHERE bajaprop is NULL ORDER BY muniprop ASC "
+                queryStr = "SELECT * FROM propiedades WHERE bajaprop is NULL OR bajaprop == '' ORDER BY muniprop ASC "
 
             elif var.historico == 0:
                 queryStr = "SELECT * FROM propiedades ORDER BY muniprop ASC "
@@ -942,7 +942,8 @@ class Conexion:
             query.prepare(
                 "SELECT * FROM ventas WHERE idPropiedad = :idVenta")
             query.bindValue(":idVenta", idVenta)
-            return query.exec()
+            query.exec()
+            return query.next()
         except sqlite3.Error as e:
             print(e)
         except Exception as error:

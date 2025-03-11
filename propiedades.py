@@ -411,21 +411,22 @@ class Propiedades():
 
     def bajaPropiedad(self):
         try:
+            isDisponible = var.ui.rbtEstadoDisponibleProp.isChecked()
+            fechas = Propiedades.checkFechas(self)
             if conexion.Conexion.bajaPropiedad(
-                    int(var.ui.lblProp.text())) and not var.ui.rbtEstadoDisponibleProp.isChecked() and Propiedades.checkFechas(
-                    self):
+                    int(var.ui.lblProp.text())) and not isDisponible and fechas:
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
                 mbox.setWindowIcon(QtGui.QIcon('img/logo.ico'))
                 mbox.setWindowTitle('Aviso')
-                mbox.setText('Cliente dado de baja correctamente')
+                mbox.setText('Propiedad dada de baja correctamente')
                 mbox.setStandardButtons(
                     QtWidgets.QMessageBox.StandardButton.Ok)
                 mbox.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Ok)
                 mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
                 mbox.exec()
                 Propiedades.cargaTablaPropiedades(self, 0)
-            elif var.ui.rbtEstadoDisponibleProp.isChecked():
+            elif isDisponible:
                 mbox = QtWidgets.QMessageBox()
                 mbox.setWindowTitle("Aviso")
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Critical)
@@ -434,7 +435,7 @@ class Propiedades():
                 mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Cancel)
                 mbox.button(QtWidgets.QMessageBox.StandardButton.Cancel).setText('Aceptar')
                 mbox.exec()
-            elif Propiedades.checkFechas(self):
+            elif fechas:
                 mbox = QtWidgets.QMessageBox()
                 mbox.setWindowTitle("Aviso")
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Critical)
@@ -448,7 +449,7 @@ class Propiedades():
                 mbox.setWindowTitle("Aviso")
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Critical)
                 mbox.setWindowIcon(QtGui.QIcon('img/logo.ico'))
-                mbox.setText("Error al dar de baja el cliente")
+                mbox.setText("Error al dar de baja la propiedad")
                 mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Cancel)
                 mbox.exec()
 
