@@ -1294,7 +1294,7 @@ class Conexion:
                 "SELECT *"
                 " FROM MENSUALIDADES"
                 " WHERE contrato = :id"
-                " AND pagado = TRUE")
+                " AND pagado == TRUE")
             query.bindValue(":id", idContrato)
             if query.exec():
                 while query.next():

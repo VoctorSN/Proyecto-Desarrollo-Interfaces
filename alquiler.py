@@ -3,6 +3,7 @@ from PyQt6 import QtWidgets, QtGui, QtCore
 import conexion
 import var
 from propiedades import Propiedades
+from ventas import Ventas
 
 
 class Alquiler():

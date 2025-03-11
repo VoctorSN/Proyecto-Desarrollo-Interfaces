@@ -87,15 +87,14 @@ class Contrato():
             for registro in listado:
                 var.ui.tabContratos.setRowCount(i + 1)
 
-
-
                 container = QtWidgets.QWidget()
                 layout = QtWidgets.QVBoxLayout()
                 Contrato.botonesdel.append(QtWidgets.QPushButton())
                 Contrato.botonesdel[-1].setFixedSize(30, 20)
                 Contrato.botonesdel[-1].setIcon(QtGui.QIcon("./img/papelera.ico"))
                 Contrato.botonesdel[-1].setStyleSheet("background-color: #efefef;")
-                Contrato.botonesdel[-1].clicked.connect(lambda checked: Contrato.eliminar_contrato(self, str(registro[0])))
+                Contrato.botonesdel[-1].clicked.connect(
+                    lambda checked, idContrato=registro[0]: Contrato.eliminar_contrato(self, str(idContrato)))
                 layout.addWidget(Contrato.botonesdel[-1])
                 layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
                 layout.setContentsMargins(0, 0, 0, 0)
@@ -204,7 +203,8 @@ class Contrato():
             msgbox.button(QtWidgets.QMessageBox.StandardButton.Yes).setText('Si')
             idPropiedad = conexion.Conexion.datosOneContrato(idContrato)[5]
             if msgbox.exec():
-                if conexion.Conexion.checkMensualidadesPagadas(self, int(idContrato)) != []:
+                mensualidades_pagadas = conexion.Conexion.checkMensualidadesPagadas(self, int(idContrato))
+                if  mensualidades_pagadas:
                     msgbox = QtWidgets.QMessageBox()
                     msgbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
                     msgbox.setWindowIcon(QtGui.QIcon('./img/logo.ico'))
