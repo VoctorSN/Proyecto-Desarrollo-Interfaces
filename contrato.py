@@ -202,7 +202,7 @@ class Contrato():
             msgbox.setStandardButtons(
                 QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No)
             msgbox.button(QtWidgets.QMessageBox.StandardButton.Yes).setText('Si')
-            idPropiedad = conexion.Conexion.datosOneContrato(idContrato)[3]
+            idPropiedad = conexion.Conexion.datosOneContrato(idContrato)[5]
             if msgbox.exec():
                 if conexion.Conexion.checkMensualidadesPagadas(self, int(idContrato)) != []:
                     msgbox = QtWidgets.QMessageBox()
