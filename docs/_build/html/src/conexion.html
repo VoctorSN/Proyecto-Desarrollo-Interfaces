@@ -7,7 +7,7 @@
 
     <title>conexion module &#8212; documentación de Proyecto-Desarrollo-Interfaces - 0</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
-    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
     <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
     <script src="../_static/documentation_options.js?v=364cdbb6"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
@@ -36,7 +36,7 @@
 <span id="conexion-module"></span><h1>conexion module<a class="headerlink" href="#module-conexion" title="Link to this heading">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="conexion.Conexion">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">conexion.</span></span><span class="sig-name descname"><span class="pre">Conexion</span></span><a class="reference internal" href="../_modules/conexion.html#Conexion"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#conexion.Conexion" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">conexion.</span></span><span class="sig-name descname"><span class="pre">Conexion</span></span><a class="reference internal" href="../_modules/conexion.html#Conexion"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#conexion.Conexion" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>método de una clase que no depende de una instancia específica de esa clase. 
 Se puede llamarlo directamente a través de la clase, sin necesidad de crear un objeto de esa clase. 
@@ -56,6 +56,26 @@ Es útil en comportamientos o funcionalidades que son más a una clase en genera
 </dd>
 </dl>
 <p>Metodo que da de alta a un cliente cogiendo los datos de este de la lista que le pasas por parametro</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="conexion.Conexion.altaContrato">
+<span class="sig-name descname"><span class="pre">altaContrato</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nuevoContrato</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/conexion.html#Conexion.altaContrato"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#conexion.Conexion.altaContrato" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nuevoVen</strong> (<em>list</em>) – datos a insertar de un nuevo vendedor</p>
+</dd>
+<dt class="field-even">Devuelve<span class="colon">:</span></dt>
+<dd class="field-even"><p>verdadero o falso dependiendo del éxito de la operación</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Metodo que da de alta a un vendendor cogiendo los datos de este de la lista</dt><dd><p>que le pasas por parametro y elige el vendedor con el dni que está en los datos de la lista pasada por parametro</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -250,6 +270,46 @@ la tabla a menos que pulses en mostrar historico</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="conexion.Conexion.checkMensualidadesPagadas">
+<span class="sig-name descname"><span class="pre">checkMensualidadesPagadas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idContrato</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/conexion.html#Conexion.checkMensualidadesPagadas"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#conexion.Conexion.checkMensualidadesPagadas" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nuevoVen</strong> (<em>list</em>) – datos a insertar de un nuevo vendedor</p>
+</dd>
+<dt class="field-even">Devuelve<span class="colon">:</span></dt>
+<dd class="field-even"><p>verdadero o falso dependiendo del éxito de la operación</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Metodo que da de alta a un vendendor cogiendo los datos de este de la lista</dt><dd><p>que le pasas por parametro y elige el vendedor con el dni que está en los datos de la lista pasada por parametro</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="conexion.Conexion.crearMensualidades">
+<span class="sig-name descname"><span class="pre">crearMensualidades</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idPropiedad</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fechaInicio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fechaFin</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/conexion.html#Conexion.crearMensualidades"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#conexion.Conexion.crearMensualidades" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nuevoVen</strong> (<em>list</em>) – datos a insertar de un nuevo vendedor</p>
+</dd>
+<dt class="field-even">Devuelve<span class="colon">:</span></dt>
+<dd class="field-even"><p>verdadero o falso dependiendo del éxito de la operación</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Metodo que da de alta a un vendendor cogiendo los datos de este de la lista</dt><dd><p>que le pasas por parametro y elige el vendedor con el dni que está en los datos de la lista pasada por parametro</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="conexion.Conexion.datosOneCliente">
 <span class="sig-name descname"><span class="pre">datosOneCliente</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/conexion.html#Conexion.datosOneCliente"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#conexion.Conexion.datosOneCliente" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
@@ -267,8 +327,42 @@ la tabla a menos que pulses en mostrar historico</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="conexion.Conexion.datosOneContrato">
+<span class="sig-name descname"><span class="pre">datosOneContrato</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/conexion.html#Conexion.datosOneContrato"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#conexion.Conexion.datosOneContrato" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>codigo</strong> (<em>codigo del vendedor</em>) – id del vendedor del cual queremos obtener los datos</p>
+</dd>
+<dt class="field-even">Devuelve<span class="colon">:</span></dt>
+<dd class="field-even"><p>lista de los datos de un vendedor en concreto</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+<p>Metodo que devuelve una lista con los datos de un vendedor con el id de este sacado por el parametro</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="conexion.Conexion.datosOneFactura">
 <span class="sig-name descname"><span class="pre">datosOneFactura</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/conexion.html#Conexion.datosOneFactura"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#conexion.Conexion.datosOneFactura" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>codigo</strong> (<em>codigo del vendedor</em>) – id del vendedor del cual queremos obtener los datos</p>
+</dd>
+<dt class="field-even">Devuelve<span class="colon">:</span></dt>
+<dd class="field-even"><p>lista de los datos de un vendedor en concreto</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+<p>Metodo que devuelve una lista con los datos de un vendedor con el id de este sacado por el parametro</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="conexion.Conexion.datosOneMensualidad">
+<span class="sig-name descname"><span class="pre">datosOneMensualidad</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/conexion.html#Conexion.datosOneMensualidad"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#conexion.Conexion.datosOneMensualidad" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parámetros<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>codigo</strong> (<em>codigo del vendedor</em>) – id del vendedor del cual queremos obtener los datos</p>
@@ -370,7 +464,7 @@ la tabla a menos que pulses en mostrar historico</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="conexion.Conexion.db_conexion">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">db_conexion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/conexion.html#Conexion.db_conexion"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#conexion.Conexion.db_conexion" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">db_conexion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/conexion.html#Conexion.db_conexion"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#conexion.Conexion.db_conexion" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parámetros<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>self</strong></p>
@@ -383,6 +477,26 @@ la tabla a menos que pulses en mostrar historico</p>
 </dd>
 </dl>
 <p>Metodo que se encarga de conectar con la base de datos y devuelve un booleano dependiendo de si se ha conectado o no</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="conexion.Conexion.delContrato">
+<span class="sig-name descname"><span class="pre">delContrato</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idPropiedad</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idContrato</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/conexion.html#Conexion.delContrato"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#conexion.Conexion.delContrato" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nuevoVen</strong> (<em>list</em>) – datos a insertar de un nuevo vendedor</p>
+</dd>
+<dt class="field-even">Devuelve<span class="colon">:</span></dt>
+<dd class="field-even"><p>verdadero o falso dependiendo del éxito de la operación</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Metodo que da de alta a un vendendor cogiendo los datos de este de la lista</dt><dd><p>que le pasas por parametro y elige el vendedor con el dni que está en los datos de la lista pasada por parametro</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -426,13 +540,45 @@ la tabla a menos que pulses en mostrar historico</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="conexion.Conexion.diferencia_meses">
+<span class="sig-name descname"><span class="pre">diferencia_meses</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fecha1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fecha2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/conexion.html#Conexion.diferencia_meses"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#conexion.Conexion.diferencia_meses" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="conexion.Conexion.facturaUtilizada">
 <span class="sig-name descname"><span class="pre">facturaUtilizada</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idFactura</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/conexion.html#Conexion.facturaUtilizada"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#conexion.Conexion.facturaUtilizada" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="conexion.Conexion.getContratoByPropiedad">
+<span class="sig-name descname"><span class="pre">getContratoByPropiedad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idPropiedad</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/conexion.html#Conexion.getContratoByPropiedad"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#conexion.Conexion.getContratoByPropiedad" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>idPropiedad</strong> (<em>int</em>) – id de la propiedad para la cual queremos obtener los contratos</p>
+</dd>
+<dt class="field-even">Devuelve<span class="colon">:</span></dt>
+<dd class="field-even"><p>lista de contratos asociados a la propiedad</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+<p>Metodo que devuelve una lista con los contratos asociados a una propiedad específica</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="conexion.Conexion.isDisponible">
+<span class="sig-name descname"><span class="pre">isDisponible</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idPropiedad</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/conexion.html#Conexion.isDisponible"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#conexion.Conexion.isDisponible" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="conexion.Conexion.isFacturada">
+<span class="sig-name descname"><span class="pre">isFacturada</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idVenta</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/conexion.html#Conexion.isFacturada"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#conexion.Conexion.isFacturada" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="conexion.Conexion.listaMunicipios">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">listaMunicipios</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">provincia</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/conexion.html#Conexion.listaMunicipios"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#conexion.Conexion.listaMunicipios" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">listaMunicipios</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">provincia</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/conexion.html#Conexion.listaMunicipios"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#conexion.Conexion.listaMunicipios" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parámetros<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>provincia</strong> (<em>str</em>) – la provincia por la que buscar los municipios</p>
@@ -454,7 +600,7 @@ la tabla a menos que pulses en mostrar historico</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="conexion.Conexion.listaProv">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">listaProv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/conexion.html#Conexion.listaProv"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#conexion.Conexion.listaProv" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">listaProv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/conexion.html#Conexion.listaProv"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#conexion.Conexion.listaProv" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parámetros<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>self</strong></p>
@@ -484,6 +630,21 @@ la tabla a menos que pulses en mostrar historico</p>
 <dt>Metodo que devuelve una lista con los datos de los clientes, coge los datos de todos</dt><dd><p>o solo de los que no están dados de baja dependiendo del estado de la variable historico</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="conexion.Conexion.listadoContratos">
+<span class="sig-name descname"><span class="pre">listadoContratos</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/conexion.html#Conexion.listadoContratos"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#conexion.Conexion.listadoContratos" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Devuelve<span class="colon">:</span></dt>
+<dd class="field-odd"><p>lista de los datos de las propiedades no dadas de baja o ambas dependiendo de la variable historico</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+<p>Metodo que devuelve una lista con los datos de las propiedades,
+coge los datos de todas o solo de las que no están dadas de baja dependiendo del estado de la variable historico</p>
 </dd></dl>
 
 <dl class="py method">
@@ -534,6 +695,21 @@ los que no están dados de baja dependiendo de el estado de la variable historic
 <dl class="py method">
 <dt class="sig sig-object py" id="conexion.Conexion.listadoVentas">
 <span class="sig-name descname"><span class="pre">listadoVentas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idFactura</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/conexion.html#Conexion.listadoVentas"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#conexion.Conexion.listadoVentas" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Devuelve<span class="colon">:</span></dt>
+<dd class="field-odd"><p>lista de los datos de las propiedades no dadas de baja o ambas dependiendo de la variable historico</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+<p>Metodo que devuelve una lista con los datos de las propiedades,
+coge los datos de todas o solo de las que no están dadas de baja dependiendo del estado de la variable historico</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="conexion.Conexion.listadomensualidades">
+<span class="sig-name descname"><span class="pre">listadomensualidades</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contrato</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/conexion.html#Conexion.listadomensualidades"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#conexion.Conexion.listadomensualidades" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Devuelve<span class="colon">:</span></dt>
 <dd class="field-odd"><p>lista de los datos de las propiedades no dadas de baja o ambas dependiendo de la variable historico</p>
@@ -601,6 +777,31 @@ y usando el resto de la lista que le pasas como los datos a modificar</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="conexion.Conexion.pagarMensualidad">
+<span class="sig-name descname"><span class="pre">pagarMensualidad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idContrato</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/conexion.html#Conexion.pagarMensualidad"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#conexion.Conexion.pagarMensualidad" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nuevoVen</strong> (<em>list</em>) – datos a insertar de un nuevo vendedor</p>
+</dd>
+<dt class="field-even">Devuelve<span class="colon">:</span></dt>
+<dd class="field-even"><p>verdadero o falso dependiendo del éxito de la operación</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Metodo que da de alta a un vendendor cogiendo los datos de este de la lista</dt><dd><p>que le pasas por parametro y elige el vendedor con el dni que está en los datos de la lista pasada por parametro</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="conexion.Conexion.sumar_un_mes">
+<span class="sig-name descname"><span class="pre">sumar_un_mes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fecha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/conexion.html#Conexion.sumar_un_mes"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#conexion.Conexion.sumar_un_mes" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 </section>
@@ -655,7 +856,7 @@ y usando el resto de la lista que le pasas como los datos a modificar</p>
       &#169;2025, Victor.
       
       |
-      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.1.3</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.1</a>
       &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
       
       |

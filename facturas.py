@@ -1,27 +1,32 @@
 from datetime import datetime
-from multiprocessing.resource_tracker import register
 
-from PyQt6 import QtWidgets, QtGui, QtCore, QtSql
+from PyQt6 import QtWidgets, QtGui, QtCore
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QIcon
-from PyQt6.QtWidgets import *
 
 import conexion
 import eventos
 import var
-
-from datetime import datetime
-
 import ventas
-from ventas import Ventas
 
 
-class Facturas():
+class Facturas:
+    """
+    Clase que gestiona las facturas dentro de la aplicación. Permite dar de alta,
+    eliminar y cargar facturas en la tabla de la interfaz gráfica.
+    """
 
-
-    botonesdel = []
+    botonesdel = []  # Lista para almacenar los botones de eliminación de facturas
 
     def altaFactura(self):
+        """
+        Método que registra una nueva factura en la base de datos.
+
+        Valida que los campos obligatorios estén completos antes de insertar
+        la factura en la base de datos.
+
+        :return: None
+        :rtype: None
+        """
         nuevaFac = [var.ui.txtDniFac.text(), var.ui.txtFechaFac.text()]
 
         mensajes_error = [
@@ -40,7 +45,7 @@ class Facturas():
                 return
 
         try:
-            if conexion.Conexion.altaFactura(self,nuevaFac):
+            if conexion.Conexion.altaFactura(self, nuevaFac):
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
                 mbox.setWindowTitle("Aviso")
@@ -59,96 +64,124 @@ class Facturas():
         Facturas.cargaTablaFacturas(self)
 
     def cargaTablaFacturas(self):
+        """
+        Método que carga la lista de facturas en la tabla de la interfaz gráfica.
+
+        Si no hay facturas, se muestra un mensaje indicando que la tabla está vacía.
+
+        :return: None
+        :rtype: None
+        """
         try:
             listado = conexion.Conexion.listadoFacturas(self)
-
             var.ui.tabFacturas.setRowCount(0)
 
-            i = 0
-
-            for registro in listado:
-
+            for i, registro in enumerate(listado):
                 var.ui.tabFacturas.setRowCount(i + 1)
 
+                # Crear botón de eliminación en cada fila
                 container = QtWidgets.QWidget()
-                layout = QtWidgets.QVBoxLayout()          
+                layout = QtWidgets.QVBoxLayout()
                 Facturas.botonesdel.append(QtWidgets.QPushButton())
                 Facturas.botonesdel[-1].setFixedSize(30, 20)
                 Facturas.botonesdel[-1].setIcon(QtGui.QIcon("./img/papelera.ico"))
                 Facturas.botonesdel[-1].setStyleSheet("background-color: #efefef;")
-                Facturas.botonesdel[-1].clicked.connect(lambda checked: Facturas.eliminar_factura(self,str(registro[0])))
+                Facturas.botonesdel[-1].clicked.connect(lambda checked, id=registro[0]: Facturas.eliminar_factura(self, str(id)))
                 layout.addWidget(Facturas.botonesdel[-1])
                 layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
                 layout.setContentsMargins(0, 0, 0, 0)
                 layout.setSpacing(0)
                 container.setLayout(layout)
 
+                # Insertar datos en la tabla
                 var.ui.tabFacturas.setItem(i, 0, QtWidgets.QTableWidgetItem(str(registro[0])))
                 var.ui.tabFacturas.setItem(i, 1, QtWidgets.QTableWidgetItem(registro[2]))
                 var.ui.tabFacturas.setItem(i, 2, QtWidgets.QTableWidgetItem(registro[1]))
                 var.ui.tabFacturas.setCellWidget(i, 3, container)
 
-                var.ui.tabFacturas.item(i, 0).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-                var.ui.tabFacturas.item(i, 1).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-                var.ui.tabFacturas.item(i, 2).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-                i += 1
+                # Alinear el texto en las celdas
+                for j in range(3):
+                    var.ui.tabFacturas.item(i, j).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
 
             if var.ui.tabFacturas.rowCount() == 0:
                 return Facturas.setTablaVaciaFac(self)
 
         except Exception as e:
-            print("Error cargar tabPropiedades", e)
-
+            print("Error al cargar las facturas:", e)
 
     def setTablaVaciaFac(self):
+        """
+        Método que establece la tabla de facturas con un mensaje indicando que no hay facturas.
+
+        :return: None
+        :rtype: None
+        """
         var.ui.tabFacturas.setRowCount(1)
         var.ui.tabFacturas.setItem(0, 1, QtWidgets.QTableWidgetItem("No hay facturas"))
-        var.ui.tabFacturas.item(0, 1).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft.AlignVCenter)
-        return
+        var.ui.tabFacturas.item(0, 1).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft | QtCore.Qt.AlignmentFlag.AlignVCenter)
 
     def cargaOneFactura(self):
+        """
+        Método que carga los datos de una factura seleccionada en los campos correspondientes.
+
+        También carga la lista de ventas asociadas a la factura.
+
+        :return: None
+        :rtype: None
+        """
         try:
             fila = var.ui.tabFacturas.selectedItems()
             datos = [dato.text() for dato in fila]
-            if(datos[0] == "No hay Facturas"):
+
+            if datos[0] == "No hay Facturas":
                 return
+
             registro = conexion.Conexion.datosOneFactura(str(datos[0]))
 
-            listado = [var.ui.txtNumFac, var.ui.txtFechaFac,
-                       var.ui.txtDniFac, var.ui.txtNomFac, var.ui.txtApelFac]
+            campos = [var.ui.txtNumFac, var.ui.txtFechaFac,
+                      var.ui.txtDniFac, var.ui.txtNomFac, var.ui.txtApelFac]
 
-            for i, casilla in enumerate(listado):
-                if isinstance(casilla, QtWidgets.QComboBox):
-                    casilla.setCurrentText(str(registro[i]))
-                elif isinstance(casilla, QtWidgets.QLabel):
-                    casilla.setText(str(registro[i]))
-                elif isinstance(casilla, QtWidgets.QLineEdit):
-                    casilla.setText(str(registro[i]))
+            for i, campo in enumerate(campos):
+                if isinstance(campo, QtWidgets.QComboBox):
+                    campo.setCurrentText(str(registro[i]))
+                elif isinstance(campo, (QtWidgets.QLabel, QtWidgets.QLineEdit)):
+                    campo.setText(str(registro[i]))
                 else:
-                    casilla.setText(str(registro[i]))
+                    campo.setText(str(registro[i]))
+
             ventas.Ventas.cargaTablaVentas(self, str(datos[0]))
 
         except Exception as e:
-            print("Error cargar Vendedor", e)
+            print("Error al cargar la factura:", e)
 
-    def eliminar_factura(self,idFactura):
+    def eliminar_factura(self, idFactura):
+        """
+        Método que elimina una factura de la base de datos si no está en uso.
+
+        Antes de eliminar la factura, se muestra un cuadro de diálogo para confirmar la acción.
+
+        :param idFactura: ID de la factura a eliminar.
+        :type idFactura: str
+        :return: None
+        :rtype: None
+        """
         try:
             msgbox = QtWidgets.QMessageBox()
             msgbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
             msgbox.setWindowIcon(QtGui.QIcon('./img/logo.ico'))
             msgbox.setWindowTitle('Aviso')
-            msgbox.setText("Desea Eliminar la Factura")
-            msgbox.setStandardButtons(
-                QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No)
-            msgbox.button(QtWidgets.QMessageBox.StandardButton.Yes).setText('Si')
-            if msgbox.exec():
+            msgbox.setText("¿Desea eliminar la factura?")
+            msgbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No)
+            msgbox.button(QtWidgets.QMessageBox.StandardButton.Yes).setText('Sí')
+
+            if msgbox.exec() == QtWidgets.QMessageBox.StandardButton.Yes:
                 facturaUtilizada = conexion.Conexion.facturaUtilizada(self, int(idFactura)) != []
                 if not facturaUtilizada and conexion.Conexion.delFactura(self, int(idFactura)):
                     msgbox = QtWidgets.QMessageBox()
                     msgbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
                     msgbox.setWindowIcon(QtGui.QIcon('./img/logo.ico'))
                     msgbox.setWindowTitle('Aviso')
-                    msgbox.setText("Factura Eliminada")
+                    msgbox.setText("Factura eliminada correctamente.")
                     msgbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
                     msgbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
                     msgbox.exec()
@@ -156,13 +189,10 @@ class Facturas():
                 elif facturaUtilizada:
                     msgbox = QtWidgets.QMessageBox()
                     msgbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
-                    msgbox.setWindowIcon(QtGui.QIcon('./img/logo.ico'))
                     msgbox.setWindowTitle('Aviso')
-                    msgbox.setText("La factura no puede ser eliminada porque está siendo utilizada.")
+                    msgbox.setText("No se puede eliminar la factura porque está en uso.")
                     msgbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
                     msgbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
                     msgbox.exec()
-            else:
-                msgbox.hide()
         except Exception as error:
-            print("Eliminar facturade ", error)
+            print("Error al eliminar la factura:", error)

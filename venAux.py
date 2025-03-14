@@ -14,6 +14,13 @@ from dlg_listadoPropiedades import Ui_dlg_ListadoProp
 
 
 class Calendar(QtWidgets.QDialog):
+    """
+    Clase que representa una ventana emergente de calendario donde se muestra el calendario actual
+    y permite seleccionar una fecha. Al seleccionar una fecha, se conecta a un evento para cargarla.
+
+    :return: None
+    :rtype: None
+    """
     def __init__(self):
         super(Calendar, self).__init__()
         var.uicalendar = Ui_dlgCalendar()
@@ -26,10 +33,23 @@ class Calendar(QtWidgets.QDialog):
         var.uicalendar.Calendar.clicked.connect(eventos.Eventos.cargaFecha)
 
 class FileDialogAbrir(QtWidgets.QFileDialog):
+    """
+    Clase que representa un diálogo para abrir archivos. Extiende de QFileDialog.
+
+    :return: None
+    :rtype: None
+    """
     def __init__(self):
         super(FileDialogAbrir, self).__init__()
 
 class dlgTipoProp(QtWidgets.QDialog):
+    """
+    Clase que representa una ventana emergente para gestionar tipos de propiedad. Permite crear
+    o eliminar tipos de propiedad.
+
+    :return: None
+    :rtype: None
+    """
     def __init__(self):
         super(dlgTipoProp,self).__init__()
         self.ui = Ui_dlg_TipoProp()
@@ -38,6 +58,12 @@ class dlgTipoProp(QtWidgets.QDialog):
         self.ui.btnDelTipoProp.clicked.connect(propiedades.Propiedades.bajaTipoPropiedad)
 
 class dlgAbout(QtWidgets.QDialog):
+    """
+    Clase que representa una ventana emergente que muestra información sobre la aplicación.
+
+    :return: None
+    :rtype: None
+    """
     def __init__(self):
         super(dlgAbout, self).__init__()
         self.ui = Ui_dlgAbout()
@@ -45,6 +71,13 @@ class dlgAbout(QtWidgets.QDialog):
         self.ui.btnSalir.clicked.connect(self.close)
 
 class dlg_listadoPropiedades(QtWidgets.QDialog):
+    """
+    Clase que representa una ventana emergente que muestra un listado de propiedades y permite
+    generar informes basados en el municipio elegido.
+
+    :return: None
+    :rtype: None
+    """
     def __init__(self):
         super(dlg_listadoPropiedades,self).__init__()
         self.ui = Ui_dlg_ListadoProp()
@@ -61,6 +94,13 @@ class dlg_listadoPropiedades(QtWidgets.QDialog):
         self.ui.btnGenerarInforme.clicked.connect(self.onBtnClicked)
 
     def onBtnClicked(self):
+        """
+        Método que genera un informe de propiedades filtrado por el municipio seleccionado.
+        Llama al método correspondiente para generar el informe y acepta el diálogo.
+
+        :return: None
+        :rtype: None
+        """
         texto = self.ui.chkElegirProp.currentText()
         informes.Informes.reportPropiedades(texto)
         self.accept()
